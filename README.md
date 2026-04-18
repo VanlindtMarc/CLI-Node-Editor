@@ -4,17 +4,13 @@ Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **ba
 
 Le logiciel passe par une interface nodale.
 
-Vous aurez donc : 
-
-- À gauche : La liste de tous les noeuds
-- Au centre : l'interface nodale
-- À droite : une prévisualisation du code 
-
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Pour le moment, seul le **batch** est optimisé et testé.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
+
+---
 
 ## Types de flux pouvant être créés
 
@@ -26,6 +22,8 @@ Il est possible de créer trois sortes de flux :
 
 Cela est configurable via l'interface et l'utilisation de certains nœuds.
 
+---
+
 ## Nœuds d'entrée
 
 Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée -> une sortie.
@@ -36,11 +34,15 @@ Pour le cas 3, vous pouvez supprimer le nœud **Fichier Input** et faire appel a
 
 Celui-ci vous permettra d'indiquer le nombre de fichiers devant être reçu en entrée et d'indiquer les différents types attendus. Par exemple, vidéo (avec plusieurs formats possibles) et sous-titres (idem).
 
+---
+
 ## Noeud de sortie
 
 Il n'y en a qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer.
 
 On y indique simplement le nom et l'extension voulue.
+
+---
 
 ## Variables
 
@@ -57,6 +59,8 @@ Ce nœud fera qu'une série de questions sera posée au début du flux pour êtr
 Certains nœuds peuvent renvoyer une valeur sauvegardée sous forme de fichier TXT, par exemple la largeur d'une image, l'artiste d'un audio...
 
 Le nœud **Variables globales** peut créer des variables basées sur ces fichiers TXT, pouvant alors être utilisées dans toute l'interface.
+
+---
 
 ## Outils CLI
 
