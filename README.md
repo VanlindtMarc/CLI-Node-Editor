@@ -83,7 +83,11 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
+### Noeuds vérifiés
 
+Les noeuds vérifiés correspondent à des noeuds qui ont été testés.
+
+La plupart des noeuds ont été générés par IA et demandent à être vérifiés.
 
 
 
