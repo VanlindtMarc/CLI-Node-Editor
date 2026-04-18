@@ -1,11 +1,14 @@
 # CLI Node Editor
 
-Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **bash** et **PowerShell** complexes faisant appels à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
+Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **bash** et **PowerShell** complexes faisant appel à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
 
-Afin de faciliter cette création, le logiciel passe par une interface nodale.
+Le logiciel passe par une interface nodale.
 
-**Attention :** Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment. 
-![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI01.png)
+**Attention :** 
+- Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
+- Pour le moment, seul le **batch** est optimisé et testé.
+
+![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
 ## Types de flux pouvant être créés
 
@@ -83,11 +86,11 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
-### Noeuds vérifiés
+### Nœuds vérifiés
 
-Les noeuds vérifiés correspondent à des noeuds qui ont été testés.
+Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
 
-La plupart des noeuds ont été générés par IA et demandent à être vérifiés.
+La plupart des nœuds ont été générés par IA et demandent à être vérifiés.
 
 
 
