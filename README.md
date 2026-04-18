@@ -4,6 +4,12 @@ Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **ba
 
 Le logiciel passe par une interface nodale.
 
+Vous aurez donc : 
+
+- À gauche : La liste de tous les noeuds
+- Au centre : l'interface nodale
+- À droite : une prévisualisation du code 
+
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Pour le moment, seul le **batch** est optimisé et testé.
