@@ -5,6 +5,7 @@ Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **ba
 Afin de faciliter cette création, le logiciel passe par une interface nodale.
 
 **Attention :** Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment. 
+![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI01.png)
 
 ## Types de flux pouvant être créés
 
