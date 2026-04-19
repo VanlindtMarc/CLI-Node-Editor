@@ -26,18 +26,14 @@ Cela est configurable via l'interface et l'utilisation de certains nœuds.
 
 ## Nœuds d'entrée
 
-![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
+![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
 
-Il existe trois noeuds d'entrée : 
-1. Fichier input : 
+Il existe trois nœuds d'entrée : 
+1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
+2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
+3. **Multi-fichiers** : indique le nombre et le type de fichier attendus pour ce flux.
 
 Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
-
-Ce nœud d'entrée correspond aux cas 1 et 2 vus dans les types de flux.
-
-Pour le cas 3, vous pouvez supprimer le nœud **Fichier Input** et faire appel au nœud **Multi Fichiers**.
-
-Celui-ci vous permettra d'indiquer le nombre de fichiers devant être reçu en entrée et d'indiquer les différents types attendus. Par exemple, vidéo (avec plusieurs formats possibles) et sous-titres (idem).
 
 ---
 
@@ -108,6 +104,37 @@ Commande à utiliser (dans son nom court indiqué dans la liste des outils), pou
 Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
 
 La plupart des nœuds ont été générés par IA et demandent à être testés.
+
+---
+
+# Exemples de flux
+
+## Watermark
+
+![CLI05](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI05.png)
+
+1. Lorsque vous lancez le flux, il va vous demander quelle place, en %, doit prendre le watermark sur l'image à traiter.
+2. Le flux retire la hauteur et la largeur de l'image à traiter et créé deux variables correspondant au %age voulu.
+3. Le Watermark est redimensionné pour correspondre au %age voulu.
+4. Le Watermark est déposé en bas à droite de l'image, à 10 pixels de chaque bord
+5. Le résultat est sauvegardé au format PNG sous le même nom que le fichier d'origine avec "-WM" à la fin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Idées 
 
