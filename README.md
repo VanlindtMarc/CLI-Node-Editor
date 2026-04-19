@@ -16,7 +16,7 @@ Le logiciel passe par une interface nodale.
 
 Il est possible de créer trois sortes de flux : 
 
-1. Chaque fichier est traité individuellement et le flux est répété pour chaque fichier
+1. Chaque fichier est traité individuellement et le flux est répété pour chaque fichier.
 2. Tous les fichiers sont traités par un seul flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
@@ -26,7 +26,12 @@ Cela est configurable via l'interface et l'utilisation de certains nœuds.
 
 ## Nœuds d'entrée
 
-Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée -> une sortie.
+![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
+
+Il existe trois noeuds d'entrée : 
+1. Fichier input : 
+
+Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
 
 Ce nœud d'entrée correspond aux cas 1 et 2 vus dans les types de flux.
 
@@ -36,7 +41,7 @@ Celui-ci vous permettra d'indiquer le nombre de fichiers devant être reçu en e
 
 ---
 
-## Noeud de sortie
+## Nœud de sortie
 
 Il n'y en a qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer.
 
@@ -96,13 +101,13 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
-### Nœuds vérifiés
+---
+
+## Nœuds vérifiés
 
 Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
 
-La plupart des nœuds ont été générés par IA et demandent à être vérifiés.
-
-
+La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ## Idées 
 
