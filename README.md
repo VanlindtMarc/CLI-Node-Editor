@@ -113,15 +113,25 @@ La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ![CLI05](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI05.png)
 
+Ce flux utilise **ffmpeg**.
+
 1. Lorsque vous lancez le flux, il va vous demander quelle place, en %, doit prendre le watermark sur l'image à traiter.
-2. Le flux retire la hauteur et la largeur de l'image à traiter et créé deux variables correspondant au %age voulu.
-3. Le Watermark est redimensionné pour correspondre au %age voulu.
-4. Le Watermark est déposé en bas à droite de l'image, à 10 pixels de chaque bord
+2. Le flux retire la hauteur et la largeur de l'image à traiter et créé deux variables correspondant au %age voulu. (ffmpeg)
+3. Le Watermark est redimensionné pour correspondre au %age voulu. (ffmpeg)
+4. Le Watermark est déposé en bas à droite de l'image, à 10 pixels de chaque bord. (ffmpeg)
 5. Le résultat est sauvegardé au format PNG sous le même nom que le fichier d'origine avec "-WM" à la fin.
 
+## Vectorisation
 
+![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
 
+Ce flux utilise **ffmpeg** et **potrace**.
 
+1. Lorsque vous lancez le flux, il demandera la qualité voulue (en px) et où doit se situer la "coupure", c'est à dire, s'il ya un flou, à quel niveau de gris doit être réalisé la vectorisation.
+2. Le fichier est transformé en BMP, format de base de Potrace.
+3. L'image est redimensionnée à la qualité voulue.
+4. L'image est vectorisée en SVG.
+5. Le résultat est sauvegardé au format SVG avec le nom d'origine de l'image.
 
 
 
