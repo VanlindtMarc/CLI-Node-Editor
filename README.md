@@ -80,6 +80,8 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 Vous allez pouvoir utiliser tous les outils CLI que vous voulez.
 
+Le nom à utiliser dans l'interface est celui indiqué dans **Nom**.
+
 Ils seront sauvés dans une base de données contenant :
 
 **Nom court à utiliser dans l'interface** - **Lien complet vers l'outil** - **Description**
@@ -110,9 +112,13 @@ Indique le nombre de fichiers attendus en entrée et en sortie.
 
 #### Paramètres
 
+![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png?raw=true)
+
 Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
 
 #### Template
+
+![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png?raw=true)
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
