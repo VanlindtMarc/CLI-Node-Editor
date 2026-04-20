@@ -194,10 +194,6 @@ Le but de ce flux est de reproduire plus fidèlement les effets de la télé ana
 
 
 
-
-
-
-
 ## A venir 
 
 * Indiquer pour quel langage est fait le nœud (batch, bash ou powershell) et faire en sorte de ne voir que ceux voulus.
