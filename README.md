@@ -159,7 +159,7 @@ On peut donc créer un flux plus complexe créant cinq images :
 
 ![CLI09](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI09.png?raw=true)
 
-Ce flux utilise ffmpeg, imagemagick, sox ainsi que des scripts python persos.
+Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts python persos**.
 
 1. On demande la taille du fichier image finale
 2. On va chercher la résolution de l'image d'origine pour en créer une variable
@@ -169,7 +169,7 @@ Ce flux utilise ffmpeg, imagemagick, sox ainsi que des scripts python persos.
 6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris : uUne fois avec la résolution d'origine et une fois avec la résolution demandée
 7. On reconstruit deux images : une dans la résolution d'origine et une dans la résolution demandée
 
-
+Le but de ce flux est de reproduire plus fidèlement les effets de la télé analogique.
 
 
 
