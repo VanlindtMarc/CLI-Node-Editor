@@ -11,7 +11,7 @@ Le logiciel passe par une interface nodale.
 L'interface principale est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés
 2. Une zone centrale montrant les nœuds et leurs liens
-3. Une colonne à droite où peut être généré le code et visualiser le code à exporter.
+3. Une colonne à droite où peut être généré et visualisé le code à exporter.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png?raw=true)
 
