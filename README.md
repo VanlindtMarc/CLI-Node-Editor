@@ -6,9 +6,9 @@ Le logiciel passe par une interface nodale.
 
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
-- Pour le moment, seul le **batch** est optimisé et testé.
+- Pour le moment, seul le **batch** est optimisé et testé : bien que le script final puisse être écrit en 3 langages, les nœuds, eux, sont écrits en batchs.
 
-![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
+![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png?raw=true)
 
 ---
 
@@ -26,7 +26,7 @@ Cela est configurable via l'interface et l'utilisation de certains nœuds.
 
 ## Nœuds d'entrée
 
-![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
+![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png?raw=true)
 
 Il existe trois nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
@@ -111,7 +111,7 @@ La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ## Watermark
 
-![CLI05](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI05.png)
+![CLI05](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI05.png?raw=true)
 
 Ce flux utilise **ffmpeg**.
 
@@ -123,7 +123,7 @@ Ce flux utilise **ffmpeg**.
 
 ## Vectorisation
 
-![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
+![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png?raw=true)
 
 Ce flux utilise **ffmpeg** et **potrace**.
 
@@ -135,7 +135,17 @@ Ce flux utilise **ffmpeg** et **potrace**.
 
 Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le principe de qualité plus compréhensible, en demandant une valeur de 1 à 16 :
 
-![CLI07](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI07.png)
+![CLI07](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI07.png?raw=true)
+
+Le problème est que si l'on prend une photo en couleur, la vectorisation peut ne pas correspondre aux attentes.
+
+On peut donc créer un flux plus complexe créant cinq images : 
+
+1. basée sur l'image en couleur
+2. basée sur une mise en noir et blanc
+3. basée sur le canal rouge
+4. basée sur le canal vert
+5. basée sur le canal bleu
 
 
 
@@ -148,6 +158,10 @@ Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le pri
 
 
 
-## Idées 
+
+
+## A venir 
 
 * Ajouter plus de dépendances et dans l'interface des zones pour voir les urls de téléchargement
+* Pour les paramètres, afficher une explication plutôt que le paramètre (par exemple "Bas-Droit) pour le watermark plutôt que le paramètre complet.
+* Indiquer pour quel langage est fait le nœud (batch, bash ou powershell) et faire en sorte de ne voir que ceux voulus.
