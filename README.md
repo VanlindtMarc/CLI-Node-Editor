@@ -55,7 +55,7 @@ Dans chacun des cas, une fois une variable créée, vous pourrez y faire appel v
 
 Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage Batch pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
 
-Pour les calculs plus complexes, je vous conseille l'outil Qalculate.
+Pour les calculs plus complexes, je vous conseille l'outil **Qalculate**.
 
 ### Variables d'entrée
 
