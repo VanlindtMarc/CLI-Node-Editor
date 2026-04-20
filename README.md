@@ -89,6 +89,9 @@ Ils seront sauvés dans une base de données contenant :
 Chaque nœud peut être paramétré via quatre onglets.
 
 #### Général 
+
+![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png?raw=true)
+
 * Nom du nœud : nom réel
 * Nom affiché : nom affiché dans les menus
 * Catégorie : en général le nom de la commande CLI
@@ -100,6 +103,9 @@ Chaque nœud peut être paramétré via quatre onglets.
 * Couleur hexa : couleur du nœud dans l'interface.
 
 #### Ports
+
+![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png?raw=true)
+
 Indique le nombre de fichiers attendus en entrée et en sortie.
 
 #### Paramètres
