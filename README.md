@@ -196,6 +196,4 @@ Le but de ce flux est de reproduire plus fidèlement les effets de la télé ana
 
 ## A venir 
 
-* Ajouter plus de dépendances et dans l'interface des zones pour voir les urls de téléchargement
-* Pour les paramètres, afficher une explication plutôt que le paramètre (par exemple "Bas-Droit) pour le watermark plutôt que le paramètre complet.
 * Indiquer pour quel langage est fait le nœud (batch, bash ou powershell) et faire en sorte de ne voir que ceux voulus.
