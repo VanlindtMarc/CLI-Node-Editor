@@ -1494,13 +1494,9 @@ class Node(QGraphicsItem):
         if self._is_multi_file_node() and param_name == 'Nombre de fichiers':
             self._rebuild_ports()
             self.schedule_parameter_widgets_rebuild()
-            if self.scene():
-                self.scene().update_execution_order()
         elif (self._is_global_variables_node() or self._is_input_variables_node()) and param_name == 'Nombre de variables':
             self._rebuild_ports()
             self.schedule_parameter_widgets_rebuild()
-            if self.scene():
-                self.scene().update_execution_order()
         main_window = self.get_main_window()
         if main_window is not None:
             main_window.refresh_all_parameter_links()
@@ -1668,7 +1664,8 @@ class Node(QGraphicsItem):
             if main_window is not None:
                 main_window.refresh_all_parameter_links()
             scene.update_scene_bounds()
-            scene.update_execution_order()
+            if main_window is not None:
+                main_window.mark_workflow_dirty()
 
 
 class NodeConfigDialog(QDialog):
@@ -1941,7 +1938,9 @@ class NodeEditorScene(QGraphicsScene):
                         item.connections.append(self.temp_connection)
                     
                     # Mettre à jour l'ordre d'exécution, et annuler si la liaison casse le graphe.
-                    self.update_execution_order()
+                    main_window = self.views()[0].window() if self.views() else None
+                    if main_window is not None and hasattr(main_window, 'mark_workflow_dirty'):
+                        main_window.mark_workflow_dirty()
                 else:
                     self.cancel_temp_connection()
             except Exception as e:
@@ -2758,6 +2757,7 @@ class MainWindow(QMainWindow):
         self.workflow_mode = "per_file"
         self.script_type = "batch"
         self.library_filter_mode = "all"
+        self.preview_dirty = True
         self.panel_expanded_sizes = {"left": 320, "right": 380}
         
         central_widget = QWidget()
@@ -2792,12 +2792,12 @@ class MainWindow(QMainWindow):
         self.preview_refresh_timer = QTimer(self)
         self.preview_refresh_timer.setSingleShot(True)
         self.preview_refresh_timer.timeout.connect(self.refresh_bat_preview)
-        self.scene.changed.connect(self.schedule_bat_preview_refresh)
+        self.scene.changed.connect(self.mark_workflow_dirty)
         
         self.create_menus()
         self.populate_default_canvas()
         self.update_preview_highlighter()
-        self.refresh_bat_preview()
+        self.generate_workflow_preview()
         
         self.statusBar().showMessage("Double-cliquez sur un noeud de la bibliothèque pour l'ajouter au canvas")
     
@@ -2896,6 +2896,17 @@ class MainWindow(QMainWindow):
         info_label.setStyleSheet("padding: 10px; background: #eef7ff; border-radius: 5px;")
         layout.addWidget(info_label)
 
+        preview_toolbar = QHBoxLayout()
+        self.generate_preview_btn = QPushButton("Générer")
+        self.generate_preview_btn.clicked.connect(self.generate_workflow_preview)
+        preview_toolbar.addWidget(self.generate_preview_btn)
+
+        self.preview_status_label = QLabel("")
+        self.preview_status_label.setStyleSheet("color: #555; padding-left: 8px;")
+        preview_toolbar.addWidget(self.preview_status_label)
+        preview_toolbar.addStretch()
+        layout.addLayout(preview_toolbar)
+
         self.preview_text = QTextEdit()
         self.preview_text.setReadOnly(True)
         self.preview_text.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
@@ -2981,11 +2992,34 @@ class MainWindow(QMainWindow):
         right_size = 36 if not self.right_panel_content.isVisible() else self.panel_expanded_sizes["right"]
         self.main_splitter.setSizes([left_size, center_size, right_size])
 
+    def update_preview_status(self):
+        """Affiche si l'aperçu doit être régénéré."""
+        if not hasattr(self, 'preview_status_label'):
+            return
+        if self.preview_dirty:
+            self.preview_status_label.setText("Aperçu non à jour")
+            self.preview_status_label.setStyleSheet("color: #c0392b; padding-left: 8px; font-weight: bold;")
+        else:
+            self.preview_status_label.setText("Aperçu à jour")
+            self.preview_status_label.setStyleSheet("color: #1e8449; padding-left: 8px; font-weight: bold;")
+
+    def mark_workflow_dirty(self, *_args):
+        """Marque le workflow comme modifié sans relancer de génération automatique."""
+        if getattr(self.scene, 'temp_connection', None) is not None:
+            return
+        self.preview_dirty = True
+        self.update_preview_status()
+
+    def generate_workflow_preview(self):
+        """Recalcule l'ordre puis met à jour l'aperçu du script."""
+        self.scene.update_execution_order()
+        self.refresh_bat_preview()
+
     def schedule_bat_preview_refresh(self, *_args):
         """Déclenche une mise à jour différée de l'aperçu BAT."""
         if getattr(self.scene, 'temp_connection', None) is not None:
             return
-        self.preview_refresh_timer.start(150)
+        self.mark_workflow_dirty()
     
     def show_library_context_menu(self, position):
         """Affiche le menu contextuel pour la bibliothèque"""
@@ -3118,7 +3152,7 @@ class MainWindow(QMainWindow):
         node = Node(node_data, x, y)
         self.scene.addItem(node)
         self.scene.update_scene_bounds()
-        self.scene.update_execution_order()
+        self.mark_workflow_dirty()
         self.statusBar().showMessage(f"Noeud ajouté: {get_display_node_name(node_data)}")
 
     def add_node_from_library(self, item):
@@ -3255,14 +3289,14 @@ class MainWindow(QMainWindow):
     def on_execution_order_changed(self):
         """Appelé quand l'ordre d'exécution change"""
         self.statusBar().showMessage("Ordre d'exécution mis à jour")
-        self.schedule_bat_preview_refresh()
+        self.update_preview_status()
 
     def on_workflow_mode_changed(self, checked):
         """Met à jour le mode d'exécution du workflow."""
         self.workflow_mode = "per_file" if checked else "single_flow"
         mode_label = "boucle par fichier" if checked else "flux unique"
         self.statusBar().showMessage(f"Mode du workflow: {mode_label}")
-        self.schedule_bat_preview_refresh()
+        self.mark_workflow_dirty()
 
     def on_script_type_changed(self, _index):
         """Met à jour le type de script exporté."""
@@ -3275,7 +3309,7 @@ class MainWindow(QMainWindow):
         mode_label = labels.get(self.script_type, self.script_type)
         self.statusBar().showMessage(f"Type de script: {mode_label}")
         self.update_preview_highlighter()
-        self.schedule_bat_preview_refresh()
+        self.mark_workflow_dirty()
 
     def update_preview_highlighter(self):
         """Active la coloration adaptée dans la prévisualisation."""
@@ -3302,9 +3336,9 @@ class MainWindow(QMainWindow):
         self.scene.addItem(input_node)
         self.scene.addItem(destination_node)
         self.scene.update_scene_bounds()
-        self.scene.update_execution_order()
         self.refresh_all_parameter_links()
         self.fit_workflow_in_view()
+        self.mark_workflow_dirty()
     
     def create_menus(self):
         """Crée les menus"""
@@ -3333,7 +3367,7 @@ class MainWindow(QMainWindow):
         edit_menu = menubar.addMenu("Édition")
         
         refresh_order = edit_menu.addAction("🔄 Recalculer l'ordre d'exécution")
-        refresh_order.triggered.connect(self.scene.update_execution_order)
+        refresh_order.triggered.connect(self.generate_workflow_preview)
         
         edit_menu.addSeparator()
 
@@ -3484,10 +3518,9 @@ class MainWindow(QMainWindow):
                     to_port.connections.append(connection)
         
         self.scene.update_scene_bounds()
-        self.scene.update_execution_order()
         self.fit_workflow_in_view()
         self.statusBar().showMessage(f"Workflow chargé: {filename}")
-        self.schedule_bat_preview_refresh()
+        self.mark_workflow_dirty()
     
     def configure_dependencies(self):
         """Configure les chemins des dépendances"""
@@ -4838,6 +4871,8 @@ class MainWindow(QMainWindow):
             preview_parts.append(bat_content)
             new_text = "\n".join(preview_parts)
             if self.preview_text.toPlainText() == new_text:
+                self.preview_dirty = False
+                self.update_preview_status()
                 return
 
             v_scroll = self.preview_text.verticalScrollBar().value()
@@ -4847,6 +4882,8 @@ class MainWindow(QMainWindow):
             self.preview_text.verticalScrollBar().setValue(v_scroll)
             self.preview_text.horizontalScrollBar().setValue(h_scroll)
             self.preview_text.setUpdatesEnabled(True)
+            self.preview_dirty = False
+            self.update_preview_status()
         except Exception as e:
             error_text = (
                 "Impossible de générer l'aperçu du script.\n\n"
@@ -4854,6 +4891,8 @@ class MainWindow(QMainWindow):
             )
             if self.preview_text.toPlainText() != error_text:
                 self.preview_text.setPlainText(error_text)
+            self.preview_dirty = True
+            self.update_preview_status()
     
     def export_to_bat(self):
         """Exporte le workflow en script Batch ou Bash selon le mode choisi."""
@@ -4871,6 +4910,8 @@ class MainWindow(QMainWindow):
             return
         
         try:
+            if self.preview_dirty:
+                self.generate_workflow_preview()
             bat_content, warnings = self._get_script_preview_content()
             if warnings:
                 QMessageBox.warning(self, "Attention", "\n".join(warnings))

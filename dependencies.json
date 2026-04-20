@@ -1,0 +1,97 @@
+{
+  "ffmpeg": {
+    "path": "ffmpeg",
+    "description": "Outil de manipulation audio/vidéo",
+    "version_arg": "-version"
+  },
+  "sox": {
+    "path": "C:/Users/Marc/AppData/Local/PortableTools/SoX/sox-14.4.2/sox.exe",
+    "description": "Swiss Army knife of audio",
+    "version_arg": "--version"
+  },
+  "magick": {
+    "path": "C:/Program Files/ImageMagick-7.1.2-Q16-HDRI/magick.exe",
+    "description": "ImageMagick - manipulation d'images",
+    "version_arg": "--version"
+  },
+  "yt-dlp": {
+    "path": "C:/Users/Marc/AppData/Local/PortableTools/yt-dlp/yt-dlp.exe",
+    "description": "Téléchargeur YouTube",
+    "version_arg": "--version"
+  },
+  "exiftool": {
+    "path": "C:/Logiciels/exiftool/exiftool.exe",
+    "description": "Manipulation de métadonnées",
+    "version_arg": "-ver"
+  },
+  "7z": {
+    "path": "7z",
+    "description": "Compression/décompression d'archives",
+    "version_arg": ""
+  },
+  "curl": {
+    "path": "curl",
+    "description": "Transfert de données URL",
+    "version_arg": "--version"
+  },
+  "pandoc": {
+    "path": "C:/ProgramData/chocolatey/bin/pandoc.exe",
+    "description": "Convertisseur de documents",
+    "version_arg": "--version"
+  },
+  "HandBrakeCLI": {
+    "path": "C:/ProgramData/chocolatey/bin/HandBrakeCLI.exe",
+    "description": "Encodeur vidéo",
+    "version_arg": "--version"
+  },
+  "lame": {
+    "path": "C:/Program Files/foobar2000/encoders/lame.exe",
+    "description": "Encodeur MP3",
+    "version_arg": "--version"
+  },
+  "flac": {
+    "path": "C:/Logiciels/flac-1.5.0-win/Win64/flac.exe",
+    "description": "Encodeur FLAC",
+    "version_arg": "--version"
+  },
+  "tesseract": {
+    "path": "tesseract",
+    "description": "OCR - reconnaissance de texte",
+    "version_arg": "--version"
+  },
+  "whisper": {
+    "path": "whisper",
+    "description": "Transcription audio OpenAI",
+    "version_arg": "--help"
+  },
+  "image_to_flac": {
+    "path": "C:/Logiciels/Python/dist/ImageToFLAC.exe",
+    "description": "",
+    "version_arg": ""
+  },
+  "ImageToFLAC": {
+    "path": "C:/Logiciels/Python/dist/ImageToFLAC.exe",
+    "description": "",
+    "version_arg": "-vers"
+  },
+  "Gris2Couleur": {
+    "path": "C:/Logiciels/Python/dist/Gris2Couleur.exe",
+    "description": "Gris2Couleur",
+    "version_arg": ""
+  },
+  "ImageToWAV": {
+    "path": "C:/Logiciels/Python/dist/ImageToWAV.exe",
+    "description": "",
+    "version_arg": "--version"
+  },
+  "Potrace": {
+    "path": "C:/Logiciels/potrace-1.16.win64/potrace.exe",
+    "description": "vectorisation vers svg",
+    "version_arg": "--version"
+  },
+  "Qalculate": {
+    "path": "C:/Program Files/Qalculate/qalc.exe",
+    "description": "Calculatrice en ligne de commande",
+    "version_arg": "--version"
+  }
+}

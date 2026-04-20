@@ -1,0 +1,6708 @@
+{
+  "Fichier Input": {
+    "name": "Fichier Input",
+    "display_name": "Fichier Input",
+    "category": "Fichier",
+    "subcategory": "Entrées / Sorties",
+    "command": "",
+    "description": "Point d'entrée dynamique - Le fichier sera passé en argument du BAT (utilise %1)",
+    "color": "#FFB6C1",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "",
+    "use_batch_vars": true,
+    "output_extension": "",
+    "output_extension_choices": [],
+    "verified": true
+  },
+  "Fichier Source": {
+    "name": "Fichier Source",
+    "display_name": "Fichier Source",
+    "category": "Fichier",
+    "subcategory": "Entrées / Sorties",
+    "command": "",
+    "description": "Point d'entrée avec chemin complet",
+    "color": "#FFB6C1",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Chemin fichier",
+        "type": "file",
+        "default": ""
+      }
+    ],
+    "template": "",
+    "output_extension": "",
+    "output_extension_choices": [],
+    "verified": true
+  },
+  "Fichier Destination": {
+    "name": "Fichier Destination",
+    "display_name": "Fichier Destination",
+    "category": "Fichier",
+    "subcategory": "Entrées / Sorties",
+    "command": "",
+    "description": "Point de sortie - Utilisez %INPUT_NAME% pour réutiliser le nom original",
+    "color": "#FFB6C1",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [],
+    "parameters": [
+      {
+        "name": "Nom fichier",
+        "type": "text",
+        "default": "%INPUT_NAME%"
+      },
+      {
+        "name": "Extension",
+        "type": "text",
+        "default": ".mp4"
+      },
+      {
+        "name": "Dossier de sortie",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "",
+    "output_extension": "",
+    "output_extension_choices": [],
+    "verified": true
+  },
+  "FFmpeg - Ajouter Audio à Vidéo": {
+    "name": "FFmpeg - Ajouter Audio à Vidéo",
+    "display_name": "Ajouter Audio à Vidéo",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Remplace l'audio d'une vidéo",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -i {input2} -c:v copy -map 0:v:0 -map 1:a:0 {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir AAC": {
+    "name": "FFmpeg - Convertir AAC",
+    "display_name": "Convertir AAC",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Convertit un fichier audio en AAC",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "bitrate",
+        "type": "choice",
+        "default": "192k",
+        "choices": [
+          "96k",
+          "128k",
+          "192k",
+          "256k",
+          "320k"
+        ]
+      },
+      {
+        "name": "sample_rate",
+        "type": "choice",
+        "default": "44100",
+        "choices": [
+          "22050",
+          "44100",
+          "48000",
+          "96000"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:a aac -b:a {bitrate} -ar {sample_rate} {output}",
+    "output_extension": ".aac",
+    "output_extension_choices": [
+      ".aac",
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir Audio": {
+    "name": "FFmpeg - Convertir Audio",
+    "display_name": "Convertir Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Convertit un fichier audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "codec",
+        "type": "choice",
+        "default": "libmp3lame",
+        "choices": [
+          "libmp3lame",
+          "aac",
+          "flac",
+          "libopus",
+          "pcm_s16le"
+        ]
+      },
+      {
+        "name": "bitrate",
+        "type": "choice",
+        "default": "192k",
+        "choices": [
+          "128k",
+          "192k",
+          "256k",
+          "320k"
+        ]
+      },
+      {
+        "name": "sample_rate",
+        "type": "choice",
+        "default": "44100",
+        "choices": [
+          "22050",
+          "44100",
+          "48000",
+          "96000"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:a {codec} -b:a {bitrate} -ar {sample_rate} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Extraire Audio": {
+    "name": "FFmpeg - Extraire Audio",
+    "display_name": "Extraire Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Extrait l'audio d'une vidéo",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "codec",
+        "type": "choice",
+        "default": "libmp3lame",
+        "choices": [
+          "libmp3lame",
+          "aac",
+          "flac",
+          "pcm_s16le",
+          "libopus"
+        ]
+      },
+      {
+        "name": "bitrate",
+        "type": "choice",
+        "default": "192k",
+        "choices": [
+          "128k",
+          "192k",
+          "256k",
+          "320k"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vn -c:a {codec} -b:a {bitrate} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Extraire Audio WAV": {
+    "name": "FFmpeg - Extraire Audio WAV",
+    "display_name": "Extraire Audio WAV",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Extrait l'audio en WAV PCM",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "sample_rate",
+        "type": "choice",
+        "default": "48000",
+        "choices": [
+          "22050",
+          "44100",
+          "48000",
+          "96000"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vn -c:a pcm_s16le -ar {sample_rate} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".flac",
+      ".mp3",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - FLAC vers MP3": {
+    "name": "FFmpeg - FLAC vers MP3",
+    "display_name": "FLAC vers MP3",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Convertit FLAC en MP3 haute qualité",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "choice",
+        "default": "0",
+        "choices": [
+          "0 (Best ~245kbps)",
+          "1 (~225kbps)",
+          "2 (~190kbps)",
+          "3 (~175kbps)",
+          "4 (~165kbps)"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:a libmp3lame -q:a {quality} {output}",
+    "output_extension": ".mp3",
+    "output_extension_choices": [
+      ".mp3",
+      ".wav",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Highpass Filter": {
+    "name": "FFmpeg - Highpass Filter",
+    "display_name": "Highpass Filter",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Filtre passe-haut audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "frequency",
+        "type": "number",
+        "default": "200"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -af \"highpass=f={frequency}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Lowpass Filter": {
+    "name": "FFmpeg - Lowpass Filter",
+    "display_name": "Lowpass Filter",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Filtre passe-bas audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "frequency",
+        "type": "number",
+        "default": "3000"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -af \"lowpass=f={frequency}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Noise Reduction Audio": {
+    "name": "FFmpeg - Noise Reduction Audio",
+    "display_name": "Noise Reduction Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Réduit le bruit de fond audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "noise_reduction",
+        "type": "text",
+        "default": "0.21"
+      },
+      {
+        "name": "noise_floor",
+        "type": "text",
+        "default": "-25"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -af \"afftdn=nf={noise_floor}:nr={noise_reduction}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Normaliser Audio": {
+    "name": "FFmpeg - Normaliser Audio",
+    "display_name": "Normaliser Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Normalise le volume audio avec loudnorm",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "target_lufs",
+        "type": "number",
+        "default": "-16"
+      },
+      {
+        "name": "target_tp",
+        "type": "number",
+        "default": "-1"
+      },
+      {
+        "name": "target_lra",
+        "type": "number",
+        "default": "11"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -af \"loudnorm=I={target_lufs}:TP={target_tp}:LRA={target_lra}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Onde Audio": {
+    "name": "FFmpeg - Onde Audio",
+    "display_name": "Onde Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "description": "Génère une image de forme d'onde audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x320"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "DodgerBlue"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -filter_complex \"showwavespic=s={size}:colors={color}\" -frames:v 1 {output}",
+    "verified": false
+  },
+  "FFmpeg - Réduire Volume": {
+    "name": "FFmpeg - Réduire Volume",
+    "display_name": "Réduire Volume",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Ajuste le volume audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "volume",
+        "type": "text",
+        "default": "0.5"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -af \"volume={volume}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Spectre Audio Vidéo": {
+    "name": "FFmpeg - Spectre Audio Vidéo",
+    "display_name": "Spectre Audio Vidéo",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Crée une vidéo de spectre audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x720"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "rainbow"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -filter_complex \"[0:a]showspectrum=s={size}:mode=combined:color=viridis:scale=log:slide=scroll[spec]; color=black:s={size}[bg]; [bg][spec]overlay=x=(W-w)/2:y=0[v]\" -map \"[v]\" -map 0:a -c:v libx264 -c:a aac -pix_fmt yuv420p -r 30 -shortest {output}",
+    "verified": false
+  },
+  "FFmpeg - Supprimer Audio": {
+    "name": "FFmpeg - Supprimer Audio",
+    "display_name": "Supprimer Audio",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Supprime la piste audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -an -c:v copy {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - WAV vers FLAC": {
+    "name": "FFmpeg - WAV vers FLAC",
+    "display_name": "WAV vers FLAC",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "description": "Convertit WAV en FLAC lossless",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "compression",
+        "type": "choice",
+        "default": "5",
+        "choices": [
+          "0 (Fast)",
+          "5 (Default)",
+          "8 (Best)"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:a flac -compression_level {compression} {output}",
+    "output_extension": ".flac",
+    "output_extension_choices": [
+      ".flac",
+      ".wav",
+      ".mp3",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Créer GIF": {
+    "name": "FFmpeg - Créer GIF",
+    "display_name": "Créer GIF",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "description": "Convertit une vidéo en GIF",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fps",
+        "type": "number",
+        "default": "10"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "480"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"fps={fps},scale={width}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Extraire Images": {
+    "name": "FFmpeg - Extraire Images",
+    "display_name": "Extraire Images",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "description": "Extrait des frames en images",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fps",
+        "type": "number",
+        "default": "1"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"fps={fps}\" {output}_%04d.png",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Extraire Miniature": {
+    "name": "FFmpeg - Extraire Miniature",
+    "display_name": "Extraire Miniature",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "description": "Extrait une frame en image miniature",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "timestamp",
+        "type": "text",
+        "default": "00:00:01"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "640"
+      }
+    ],
+    "template": "ffmpeg -y -ss {timestamp} -i {input} -vframes 1 -vf \"scale={width}:-1\" {output}",
+    "output_extension": ".jpg",
+    "output_extension_choices": [
+      ".jpg",
+      ".png",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Images vers Vidéo": {
+    "name": "FFmpeg - Images vers Vidéo",
+    "display_name": "Images vers Vidéo",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "description": "Crée une vidéo à partir d'images",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fps",
+        "type": "number",
+        "default": "24"
+      },
+      {
+        "name": "pattern",
+        "type": "text",
+        "default": "img_%04d.png"
+      }
+    ],
+    "template": "ffmpeg -y -framerate {fps} -i \"{pattern}\" -c:v libx264 -pix_fmt yuv420p {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Concaténer Vidéos": {
+    "name": "FFmpeg - Concaténer Vidéos",
+    "display_name": "Concaténer Vidéos",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Assemble plusieurs vidéos",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "liste",
+        "type": "file",
+        "default": "liste.txt"
+      }
+    ],
+    "template": "ffmpeg -y -f concat -safe 0 -i \"{liste}\" -c copy {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Empiler Vidéos Horizontalement": {
+    "name": "FFmpeg - Empiler Vidéos Horizontalement",
+    "display_name": "Empiler vidéos horizontalement",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Place deux vidéos côte à côte.",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -i {input2} -filter_complex \"hstack=inputs=2\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Empiler Vidéos Verticalement": {
+    "name": "FFmpeg - Empiler Vidéos Verticalement",
+    "display_name": "Empiler vidéos verticalement",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Place deux vidéos l’une au-dessus de l’autre.",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -i {input2} -filter_complex \"vstack=inputs=2\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Fusionner Sous-titres": {
+    "name": "FFmpeg - Fusionner Sous-titres",
+    "display_name": "Fusionner Sous-titres",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Incruste un fichier SRT dans la vidéo",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "subtitle_file",
+        "type": "file",
+        "default": ""
+      },
+      {
+        "name": "font_size",
+        "type": "number",
+        "default": "22"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"subtitles={subtitle_file}:force_style=FontSize={font_size}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Mixer Deux Audios": {
+    "name": "FFmpeg - Mixer Deux Audios",
+    "display_name": "Mixer deux audios",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Mixe deux sources audio en une seule sortie.",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "duration",
+        "type": "choice",
+        "default": "longest",
+        "choices": [
+          "longest",
+          "shortest",
+          "first"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -i {input2} -filter_complex \"amix=inputs=2:duration={duration}\" {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Superposer Image sur Vidéo": {
+    "name": "FFmpeg - Superposer Image sur Vidéo",
+    "display_name": "Superposer image sur vidéo",
+    "category": "FFmpeg",
+    "subcategory": "Multi-Source",
+    "command": "ffmpeg",
+    "description": "Superpose une image ou un logo sur une vidéo.",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "position",
+        "type": "choice",
+        "default": "10:10",
+        "choices": [
+          "10:10",
+          "main_w-overlay_w-10:10",
+          "10:main_h-overlay_h-10",
+          "main_w-overlay_w-10:main_h-overlay_h-10"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -i {input2} -filter_complex \"overlay={position}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Accélérer/Ralentir": {
+    "name": "FFmpeg - Accélérer/Ralentir",
+    "display_name": "Accélérer/Ralentir",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Change la vitesse de lecture",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "speed",
+        "type": "choice",
+        "default": "1.0",
+        "choices": [
+          "0.25",
+          "0.5",
+          "0.75",
+          "1.0",
+          "1.25",
+          "1.5",
+          "2.0",
+          "4.0"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -filter_complex \"[0:v]setpts=PTS/{speed}[v];[0:a]atempo={speed}[a]\" -map \"[v]\" -map \"[a]\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Ajouter Filigrane": {
+    "name": "FFmpeg - Ajouter Filigrane",
+    "display_name": "Ajouter Filigrane",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Ajoute une image en filigrane",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "watermark",
+        "type": "file",
+        "default": ""
+      },
+      {
+        "name": "position",
+        "type": "choice",
+        "default": "10:10",
+        "choices": [
+          "10:10",
+          "main_w-overlay_w-10:10",
+          "10:main_h-overlay_h-10",
+          "main_w-overlay_w-10:main_h-overlay_h-10"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -i \"{watermark}\" -filter_complex \"overlay={position}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Ajouter Texte": {
+    "name": "FFmpeg - Ajouter Texte",
+    "display_name": "Ajouter Texte",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Ajoute du texte sur la vidéo",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "text",
+        "type": "text",
+        "default": "Mon texte"
+      },
+      {
+        "name": "fontsize",
+        "type": "number",
+        "default": "24"
+      },
+      {
+        "name": "fontcolor",
+        "type": "text",
+        "default": "white"
+      },
+      {
+        "name": "x",
+        "type": "text",
+        "default": "10"
+      },
+      {
+        "name": "y",
+        "type": "text",
+        "default": "10"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"drawtext=text='{text}':fontsize={fontsize}:fontcolor={fontcolor}:x={x}:y={y}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Ajuster Luminosité/Contraste": {
+    "name": "FFmpeg - Ajuster Luminosité/Contraste",
+    "display_name": "Ajuster Luminosité/Contraste",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Ajuste luminosité et contraste",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "brightness",
+        "type": "text",
+        "default": "0.0"
+      },
+      {
+        "name": "contrast",
+        "type": "text",
+        "default": "1.0"
+      },
+      {
+        "name": "saturation",
+        "type": "text",
+        "default": "1.0"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"eq=brightness={brightness}:contrast={contrast}:saturation={saturation}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Changer FPS": {
+    "name": "FFmpeg - Changer FPS",
+    "display_name": "Changer FPS",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Change le framerate",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fps",
+        "type": "choice",
+        "default": "30",
+        "choices": [
+          "24",
+          "25",
+          "30",
+          "50",
+          "60"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -filter:v \"fps={fps}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir AV1": {
+    "name": "FFmpeg - Convertir AV1",
+    "display_name": "Convertir AV1",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en AV1 (très lent mais efficient)",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "crf",
+        "type": "number",
+        "default": "30"
+      },
+      {
+        "name": "preset",
+        "type": "choice",
+        "default": "6",
+        "choices": [
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v libaom-av1 -crf {crf} -cpu-used {preset} -c:a libopus {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir MKV": {
+    "name": "FFmpeg - Convertir MKV",
+    "display_name": "Convertir MKV",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en MKV H.264/AAC",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "preset",
+        "type": "choice",
+        "default": "medium",
+        "choices": [
+          "ultrafast",
+          "fast",
+          "medium",
+          "slow",
+          "veryslow"
+        ]
+      },
+      {
+        "name": "crf",
+        "type": "number",
+        "default": "23"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v libx264 -preset {preset} -crf {crf} -c:a aac {output}",
+    "output_extension": ".mkv",
+    "output_extension_choices": [
+      ".mkv",
+      ".mp4",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir MOV": {
+    "name": "FFmpeg - Convertir MOV",
+    "display_name": "Convertir MOV",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en MOV H.264/AAC",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "preset",
+        "type": "choice",
+        "default": "medium",
+        "choices": [
+          "ultrafast",
+          "fast",
+          "medium",
+          "slow",
+          "veryslow"
+        ]
+      },
+      {
+        "name": "crf",
+        "type": "number",
+        "default": "20"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v libx264 -preset {preset} -crf {crf} -c:a aac {output}",
+    "output_extension": ".mov",
+    "output_extension_choices": [
+      ".mov",
+      ".mp4",
+      ".mkv",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir MP4": {
+    "name": "FFmpeg - Convertir MP4",
+    "display_name": "Convertir MP4",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en MP4 H.264",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "codec",
+        "type": "choice",
+        "default": "libx264",
+        "choices": [
+          "libx264",
+          "libx265",
+          "mpeg4",
+          "copy"
+        ]
+      },
+      {
+        "name": "preset",
+        "type": "choice",
+        "default": "medium",
+        "choices": [
+          "ultrafast",
+          "fast",
+          "medium",
+          "slow",
+          "veryslow"
+        ]
+      },
+      {
+        "name": "crf",
+        "type": "number",
+        "default": "23"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v {codec} -preset {preset} -crf {crf} {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir ProRes": {
+    "name": "FFmpeg - Convertir ProRes",
+    "display_name": "Convertir ProRes",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en Apple ProRes",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "profile",
+        "type": "choice",
+        "default": "2",
+        "choices": [
+          "0 (Proxy)",
+          "1 (LT)",
+          "2 (Standard)",
+          "3 (HQ)",
+          "4 (4444)"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v prores_ks -profile:v {profile} -c:a pcm_s16le {output}",
+    "output_extension": ".mov",
+    "output_extension_choices": [
+      ".mov",
+      ".mp4",
+      ".mkv",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Convertir WebM": {
+    "name": "FFmpeg - Convertir WebM",
+    "display_name": "Convertir WebM",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en WebM VP9",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "crf",
+        "type": "number",
+        "default": "30"
+      },
+      {
+        "name": "cpu-used",
+        "type": "choice",
+        "default": "2",
+        "choices": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -c:v libvpx-vp9 -crf {crf} -b:v 0 -cpu-used {cpu-used} -c:a libopus {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Couper": {
+    "name": "FFmpeg - Couper",
+    "display_name": "Couper",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Découpe une portion de média",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "start",
+        "type": "text",
+        "default": "00:00:00"
+      },
+      {
+        "name": "end",
+        "type": "text",
+        "default": "00:01:00"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -ss {start} -to {end} -c copy {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Couper (réencode)": {
+    "name": "FFmpeg - Couper (réencode)",
+    "display_name": "Couper (réencode)",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Découpe avec réencodage (plus précis)",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "start",
+        "type": "text",
+        "default": "00:00:00"
+      },
+      {
+        "name": "duration",
+        "type": "text",
+        "default": "00:01:00"
+      }
+    ],
+    "template": "ffmpeg -y -ss {start} -i {input} -t {duration} -c:v libx264 -c:a aac {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Désentrelacer": {
+    "name": "FFmpeg - Désentrelacer",
+    "display_name": "Désentrelacer",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit entrelacé en progressif",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "mode",
+        "type": "choice",
+        "default": "yadif",
+        "choices": [
+          "yadif",
+          "bwdif",
+          "w3fdif"
+        ]
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"{mode}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Miroir Horizontal": {
+    "name": "FFmpeg - Miroir Horizontal",
+    "display_name": "Miroir Horizontal",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Effet miroir horizontal",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -vf \"hflip\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Miroir Vertical": {
+    "name": "FFmpeg - Miroir Vertical",
+    "display_name": "Miroir Vertical",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Effet miroir vertical",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -vf \"vflip\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Noir et Blanc": {
+    "name": "FFmpeg - Noir et Blanc",
+    "display_name": "Noir et Blanc",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Convertit en niveaux de gris",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -vf \"colorchannelmixer=.3:.4:.3:0:.3:.4:.3:0:.3:.4:.3\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Normaliser EBU R128": {
+    "name": "FFmpeg - Normaliser EBU R128",
+    "display_name": "Normaliser EBU R128",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Normalisation broadcast EBU R128",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -af \"loudnorm=I=-23:TP=-1:LRA=7\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Redimensionner": {
+    "name": "FFmpeg - Redimensionner",
+    "display_name": "Redimensionner",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Change la résolution vidéo",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "width",
+        "type": "number",
+        "default": "1920"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "1080"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf scale={width}:{height} {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Redimensionner (ratio)": {
+    "name": "FFmpeg - Redimensionner (ratio)",
+    "display_name": "Redimensionner (ratio)",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Redimensionne en conservant le ratio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "width",
+        "type": "number",
+        "default": "1280"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"scale={width}:-2\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Rogner Vidéo": {
+    "name": "FFmpeg - Rogner Vidéo",
+    "display_name": "Rogner Vidéo",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Rogne la vidéo avec un filtre crop",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "width",
+        "type": "number",
+        "default": "1280"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "720"
+      },
+      {
+        "name": "x",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"crop={width}:{height}:{x}:{y}\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Rotation 180°": {
+    "name": "FFmpeg - Rotation 180°",
+    "display_name": "Rotation 180°",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Tourne la vidéo de 180°",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -vf \"transpose=2,transpose=2\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Rotation 90°": {
+    "name": "FFmpeg - Rotation 90°",
+    "display_name": "Rotation 90°",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Tourne la vidéo de 90° horaire",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffmpeg -y -i {input} -vf \"transpose=1\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Stabilisation": {
+    "name": "FFmpeg - Stabilisation",
+    "display_name": "Stabilisation",
+    "category": "FFmpeg",
+    "subcategory": "Vidéo",
+    "command": "ffmpeg",
+    "description": "Stabilise une vidéo tremblante (2 passes)",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "shakiness",
+        "type": "number",
+        "default": "5"
+      },
+      {
+        "name": "smoothing",
+        "type": "number",
+        "default": "10"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -vf \"vidstabdetect=shakiness={shakiness}:result=transforms.trf\" -f null - && ffmpeg -y -i {input} -vf \"vidstabtransform=smoothing={smoothing}:input=transforms.trf,unsharp=5:5:0.8:3:3:0.4\" {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "SoX - Convertir": {
+    "name": "SoX - Convertir",
+    "display_name": "Convertir",
+    "category": "SoX",
+    "subcategory": "Conversion",
+    "command": "sox",
+    "description": "Convertit le format audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "sample_rate",
+        "type": "choice",
+        "default": "44100",
+        "choices": [
+          "22050",
+          "44100",
+          "48000",
+          "96000"
+        ]
+      },
+      {
+        "name": "bits",
+        "type": "choice",
+        "default": "16",
+        "choices": [
+          "8",
+          "16",
+          "24",
+          "32"
+        ]
+      }
+    ],
+    "template": "sox {input} -r {sample_rate} -b {bits} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Mono vers Stereo": {
+    "name": "SoX - Mono vers Stereo",
+    "display_name": "Mono vers Stereo",
+    "category": "SoX",
+    "subcategory": "Conversion",
+    "command": "sox",
+    "description": "Duplique mono en stéréo",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox {input} {output} channels 2",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Stereo vers Mono": {
+    "name": "SoX - Stereo vers Mono",
+    "display_name": "Stereo vers Mono",
+    "category": "SoX",
+    "subcategory": "Conversion",
+    "command": "sox",
+    "description": "Convertit stéréo en mono",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox {input} {output} channels 1",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Bass Boost": {
+    "name": "SoX - Bass Boost",
+    "display_name": "Bass Boost",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Augmente les basses fréquences",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "gain_db",
+        "type": "number",
+        "default": "5"
+      },
+      {
+        "name": "frequency",
+        "type": "number",
+        "default": "100"
+      }
+    ],
+    "template": "sox {input} {output} bass {gain_db} {frequency}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Chorus": {
+    "name": "SoX - Chorus",
+    "display_name": "Chorus",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Effet de chorus",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "gain_in",
+        "type": "text",
+        "default": "0.7"
+      },
+      {
+        "name": "gain_out",
+        "type": "text",
+        "default": "0.9"
+      },
+      {
+        "name": "delay",
+        "type": "number",
+        "default": "55"
+      },
+      {
+        "name": "decay",
+        "type": "text",
+        "default": "0.4"
+      },
+      {
+        "name": "speed",
+        "type": "text",
+        "default": "0.25"
+      },
+      {
+        "name": "depth",
+        "type": "number",
+        "default": "2"
+      }
+    ],
+    "template": "sox {input} {output} chorus {gain_in} {gain_out} {delay} {decay} {speed} -t",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Compressor": {
+    "name": "SoX - Compressor",
+    "display_name": "Compressor",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Compresse la dynamique audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "attack",
+        "type": "text",
+        "default": "0.3"
+      },
+      {
+        "name": "decay",
+        "type": "text",
+        "default": "0.8"
+      }
+    ],
+    "template": "sox {input} {output} compand {attack},{decay} 6:-70,-60,-20 -5 -90 0.2",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Echo": {
+    "name": "SoX - Echo",
+    "display_name": "Echo",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Ajoute un effet d'écho",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "gain_in",
+        "type": "text",
+        "default": "0.8"
+      },
+      {
+        "name": "gain_out",
+        "type": "text",
+        "default": "0.88"
+      },
+      {
+        "name": "delay",
+        "type": "number",
+        "default": "60"
+      },
+      {
+        "name": "decay",
+        "type": "text",
+        "default": "0.4"
+      }
+    ],
+    "template": "sox {input} {output} echo {gain_in} {gain_out} {delay} {decay}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Fade In": {
+    "name": "SoX - Fade In",
+    "display_name": "Fade In",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Fade in progressif",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "duration",
+        "type": "number",
+        "default": "3"
+      },
+      {
+        "name": "type",
+        "type": "choice",
+        "default": "t",
+        "choices": [
+          "t (linear)",
+          "q (quarter sine)",
+          "h (half sine)",
+          "l (logarithmic)",
+          "p (parabolic)"
+        ]
+      }
+    ],
+    "template": "sox {input} {output} fade {type} {duration}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Fade Out": {
+    "name": "SoX - Fade Out",
+    "display_name": "Fade Out",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Fade out progressif",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "stop_time",
+        "type": "text",
+        "default": "0"
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "default": "3"
+      }
+    ],
+    "template": "sox {input} {output} fade 0 {stop_time} {duration}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Flanger": {
+    "name": "SoX - Flanger",
+    "display_name": "Flanger",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Effet de flanger",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox {input} {output} flanger",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Noise Gate": {
+    "name": "SoX - Noise Gate",
+    "display_name": "Noise Gate",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Gate de bruit",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "threshold_db",
+        "type": "number",
+        "default": "-40"
+      }
+    ],
+    "template": "sox {input} {output} compand 0.1,0.2 -{threshold_db},-inf,{threshold_db},{threshold_db} 0 0 0.1",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Normaliser": {
+    "name": "SoX - Normaliser",
+    "display_name": "Normaliser",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Normalise le volume audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "level",
+        "type": "number",
+        "default": "-3"
+      }
+    ],
+    "template": "sox {input} {output} norm {level}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Phaser": {
+    "name": "SoX - Phaser",
+    "display_name": "Phaser",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Effet de phaser",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "gain_in",
+        "type": "text",
+        "default": "0.9"
+      },
+      {
+        "name": "gain_out",
+        "type": "text",
+        "default": "0.8"
+      },
+      {
+        "name": "delay",
+        "type": "number",
+        "default": "1"
+      },
+      {
+        "name": "decay",
+        "type": "text",
+        "default": "0.25"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "2"
+      }
+    ],
+    "template": "sox {input} {output} phaser {gain_in} {gain_out} {delay} {decay} {speed}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Pitch Shift": {
+    "name": "SoX - Pitch Shift",
+    "display_name": "Pitch Shift",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Change la hauteur tonale",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "cents",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "template": "sox {input} {output} pitch {cents}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Reverb": {
+    "name": "SoX - Reverb",
+    "display_name": "Reverb",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Ajoute de la réverbération",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "reverberance",
+        "type": "number",
+        "default": "50"
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "50"
+      },
+      {
+        "name": "room_scale",
+        "type": "number",
+        "default": "100"
+      }
+    ],
+    "template": "sox {input} {output} reverb {reverberance} {damping} {room_scale}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Reverse": {
+    "name": "SoX - Reverse",
+    "display_name": "Reverse",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Inverse l'audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox {input} {output} reverse",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Silence Remove": {
+    "name": "SoX - Silence Remove",
+    "display_name": "Silence Remove",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Supprime les silences",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "threshold",
+        "type": "text",
+        "default": "1%"
+      }
+    ],
+    "template": "sox {input} {output} silence 1 0.1 {threshold} 1 0.1 {threshold}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Speed": {
+    "name": "SoX - Speed",
+    "display_name": "Speed",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Change vitesse et tonalité proportionnellement",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "factor",
+        "type": "text",
+        "default": "1.0"
+      }
+    ],
+    "template": "sox {input} {output} speed {factor}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Tempo (sans pitch)": {
+    "name": "SoX - Tempo (sans pitch)",
+    "display_name": "Tempo (sans pitch)",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Change la vitesse sans modifier la tonalité",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "factor",
+        "type": "text",
+        "default": "1.0"
+      }
+    ],
+    "template": "sox {input} {output} tempo {factor}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Treble Boost": {
+    "name": "SoX - Treble Boost",
+    "display_name": "Treble Boost",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Augmente les hautes fréquences",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "gain_db",
+        "type": "number",
+        "default": "5"
+      },
+      {
+        "name": "frequency",
+        "type": "number",
+        "default": "3000"
+      }
+    ],
+    "template": "sox {input} {output} treble {gain_db} {frequency}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Trim/Couper": {
+    "name": "SoX - Trim/Couper",
+    "display_name": "Trim/Couper",
+    "category": "SoX",
+    "subcategory": "Effets",
+    "command": "sox",
+    "description": "Extrait une portion audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "start",
+        "type": "text",
+        "default": "0"
+      },
+      {
+        "name": "duration",
+        "type": "text",
+        "default": "30"
+      }
+    ],
+    "template": "sox {input} {output} trim {start} {duration}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Concatenate": {
+    "name": "SoX - Concatenate",
+    "display_name": "Concatenate",
+    "category": "SoX",
+    "subcategory": "Multi-Source",
+    "command": "sox",
+    "description": "Concatène plusieurs fichiers audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox {input} {input2} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "SoX - Mix": {
+    "name": "SoX - Mix",
+    "display_name": "Mix",
+    "category": "SoX",
+    "subcategory": "Multi-Source",
+    "command": "sox",
+    "description": "Mixe plusieurs pistes audio",
+    "color": "#4ECDC4",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "sox -m {input} {input2} {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Ajouter Fond": {
+    "name": "ImageMagick - Ajouter Fond",
+    "display_name": "Ajouter Fond",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "description": "Ajoute un fond coloré derrière une image transparente",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "background",
+        "type": "text",
+        "default": "white"
+      }
+    ],
+    "template": "magick {input} -background {background} -alpha remove -alpha off {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Ajouter Texte": {
+    "name": "ImageMagick - Ajouter Texte",
+    "display_name": "Ajouter Texte",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "description": "Ajoute du texte sur l'image",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "text",
+        "type": "text",
+        "default": "Mon texte"
+      },
+      {
+        "name": "pointsize",
+        "type": "number",
+        "default": "48"
+      },
+      {
+        "name": "fill",
+        "type": "text",
+        "default": "white"
+      },
+      {
+        "name": "gravity",
+        "type": "choice",
+        "default": "south",
+        "choices": [
+          "north",
+          "south",
+          "east",
+          "west",
+          "center",
+          "northwest",
+          "northeast",
+          "southwest",
+          "southeast"
+        ]
+      }
+    ],
+    "template": "magick {input} -gravity {gravity} -pointsize {pointsize} -fill {fill} -annotate +0+10 \"{text}\" {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Filigrane": {
+    "name": "ImageMagick - Filigrane",
+    "display_name": "Filigrane",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "description": "Ajoute un filigrane image",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "watermark",
+        "type": "file",
+        "default": ""
+      },
+      {
+        "name": "gravity",
+        "type": "choice",
+        "default": "southeast",
+        "choices": [
+          "north",
+          "south",
+          "east",
+          "west",
+          "center",
+          "northwest",
+          "northeast",
+          "southwest",
+          "southeast"
+        ]
+      },
+      {
+        "name": "dissolve",
+        "type": "number",
+        "default": "25"
+      }
+    ],
+    "template": "magick composite -dissolve {dissolve} -gravity {gravity} \"{watermark}\" {input} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Fond Transparent": {
+    "name": "ImageMagick - Fond Transparent",
+    "display_name": "Fond Transparent",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "description": "Rend une couleur transparente",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "color",
+        "type": "text",
+        "default": "white"
+      },
+      {
+        "name": "fuzz",
+        "type": "text",
+        "default": "10%"
+      }
+    ],
+    "template": "magick {input} -fuzz {fuzz} -transparent {color} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Compresser PNG": {
+    "name": "ImageMagick - Compresser PNG",
+    "display_name": "Compresser PNG",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "description": "Réencode un PNG avec un niveau de compression défini",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "level",
+        "type": "choice",
+        "default": "9",
+        "choices": [
+          "1",
+          "3",
+          "6",
+          "9"
+        ]
+      }
+    ],
+    "template": "magick {input} -define png:compression-level={level} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".webp",
+      ".jpg"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Convertir": {
+    "name": "ImageMagick - Convertir",
+    "display_name": "Convertir",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "description": "Convertit le format d'image",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "number",
+        "default": "85"
+      }
+    ],
+    "template": "magick {input} -quality {quality} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Convertir WebP": {
+    "name": "ImageMagick - Convertir WebP",
+    "display_name": "Convertir WebP",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "description": "Convertit une image en WebP",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "number",
+        "default": "82"
+      }
+    ],
+    "template": "magick {input} -quality {quality} {output}",
+    "output_extension": ".webp",
+    "output_extension_choices": [
+      ".webp",
+      ".png",
+      ".jpg",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - PNG vers ICO": {
+    "name": "ImageMagick - PNG vers ICO",
+    "display_name": "PNG vers ICO",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "description": "Convertit une image en icône Windows",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "sizes",
+        "type": "text",
+        "default": "256,128,64,48,32,16"
+      }
+    ],
+    "template": "magick {input} -define icon:auto-resize={sizes} {output}",
+    "output_extension": ".ico",
+    "output_extension_choices": [
+      ".ico",
+      ".png",
+      ".webp",
+      ".jpg"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Qualité JPEG": {
+    "name": "ImageMagick - Qualité JPEG",
+    "display_name": "Qualité JPEG",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "description": "Réencode un JPEG avec une qualité définie",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "number",
+        "default": "85"
+      }
+    ],
+    "template": "magick {input} -quality {quality} {output}",
+    "output_extension": ".jpg",
+    "output_extension_choices": [
+      ".jpg",
+      ".png",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Ajuster Luminosité": {
+    "name": "ImageMagick - Ajuster Luminosité",
+    "display_name": "Ajuster Luminosité",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Ajuste la luminosité",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "brightness",
+        "type": "number",
+        "default": "100"
+      },
+      {
+        "name": "saturation",
+        "type": "number",
+        "default": "100"
+      }
+    ],
+    "template": "magick {input} -modulate {brightness},{saturation} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Auto-Crop": {
+    "name": "ImageMagick - Auto-Crop",
+    "display_name": "Auto-Crop",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Supprime automatiquement les bordures",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fuzz",
+        "type": "number",
+        "default": "10"
+      }
+    ],
+    "template": "magick {input} -fuzz {fuzz}% -trim +repage {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Auto-Level": {
+    "name": "ImageMagick - Auto-Level",
+    "display_name": "Auto-Level",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Ajustement automatique des niveaux",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} -auto-level {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Bordure": {
+    "name": "ImageMagick - Bordure",
+    "display_name": "Bordure",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Ajoute une bordure",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "number",
+        "default": "10"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "black"
+      }
+    ],
+    "template": "magick {input} -bordercolor {color} -border {size} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Charcoal": {
+    "name": "ImageMagick - Charcoal",
+    "display_name": "Charcoal",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet dessin au charbon",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "1"
+      }
+    ],
+    "template": "magick {input} -charcoal {radius} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Crop": {
+    "name": "ImageMagick - Crop",
+    "display_name": "Crop",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Recadre l'image",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "width",
+        "type": "number",
+        "default": "800"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "600"
+      },
+      {
+        "name": "x",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "template": "magick {input} -crop {width}x{height}+{x}+{y} +repage {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Edge Detection": {
+    "name": "ImageMagick - Edge Detection",
+    "display_name": "Edge Detection",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Détection des contours",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "1"
+      }
+    ],
+    "template": "magick {input} -edge {radius} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Emboss": {
+    "name": "ImageMagick - Emboss",
+    "display_name": "Emboss",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet relief/embossage",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "1"
+      }
+    ],
+    "template": "magick {input} -emboss {radius}x{sigma} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Enhance": {
+    "name": "ImageMagick - Enhance",
+    "display_name": "Enhance",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Amélioration automatique",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} -enhance {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Flou": {
+    "name": "ImageMagick - Flou",
+    "display_name": "Flou",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Applique un flou gaussien",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "8"
+      }
+    ],
+    "template": "magick {input} -blur {radius}x{sigma} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Noir et Blanc": {
+    "name": "ImageMagick - Noir et Blanc",
+    "display_name": "Noir et Blanc",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Convertit en niveaux de gris",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} -colorspace Gray {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Normalize": {
+    "name": "ImageMagick - Normalize",
+    "display_name": "Normalize",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Normalise les niveaux",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} -normalize {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Négatif": {
+    "name": "ImageMagick - Négatif",
+    "display_name": "Négatif",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Inverse les couleurs",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} -negate {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Oil Paint": {
+    "name": "ImageMagick - Oil Paint",
+    "display_name": "Oil Paint",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet peinture à l'huile",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "3"
+      }
+    ],
+    "template": "magick {input} -paint {radius} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Ombre portée": {
+    "name": "ImageMagick - Ombre portée",
+    "display_name": "Ombre portée",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Ajoute une ombre portée",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "60"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "4"
+      },
+      {
+        "name": "x_offset",
+        "type": "number",
+        "default": "4"
+      },
+      {
+        "name": "y_offset",
+        "type": "number",
+        "default": "4"
+      }
+    ],
+    "template": "magick {input} \\( +clone -background black -shadow {opacity}x{sigma}+{x_offset}+{y_offset} \\) +swap -background none -layers merge +repage {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Posterize": {
+    "name": "ImageMagick - Posterize",
+    "display_name": "Posterize",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet poster/affiche",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "levels",
+        "type": "number",
+        "default": "4"
+      }
+    ],
+    "template": "magick {input} -posterize {levels} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Redimensionner (%)": {
+    "name": "ImageMagick - Redimensionner (%)",
+    "display_name": "Redimensionner (%)",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Redimensionne en pourcentage",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "percent",
+        "type": "number",
+        "default": "50"
+      }
+    ],
+    "template": "magick {input} -resize {percent}% {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Rotation": {
+    "name": "ImageMagick - Rotation",
+    "display_name": "Rotation",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Rotation d'image",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "angle",
+        "type": "choice",
+        "default": "90",
+        "choices": [
+          "90",
+          "180",
+          "270",
+          "-90"
+        ]
+      }
+    ],
+    "template": "magick {input} -rotate {angle} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Sepia": {
+    "name": "ImageMagick - Sepia",
+    "display_name": "Sepia",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet sépia vintage",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "threshold",
+        "type": "number",
+        "default": "80"
+      }
+    ],
+    "template": "magick {input} -sepia-tone {threshold}% {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Sharpen": {
+    "name": "ImageMagick - Sharpen",
+    "display_name": "Sharpen",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Augmente la netteté",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "1"
+      }
+    ],
+    "template": "magick {input} -sharpen {radius}x{sigma} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Sketch": {
+    "name": "ImageMagick - Sketch",
+    "display_name": "Sketch",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet dessin au crayon",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "20"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "default": "135"
+      }
+    ],
+    "template": "magick {input} -sketch {radius}x{sigma}+{angle} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Solarize": {
+    "name": "ImageMagick - Solarize",
+    "display_name": "Solarize",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Effet solarisation",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "threshold",
+        "type": "number",
+        "default": "50"
+      }
+    ],
+    "template": "magick {input} -solarize {threshold}% {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Vignette": {
+    "name": "ImageMagick - Vignette",
+    "display_name": "Vignette",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "description": "Ajoute un effet vignette",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "0"
+      },
+      {
+        "name": "sigma",
+        "type": "number",
+        "default": "50"
+      }
+    ],
+    "template": "magick {input} -vignette {radius}x{sigma} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Comparer Deux Images": {
+    "name": "ImageMagick - Comparer Deux Images",
+    "display_name": "Comparer deux images",
+    "category": "ImageMagick",
+    "subcategory": "Multi-Source",
+    "command": "magick",
+    "description": "Génère une image de différence entre deux images.",
+    "color": "#95E1D3",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick compare -compose src {input} {input2} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Créer Montage": {
+    "name": "ImageMagick - Créer Montage",
+    "display_name": "Créer Montage",
+    "category": "ImageMagick",
+    "subcategory": "Multi-Source",
+    "command": "magick",
+    "description": "Crée un montage de plusieurs images",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "tile",
+        "type": "text",
+        "default": "2x2"
+      },
+      {
+        "name": "geometry",
+        "type": "text",
+        "default": "200x200+2+2"
+      }
+    ],
+    "template": "magick montage {input} -tile {tile} -geometry {geometry} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Fusionner Horizontalement": {
+    "name": "ImageMagick - Fusionner Horizontalement",
+    "display_name": "Fusionner horizontalement",
+    "category": "ImageMagick",
+    "subcategory": "Multi-Source",
+    "command": "magick",
+    "description": "Assemble deux images côte à côte.",
+    "color": "#95E1D3",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "spacing",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "template": "magick {input} {input2} +append -splice {spacing}x0 {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ImageMagick - Fusionner Verticalement": {
+    "name": "ImageMagick - Fusionner Verticalement",
+    "display_name": "Fusionner verticalement",
+    "category": "ImageMagick",
+    "subcategory": "Multi-Source",
+    "command": "magick",
+    "description": "Assemble deux images l’une sous l’autre.",
+    "color": "#95E1D3",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "spacing",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "template": "magick {input} {input2} -append -splice 0x{spacing} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "ExifTool - Ajouter Copyright": {
+    "name": "ExifTool - Ajouter Copyright",
+    "display_name": "Ajouter Copyright",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Ajoute une mention de copyright",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "copyright",
+        "type": "text",
+        "default": "© 2024 Mon Nom"
+      },
+      {
+        "name": "artist",
+        "type": "text",
+        "default": "Mon Nom"
+      }
+    ],
+    "template": "exiftool \"-Copyright={copyright}\" \"-Artist={artist}\" -overwrite_original {input} && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Copier Métadonnées": {
+    "name": "ExifTool - Copier Métadonnées",
+    "display_name": "Copier Métadonnées",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Copie les métadonnées d'un fichier à un autre",
+    "color": "#AA96DA",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -TagsFromFile {input} {input2} && copy {input2} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Définir Titre": {
+    "name": "ExifTool - Définir Titre",
+    "display_name": "Définir Titre",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Ajoute un titre dans les métadonnées",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "title",
+        "type": "text",
+        "default": "Mon titre"
+      }
+    ],
+    "template": "exiftool \"-Title={title}\" -overwrite_original {input} && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Export CSV Métadonnées": {
+    "name": "ExifTool - Export CSV Métadonnées",
+    "display_name": "Export CSV Métadonnées",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Exporte les métadonnées dans un CSV",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -csv {input} > {output}",
+    "output_extension": ".csv",
+    "output_extension_choices": [
+      ".csv",
+      ".json",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "ExifTool - Export JSON Métadonnées": {
+    "name": "ExifTool - Export JSON Métadonnées",
+    "display_name": "Export JSON Métadonnées",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Exporte les métadonnées en JSON",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -j {input} > {output}",
+    "output_extension": ".json",
+    "output_extension_choices": [
+      ".json",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "ExifTool - Lire Métadonnées": {
+    "name": "ExifTool - Lire Métadonnées",
+    "display_name": "Lire Métadonnées",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Exporte les métadonnées en fichier texte",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool {input} > metadata.txt && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Modifier Date": {
+    "name": "ExifTool - Modifier Date",
+    "display_name": "Modifier Date",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Modifie la date de création",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "date",
+        "type": "text",
+        "default": "2024:01:01 12:00:00"
+      }
+    ],
+    "template": "exiftool \"-AllDates={date}\" -overwrite_original {input} && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Renommer par Date": {
+    "name": "ExifTool - Renommer par Date",
+    "display_name": "Renommer par Date",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Renomme selon la date de prise de vue",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "format",
+        "type": "text",
+        "default": "%Y%m%d_%H%M%S"
+      }
+    ],
+    "template": "exiftool \"-FileName<DateTimeOriginal\" -d \"{format}%%-c.%%le\" {input}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Supprimer GPS": {
+    "name": "ExifTool - Supprimer GPS",
+    "display_name": "Supprimer GPS",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Supprime uniquement les données GPS",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -gps:all= -overwrite_original {input} && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "ExifTool - Supprimer Métadonnées": {
+    "name": "ExifTool - Supprimer Métadonnées",
+    "display_name": "Supprimer Métadonnées",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "description": "Supprime toutes les métadonnées",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -all= -overwrite_original {input} && copy {input} {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "7-Zip - Compresser 7z": {
+    "name": "7-Zip - Compresser 7z",
+    "display_name": "Compresser 7z",
+    "category": "7-Zip",
+    "subcategory": "Archives",
+    "command": "7z",
+    "description": "Crée une archive 7z (meilleure compression)",
+    "color": "#F9D56E",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "compression",
+        "type": "choice",
+        "default": "5",
+        "choices": [
+          "0 (Store)",
+          "1 (Fastest)",
+          "5 (Normal)",
+          "9 (Ultra)"
+        ]
+      }
+    ],
+    "template": "7z a -t7z -mx={compression} {output} {input}",
+    "output_extension": ".7z",
+    "output_extension_choices": [
+      ".7z",
+      ".zip"
+    ],
+    "verified": false
+  },
+  "7-Zip - Compresser ZIP": {
+    "name": "7-Zip - Compresser ZIP",
+    "display_name": "Compresser ZIP",
+    "category": "7-Zip",
+    "subcategory": "Archives",
+    "command": "7z",
+    "description": "Crée une archive ZIP",
+    "color": "#F9D56E",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "compression",
+        "type": "choice",
+        "default": "5",
+        "choices": [
+          "0 (Store)",
+          "1 (Fastest)",
+          "5 (Normal)",
+          "9 (Ultra)"
+        ]
+      }
+    ],
+    "template": "7z a -tzip -mx={compression} {output} {input}",
+    "output_extension": ".zip",
+    "output_extension_choices": [
+      ".zip",
+      ".7z"
+    ],
+    "verified": false
+  },
+  "7-Zip - Extraire": {
+    "name": "7-Zip - Extraire",
+    "display_name": "Extraire",
+    "category": "7-Zip",
+    "subcategory": "Archives",
+    "command": "7z",
+    "description": "Extrait une archive",
+    "color": "#F9D56E",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "destination",
+        "type": "text",
+        "default": "extracted"
+      }
+    ],
+    "template": "7z x {input} -o\"{destination}\" && echo Extracted > {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Info JSON": {
+    "name": "yt-dlp - Télécharger Info JSON",
+    "display_name": "Télécharger Info JSON",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Exporte uniquement les informations d'une vidéo en JSON",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "yt-dlp --dump-single-json \"{url}\" > {output}",
+    "output_extension": ".json",
+    "output_extension_choices": [
+      ".json",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger MP3": {
+    "name": "yt-dlp - Télécharger MP3",
+    "display_name": "Télécharger MP3",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge et convertit l'audio en MP3",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "quality",
+        "type": "choice",
+        "default": "192",
+        "choices": [
+          "128",
+          "192",
+          "256",
+          "320"
+        ]
+      }
+    ],
+    "template": "yt-dlp \"{url}\" -x --audio-format mp3 --audio-quality {quality}K -o {output}",
+    "output_extension": ".mp3",
+    "output_extension_choices": [
+      ".mp3",
+      ".m4a",
+      ".opus",
+      ".flac",
+      ".wav"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger MP4": {
+    "name": "yt-dlp - Télécharger MP4",
+    "display_name": "Télécharger MP4",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge la meilleure version MP4 disponible",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "height",
+        "type": "choice",
+        "default": "1080",
+        "choices": [
+          "2160",
+          "1440",
+          "1080",
+          "720",
+          "480"
+        ]
+      }
+    ],
+    "template": "yt-dlp \"{url}\" -f \"bv*[ext=mp4][height<={height}]+ba[ext=m4a]/b[ext=mp4][height<={height}]\" --merge-output-format mp4 -o {output}",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".webm"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Audio": {
+    "name": "yt-dlp - Télécharger Audio",
+    "display_name": "Télécharger Audio",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge uniquement l'audio",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "format",
+        "type": "choice",
+        "default": "mp3",
+        "choices": [
+          "mp3",
+          "aac",
+          "flac",
+          "opus",
+          "wav"
+        ]
+      }
+    ],
+    "template": "yt-dlp \"{url}\" -x --audio-format {format} -o {output}",
+    "output_extension": "{format}",
+    "output_extension_choices": [
+      "{format}",
+      ".mp3",
+      ".aac",
+      ".flac",
+      ".opus",
+      ".wav"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Miniature": {
+    "name": "yt-dlp - Télécharger Miniature",
+    "display_name": "Télécharger Miniature",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge uniquement la miniature",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "yt-dlp \"{url}\" --write-thumbnail --skip-download -o {output}",
+    "output_extension": ".jpg",
+    "output_extension_choices": [
+      ".jpg",
+      ".png",
+      ".webp"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Playlist": {
+    "name": "yt-dlp - Télécharger Playlist",
+    "display_name": "Télécharger Playlist",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge une playlist entière",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "format",
+        "type": "choice",
+        "default": "best",
+        "choices": [
+          "best",
+          "720",
+          "480",
+          "audio"
+        ]
+      }
+    ],
+    "template": "yt-dlp \"{url}\" --yes-playlist -f \"{format}\" -o \"{output}/%(playlist_index)s - %(title)s.%(ext)s\"",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Sous-titres": {
+    "name": "yt-dlp - Télécharger Sous-titres",
+    "display_name": "Télécharger Sous-titres",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge avec sous-titres intégrés",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "lang",
+        "type": "text",
+        "default": "fr,en"
+      }
+    ],
+    "template": "yt-dlp \"{url}\" --write-subs --sub-langs {lang} --embed-subs -o {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "yt-dlp - Télécharger Vidéo": {
+    "name": "yt-dlp - Télécharger Vidéo",
+    "display_name": "Télécharger Vidéo",
+    "category": "yt-dlp",
+    "subcategory": "Téléchargement",
+    "command": "yt-dlp",
+    "description": "Télécharge une vidéo YouTube",
+    "color": "#F38181",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "quality",
+        "type": "choice",
+        "default": "best",
+        "choices": [
+          "best",
+          "1080",
+          "720",
+          "480"
+        ]
+      }
+    ],
+    "template": "yt-dlp \"{url}\" -f \"bestvideo[height<={quality}]+bestaudio\" -o {output}",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav",
+      ".mp3",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "cURL - Télécharger avec User-Agent": {
+    "name": "cURL - Télécharger avec User-Agent",
+    "display_name": "Télécharger avec User-Agent",
+    "category": "cURL",
+    "subcategory": "Téléchargement",
+    "command": "curl",
+    "description": "Télécharge une ressource avec un User-Agent personnalisé",
+    "color": "#74B9FF",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "user_agent",
+        "type": "text",
+        "default": "Mozilla/5.0"
+      }
+    ],
+    "template": "curl -L -A \"{user_agent}\" -o {output} \"{url}\"",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp",
+      ".json",
+      ".txt",
+      ".html",
+      ".zip"
+    ],
+    "verified": false
+  },
+  "cURL - Télécharger JSON": {
+    "name": "cURL - Télécharger JSON",
+    "display_name": "Télécharger JSON",
+    "category": "cURL",
+    "subcategory": "Téléchargement",
+    "command": "curl",
+    "description": "Télécharge une réponse JSON depuis une URL",
+    "color": "#74B9FF",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "curl -L -H \"Accept: application/json\" -o {output} \"{url}\"",
+    "output_extension": ".json",
+    "output_extension_choices": [
+      ".json",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "cURL - Télécharger avec Auth": {
+    "name": "cURL - Télécharger avec Auth",
+    "display_name": "Télécharger avec Auth",
+    "category": "cURL",
+    "subcategory": "Téléchargement",
+    "command": "curl",
+    "description": "Télécharge avec authentification basique",
+    "color": "#74B9FF",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "user",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "password",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "curl -L -u \"{user}:{password}\" -o {output} \"{url}\"",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "cURL - Télécharger Fichier": {
+    "name": "cURL - Télécharger Fichier",
+    "display_name": "Télécharger Fichier",
+    "category": "cURL",
+    "subcategory": "Téléchargement",
+    "command": "curl",
+    "description": "Télécharge un fichier depuis une URL",
+    "color": "#74B9FF",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "curl -L -o {output} \"{url}\"",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "Pandoc - DOCX vers Markdown": {
+    "name": "Pandoc - DOCX vers Markdown",
+    "display_name": "DOCX vers Markdown",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Word en Markdown",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -f docx -t markdown -o {output}",
+    "output_extension": ".md",
+    "output_extension_choices": [
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "Pandoc - Fusionner Markdown": {
+    "name": "Pandoc - Fusionner Markdown",
+    "display_name": "Fusionner markdown",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "output_extension": ".md",
+    "output_extension_choices": [
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "description": "Fusionne deux fichiers Markdown en un seul document.",
+    "color": "#00B894",
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} {input2} -o {output}",
+    "verified": false
+  },
+  "Pandoc - HTML vers Markdown": {
+    "name": "Pandoc - HTML vers Markdown",
+    "display_name": "HTML vers Markdown",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit HTML en Markdown",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -f html -t markdown -o {output}",
+    "output_extension": ".html",
+    "output_extension_choices": [
+      ".html",
+      ".md",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "Pandoc - Markdown vers DOCX": {
+    "name": "Pandoc - Markdown vers DOCX",
+    "display_name": "Markdown vers DOCX",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Markdown en Word",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -o {output}",
+    "output_extension": ".md",
+    "output_extension_choices": [
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "Pandoc - Markdown vers EPUB": {
+    "name": "Pandoc - Markdown vers EPUB",
+    "display_name": "Markdown vers EPUB",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Markdown en EPUB",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -o {output}",
+    "output_extension": ".epub",
+    "output_extension_choices": [
+      ".epub",
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "Pandoc - Markdown vers HTML": {
+    "name": "Pandoc - Markdown vers HTML",
+    "display_name": "Markdown vers HTML",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Markdown en HTML",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "standalone",
+        "type": "checkbox",
+        "default": "true"
+      }
+    ],
+    "template": "pandoc {input} -o {output} --standalone",
+    "output_extension": ".md",
+    "output_extension_choices": [
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "Pandoc - Markdown vers PDF": {
+    "name": "Pandoc - Markdown vers PDF",
+    "display_name": "Markdown vers PDF",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Markdown en PDF (nécessite LaTeX)",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -o {output}",
+    "output_extension": ".md",
+    "output_extension_choices": [
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".txt",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "Pandoc - Markdown vers TXT": {
+    "name": "Pandoc - Markdown vers TXT",
+    "display_name": "Markdown vers TXT",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "description": "Convertit Markdown en texte brut",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -t plain -o {output}",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt",
+      ".md",
+      ".html",
+      ".pdf",
+      ".docx",
+      ".epub"
+    ],
+    "verified": false
+  },
+  "jpegoptim - Optimiser JPEG": {
+    "name": "jpegoptim - Optimiser JPEG",
+    "display_name": "jpegoptim - Optimiser JPEG",
+    "category": "Optimisation",
+    "subcategory": "Compression",
+    "command": "jpegoptim",
+    "description": "Optimise les fichiers JPEG",
+    "color": "#FDCB6E",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "number",
+        "default": "85"
+      },
+      {
+        "name": "strip",
+        "type": "checkbox",
+        "default": "true"
+      }
+    ],
+    "template": "copy {input} {output} && jpegoptim --max={quality} --strip-all {output}",
+    "output_extension": ".jpg",
+    "output_extension_choices": [
+      ".jpg",
+      ".png",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "OptiPNG - Optimiser PNG": {
+    "name": "OptiPNG - Optimiser PNG",
+    "display_name": "OptiPNG - Optimiser PNG",
+    "category": "Optimisation",
+    "subcategory": "Compression",
+    "command": "optipng",
+    "description": "Optimise les fichiers PNG sans perte",
+    "color": "#FDCB6E",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "level",
+        "type": "choice",
+        "default": "2",
+        "choices": [
+          "1 (Fast)",
+          "2 (Default)",
+          "3",
+          "4",
+          "5",
+          "7 (Slowest)"
+        ]
+      }
+    ],
+    "template": "copy {input} {output} && optipng -o{level} {output}",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "verified": false
+  },
+  "HandBrakeCLI - Convertir Vidéo": {
+    "name": "HandBrakeCLI - Convertir Vidéo",
+    "display_name": "HandBrakeCLI - Convertir Vidéo",
+    "category": "HandBrake",
+    "subcategory": "Conversion",
+    "command": "HandBrakeCLI",
+    "description": "Conversion vidéo avec HandBrake",
+    "color": "#E17055",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "preset",
+        "type": "choice",
+        "default": "Fast 1080p30",
+        "choices": [
+          "Very Fast 1080p30",
+          "Fast 1080p30",
+          "HQ 1080p30 Surround",
+          "Super HQ 1080p30 Surround",
+          "Fast 720p30",
+          "HQ 720p30 Surround"
+        ]
+      }
+    ],
+    "template": "HandBrakeCLI -i {input} -o {output} --preset=\"{preset}\"",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "FLAC - Décoder vers WAV": {
+    "name": "FLAC - Décoder vers WAV",
+    "display_name": "Décoder vers WAV",
+    "category": "FLAC",
+    "subcategory": "Conversion",
+    "command": "flac",
+    "description": "Décode FLAC en WAV",
+    "color": "#6C5CE7",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "flac -d -o {output} {input}",
+    "output_extension": ".flac",
+    "output_extension_choices": [
+      ".flac",
+      ".wav",
+      ".mp3",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "FLAC - Encoder FLAC": {
+    "name": "FLAC - Encoder FLAC",
+    "display_name": "Encoder FLAC",
+    "category": "FLAC",
+    "subcategory": "Conversion",
+    "command": "flac",
+    "description": "Encode en FLAC lossless",
+    "color": "#6C5CE7",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "compression",
+        "type": "choice",
+        "default": "5",
+        "choices": [
+          "0 (Fast)",
+          "5 (Default)",
+          "8 (Best)"
+        ]
+      }
+    ],
+    "template": "flac -{compression} -o {output} {input}",
+    "output_extension": ".flac",
+    "output_extension_choices": [
+      ".flac",
+      ".wav",
+      ".mp3",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "LAME - Encoder MP3": {
+    "name": "LAME - Encoder MP3",
+    "display_name": "Encoder MP3",
+    "category": "LAME",
+    "subcategory": "Conversion",
+    "command": "lame",
+    "description": "Encode en MP3 avec LAME",
+    "color": "#0984E3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "quality",
+        "type": "choice",
+        "default": "V0",
+        "choices": [
+          "V0 (~245kbps)",
+          "V1 (~225kbps)",
+          "V2 (~190kbps)",
+          "V3 (~175kbps)",
+          "320 (CBR)",
+          "256 (CBR)",
+          "192 (CBR)"
+        ]
+      },
+      {
+        "name": "mode",
+        "type": "choice",
+        "default": "j",
+        "choices": [
+          "j (joint stereo)",
+          "s (stereo)",
+          "m (mono)"
+        ]
+      }
+    ],
+    "template": "lame -{quality} -m {mode} {input} {output}",
+    "output_extension": ".mp3",
+    "output_extension_choices": [
+      ".mp3",
+      ".wav",
+      ".flac",
+      ".aac",
+      ".opus",
+      ".ogg"
+    ],
+    "verified": false
+  },
+  "Tesseract - OCR Image": {
+    "name": "Tesseract - OCR Image",
+    "display_name": "OCR Image",
+    "category": "Tesseract",
+    "subcategory": "OCR",
+    "command": "tesseract",
+    "description": "Reconnaissance de texte (OCR)",
+    "color": "#A29BFE",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "lang",
+        "type": "choice",
+        "default": "fra",
+        "choices": [
+          "eng",
+          "fra",
+          "deu",
+          "spa",
+          "ita",
+          "por",
+          "nld",
+          "fra+eng"
+        ]
+      },
+      {
+        "name": "psm",
+        "type": "choice",
+        "default": "3",
+        "choices": [
+          "1 (Auto OSD)",
+          "3 (Auto)",
+          "4 (Single column)",
+          "6 (Single block)",
+          "7 (Single line)",
+          "8 (Single word)"
+        ]
+      }
+    ],
+    "template": "tesseract {input} {output} -l {lang} --psm {psm}",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "verified": false
+  },
+  "Tesseract - OCR TSV": {
+    "name": "Tesseract - OCR TSV",
+    "display_name": "OCR TSV",
+    "category": "Tesseract",
+    "subcategory": "OCR",
+    "command": "tesseract",
+    "description": "Reconnaissance de texte avec sortie TSV",
+    "color": "#A29BFE",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "lang",
+        "type": "choice",
+        "default": "fra",
+        "choices": [
+          "eng",
+          "fra",
+          "deu",
+          "spa",
+          "ita",
+          "por",
+          "nld",
+          "fra+eng"
+        ]
+      }
+    ],
+    "template": "tesseract {input} {output} -l {lang} tsv",
+    "output_extension": ".tsv",
+    "output_extension_choices": [
+      ".tsv",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "Whisper - Transcription Audio": {
+    "name": "Whisper - Transcription Audio",
+    "display_name": "Transcription Audio",
+    "category": "Whisper",
+    "subcategory": "Transcription",
+    "command": "whisper",
+    "description": "Transcrit l'audio en texte (OpenAI Whisper)",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "model",
+        "type": "choice",
+        "default": "base",
+        "choices": [
+          "tiny",
+          "base",
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      {
+        "name": "language",
+        "type": "text",
+        "default": "fr"
+      },
+      {
+        "name": "output_format",
+        "type": "choice",
+        "default": "srt",
+        "choices": [
+          "txt",
+          "srt",
+          "vtt",
+          "json"
+        ]
+      }
+    ],
+    "template": "whisper {input} --model {model} --language {language} --output_format {output_format} --output_dir .",
+    "output_extension": "{output_format}",
+    "output_extension_choices": [
+      "{output_format}",
+      ".txt",
+      ".srt",
+      ".vtt",
+      ".json"
+    ],
+    "verified": false
+  },
+  "Whisper - Transcription TXT": {
+    "name": "Whisper - Transcription TXT",
+    "display_name": "Transcription TXT",
+    "category": "Whisper",
+    "subcategory": "Transcription",
+    "command": "whisper",
+    "description": "Transcrit l'audio en texte brut",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "model",
+        "type": "choice",
+        "default": "base",
+        "choices": [
+          "tiny",
+          "base",
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      {
+        "name": "language",
+        "type": "text",
+        "default": "fr"
+      }
+    ],
+    "template": "whisper {input} --model {model} --language {language} --output_format txt --output_dir .",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt",
+      ".srt",
+      ".vtt",
+      ".json"
+    ],
+    "verified": false
+  },
+  "rclone - Sync vers Cloud": {
+    "name": "rclone - Sync vers Cloud",
+    "display_name": "Sync vers Cloud",
+    "category": "rclone",
+    "subcategory": "Cloud",
+    "command": "rclone",
+    "description": "Synchronise vers stockage cloud",
+    "color": "#00CEC9",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "remote",
+        "type": "text",
+        "default": "gdrive:backup"
+      },
+      {
+        "name": "dry_run",
+        "type": "checkbox",
+        "default": "false"
+      }
+    ],
+    "template": "rclone sync {input} \"{remote}\" --progress > {output}",
+    "output_extension": ".log",
+    "output_extension_choices": [
+      ".log",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "PowerShell - Lister Fichiers": {
+    "name": "PowerShell - Lister Fichiers",
+    "display_name": "PowerShell - Lister Fichiers",
+    "category": "Système",
+    "subcategory": "Scripts",
+    "command": "powershell",
+    "description": "Liste les fichiers d'un dossier vers un fichier texte",
+    "color": "#636E72",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "folder",
+        "type": "text",
+        "default": "."
+      },
+      {
+        "name": "filter",
+        "type": "text",
+        "default": "*"
+      }
+    ],
+    "template": "powershell -NoProfile -Command \"Get-ChildItem -LiteralPath {folder} -Filter {filter} | Select-Object FullName | Out-File -Encoding utf8 {output}\"",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt",
+      ".log",
+      ".csv"
+    ],
+    "verified": false
+  },
+  "Robocopy - Copie Miroir": {
+    "name": "Robocopy - Copie Miroir",
+    "display_name": "Robocopy - Copie Miroir",
+    "category": "Système",
+    "subcategory": "",
+    "command": "robocopy",
+    "description": "Copie miroir de dossiers",
+    "color": "#636E72",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "source",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "destination",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "robocopy \"{source}\" \"{destination}\" /MIR /R:3 /W:5 > {output}",
+    "output_extension": ".log",
+    "output_extension_choices": [
+      ".log",
+      ".txt"
+    ],
+    "verified": false
+  },
+  "WMIC - Info Système": {
+    "name": "WMIC - Info Système",
+    "display_name": "WMIC - Info Système",
+    "category": "Système",
+    "subcategory": "",
+    "command": "wmic",
+    "description": "Exporte les informations système",
+    "color": "#636E72",
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "category",
+        "type": "choice",
+        "default": "os",
+        "choices": [
+          "os",
+          "cpu",
+          "memorychip",
+          "diskdrive",
+          "bios"
+        ]
+      }
+    ],
+    "template": "wmic {category} get /format:list > {output}",
+    "output_extension": ".tmp",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": false
+  },
+  "FFmpeg - Spectre Audio Vidéo (copie)": {
+    "name": "FFmpeg - Spectre Audio Vidéo (copie)",
+    "display_name": "Spectre Audio Vidéo copie",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Crée une vidéo de spectre audio",
+    "color": "#ffffff",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x720"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "rainbow"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -filter_complex \"[0:a]showspectrum=s={size}:color={color}\" -c:v libx264 -pix_fmt yuv420p {output}",
+    "verified": false
+  },
+  "FFmpeg - Spectre Audio Vidéo + waveform": {
+    "name": "FFmpeg - Spectre Audio Vidéo + waveform",
+    "display_name": "Spectre Audio Vidéo + waveform",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Crée une vidéo de spectre audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x720"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "rainbow"
+      },
+      {
+        "name": "mode",
+        "type": "choice",
+        "default": "polar",
+        "choices": [
+          "polar",
+          "lissajous"
+        ]
+      },
+      {
+        "name": "type",
+        "type": "choice",
+        "default": "line",
+        "choices": [
+          "line",
+          "dot"
+        ]
+      },
+      {
+        "name": "wfsize",
+        "type": "text",
+        "default": "700x700"
+      },
+      {
+        "name": "zoom",
+        "type": "text",
+        "default": "1.2"
+      }
+    ],
+    "template": "ffmpeg -i {input} -filter_complex \"[0:a]showspectrum=s={size}:mode=combined:color=rainbow:slide=scroll:scale=cbrt[spec];[0:a]avectorscope=s={wfsize}:mode={mode}:draw={type}:zoom={zoom}:rc=255:gc=255:bc=255,format=rgba,colorkey=black:0.05:0.0[wave];[spec][wave]overlay=(W-w)/2:(H-h)/2,format=yuv420p[v]\" -map \"[v]\" -map 0:a -c:v libx264 -c:a aac -shortest {output}",
+    "verified": false
+  },
+  "FFmpeg - Spectre Audio Vidéo + waveform Best": {
+    "name": "FFmpeg - Spectre Audio Vidéo + waveform Best",
+    "display_name": "Spectre Audio Vidéo + waveform Best",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Crée une vidéo de spectre audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x720"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "default": "rainbow"
+      },
+      {
+        "name": "mode",
+        "type": "choice",
+        "default": "polar",
+        "choices": [
+          "polar",
+          "lissajous"
+        ]
+      },
+      {
+        "name": "type",
+        "type": "choice",
+        "default": "line",
+        "choices": [
+          "line",
+          "dot"
+        ]
+      },
+      {
+        "name": "wfsize",
+        "type": "text",
+        "default": "1280x180"
+      },
+      {
+        "name": "zoom",
+        "type": "text",
+        "default": "1.2"
+      }
+    ],
+    "template": "ffmpeg -i {input} -filter_complex \"[0:a]showspectrum=s={size}:mode=combined:color=plasma:slide=scroll:scale=log[spec];[spec]eq=brightness=-0.1:saturation=0.7[dark];[0:a]showwaves=s={wfsize}:mode=line:colors=0x88FFFFFF[wave];[wave]format=rgba,boxblur=3:1[glow];[dark][glow]overlay=0:H-200[tmp];[tmp][wave]overlay=0:H-200,format=yuv420p[v]\" -map \"[v]\" -map 0:a -c:v libx264 -c:a aac -pix_fmt yuv420p -shortest {output}",
+    "verified": false
+  },
+  "ExifTool - Export cover": {
+    "name": "ExifTool - Export cover",
+    "display_name": "Export Cover",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg"
+    ],
+    "description": "Export de la cover",
+    "color": "#AA96DA",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "title",
+        "type": "text",
+        "default": "Mon titre"
+      }
+    ],
+    "template": "exiftool -b -Picture {input} > {output}",
+    "verified": false
+  },
+  "Pandoc - txt vers PDF": {
+    "name": "Pandoc - txt vers PDF",
+    "display_name": "TXT vers PDF",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "output_extension": ".pdf",
+    "output_extension_choices": [
+      ".pdf"
+    ],
+    "description": "Convertit Markdown en texte brut",
+    "color": "#00B894",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -o {output}",
+    "verified": false
+  },
+  "Pandoc - HTML vers PDF": {
+    "name": "Pandoc - HTML vers PDF",
+    "display_name": "HTML vers PDF",
+    "category": "Pandoc",
+    "subcategory": "Documents",
+    "command": "pandoc",
+    "output_extension": ".PDF",
+    "output_extension_choices": [
+      ".PDF",
+      ".pdf"
+    ],
+    "description": "Convertit HTML en Markdown",
+    "color": "#00B894",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "pandoc {input} -o {output}"
+  },
+  "Multi-fichiers": {
+    "name": "Multi-fichiers",
+    "category": "Fichier",
+    "command": "",
+    "description": "Point d'entrée multi-fichiers pour le mode flux unique. Identifie chaque fichier par extension et expose une sortie par type attendu.",
+    "color": "#FFD1A9",
+    "inputs": [],
+    "outputs": [
+      "file",
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Nombre de fichiers",
+        "type": "number",
+        "default": "2"
+      },
+      {
+        "name": "Type fichier 1",
+        "type": "text",
+        "default": "Vidéo"
+      },
+      {
+        "name": "Extensions fichier 1",
+        "type": "text",
+        "default": ".mp4,.mov,.avi,.mkv,.webm"
+      },
+      {
+        "name": "Type fichier 2",
+        "type": "text",
+        "default": "Sous-titres"
+      },
+      {
+        "name": "Extensions fichier 2",
+        "type": "text",
+        "default": ".srt,.ssa,.ass,.sub,.idx"
+      },
+      {
+        "name": "Type fichier 3",
+        "type": "text",
+        "default": "Fichier 3"
+      },
+      {
+        "name": "Extensions fichier 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Type fichier 4",
+        "type": "text",
+        "default": "Fichier 4"
+      },
+      {
+        "name": "Extensions fichier 4",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "",
+    "output_extension": "",
+    "display_name": "Multi-fichiers",
+    "subcategory": "",
+    "output_extension_choices": [
+      ".tmp"
+    ],
+    "verified": true
+  },
+  "ImageMagick - Séparer Rouge": {
+    "name": "ImageMagick - Séparer Rouge",
+    "display_name": "Séparer Rouge",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "description": "Ajoute un fond coloré derrière une image transparente",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "background",
+        "type": "text",
+        "default": "white"
+      }
+    ],
+    "template": "magick {input} -channel R -separate {output}",
+    "verified": false
+  },
+  "ImageMagick - Séparer Vert": {
+    "name": "ImageMagick - Séparer Vert",
+    "display_name": "Séparer Vert",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "description": "Ajoute un fond coloré derrière une image transparente",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "background",
+        "type": "text",
+        "default": "white"
+      }
+    ],
+    "template": "magick {input} -channel G -separate {output}",
+    "verified": false
+  },
+  "ImageMagick - Séparer Bleu": {
+    "name": "ImageMagick - Séparer Bleu",
+    "display_name": "Séparer Bleu",
+    "category": "ImageMagick",
+    "subcategory": "Composition",
+    "command": "magick",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "description": "Ajoute un fond coloré derrière une image transparente",
+    "color": "#95E1D3",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "background",
+        "type": "text",
+        "default": "white"
+      }
+    ],
+    "template": "magick {input} -channel B -separate {output}",
+    "verified": false
+  },
+  "image to flac": {
+    "name": "image to flac",
+    "display_name": "image to flac",
+    "category": "PyPerso",
+    "subcategory": "",
+    "command": "image_to_flac",
+    "output_extension": ".flac",
+    "output_extension_choices": [
+      ".flac"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "image_to_flac {input} {output}"
+  },
+  "FFmpeg - Spectre Audio image": {
+    "name": "FFmpeg - Spectre Audio image",
+    "display_name": "Spectre Audio image",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".flac",
+    "output_extension_choices": [
+      ".flac",
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Crée une vidéo de spectre audio",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "size",
+        "type": "text",
+        "default": "1280x1024"
+      }
+    ],
+    "template": "ffmpeg -y -i {input} -lavfi \"showspectrumpic=s={size}:legend=disabled:color=channel:gain=22:scale=lin:saturation=1\" {output}",
+    "verified": false
+  },
+  "FFmpeg - Recomposer RVB": {
+    "name": "FFmpeg - Recomposer RVB",
+    "display_name": "Recomposer RVB",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png"
+    ],
+    "description": "Convertit une vidéo en GIF",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file",
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "fps",
+        "type": "number",
+        "default": "10"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "480"
+      }
+    ],
+    "template": "ffmpeg -i {input} -i {input2} -i {input3} -filter_complex \"[0:v][1:v][2:v]mergeplanes=0x001020:gbrp,format=rgb24\" {output}",
+    "verified": false
+  },
+  "Gris vers couleur": {
+    "name": "Gris vers couleur",
+    "display_name": "Gris vers couleur",
+    "category": "PyPerso",
+    "subcategory": "",
+    "command": "Gris2Couleur",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [
+      "file",
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "Gris2Couleur {input} {input2} {input3} {output}"
+  },
+  "image to wav": {
+    "name": "image to wav",
+    "display_name": "image to wav",
+    "category": "PyPerso",
+    "subcategory": "",
+    "command": "ImageToWAV",
+    "output_extension": ".wav",
+    "output_extension_choices": [
+      ".wav"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ImageToWAV {input} {output}"
+  },
+  "Retirer Hauteur": {
+    "name": "Retirer Hauteur",
+    "display_name": "Retirer Hauteur",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "Retirer Hauteur",
+    "color": "#FF6B6B",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 {input} > {output}"
+  },
+  "Retirer Largeur": {
+    "name": "Retirer Largeur",
+    "display_name": "Retirer Largeur",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "Retirer Largeur",
+    "color": "#FF6B6B",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 {input} > {output}"
+  },
+  "Variables Globales": {
+    "name": "Variables Globales",
+    "display_name": "Variables Globales",
+    "category": "Système",
+    "subcategory": "Variables",
+    "command": "",
+    "output_extension": "",
+    "output_extension_choices": [],
+    "description": "Lit plusieurs fichiers texte et expose des variables globales utilisables dans tous les noeuds via {nom_variable}.",
+    "color": "#B8E6B8",
+    "verified": true,
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [],
+    "parameters": [
+      {
+        "name": "Nombre de variables",
+        "type": "number",
+        "default": "2"
+      },
+      {
+        "name": "Nom 1",
+        "type": "text",
+        "default": "size"
+      },
+      {
+        "name": "Valeur 1",
+        "type": "text",
+        "default": "{input}x{input2}"
+      },
+      {
+        "name": "Nom 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 4",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 4",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 5",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 5",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 6",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 6",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 7",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 7",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 8",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 8",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 9",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 9",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 10",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 10",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 11",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 11",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Nom 12",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur 12",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": ""
+  },
+  "Variables d'entrée": {
+    "name": "Variables d'entrée",
+    "display_name": "Variables d'entrée",
+    "category": "Système",
+    "subcategory": "Variables",
+    "command": "",
+    "output_extension": "",
+    "output_extension_choices": [],
+    "description": "Pose des questions au debut du script et expose les reponses dans tout le workflow via {nom_variable}.",
+    "color": "#B8D8FF",
+    "verified": true,
+    "inputs": [],
+    "outputs": [],
+    "parameters": [
+      {
+        "name": "Nombre de variables",
+        "type": "number",
+        "default": "2"
+      },
+      {
+        "name": "Question 1",
+        "type": "text",
+        "default": "Quel nom utiliser ?"
+      },
+      {
+        "name": "Nom 1",
+        "type": "text",
+        "default": "nom"
+      },
+      {
+        "name": "Valeur par défaut 1",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 2",
+        "type": "text",
+        "default": "Valeur pour la variable 2 ?"
+      },
+      {
+        "name": "Nom 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 3",
+        "type": "text",
+        "default": "Valeur pour la variable 3 ?"
+      },
+      {
+        "name": "Nom 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 4",
+        "type": "text",
+        "default": "Valeur pour la variable 4 ?"
+      },
+      {
+        "name": "Nom 4",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 4",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 5",
+        "type": "text",
+        "default": "Valeur pour la variable 5 ?"
+      },
+      {
+        "name": "Nom 5",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 5",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 6",
+        "type": "text",
+        "default": "Valeur pour la variable 6 ?"
+      },
+      {
+        "name": "Nom 6",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 6",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 7",
+        "type": "text",
+        "default": "Valeur pour la variable 7 ?"
+      },
+      {
+        "name": "Nom 7",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 7",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 8",
+        "type": "text",
+        "default": "Valeur pour la variable 8 ?"
+      },
+      {
+        "name": "Nom 8",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 8",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 9",
+        "type": "text",
+        "default": "Valeur pour la variable 9 ?"
+      },
+      {
+        "name": "Nom 9",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 9",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 10",
+        "type": "text",
+        "default": "Valeur pour la variable 10 ?"
+      },
+      {
+        "name": "Nom 10",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 10",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 11",
+        "type": "text",
+        "default": "Valeur pour la variable 11 ?"
+      },
+      {
+        "name": "Nom 11",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 11",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Question 12",
+        "type": "text",
+        "default": "Valeur pour la variable 12 ?"
+      },
+      {
+        "name": "Nom 12",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur par défaut 12",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": ""
+  },
+  "ImageMagick - Redimensionner Max": {
+    "name": "ImageMagick - Redimensionner Max",
+    "display_name": "Redimensionner Max",
+    "category": "ImageMagick",
+    "subcategory": "Effets",
+    "command": "magick",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png",
+      ".jpg",
+      ".webp",
+      ".gif",
+      ".tiff"
+    ],
+    "description": "Redimensionne une image",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "width",
+        "type": "text",
+        "default": "800"
+      },
+      {
+        "name": "height",
+        "type": "text",
+        "default": "600"
+      }
+    ],
+    "template": "magick {input} -resize {width}x{height} {output}"
+  },
+  "Redim image": {
+    "name": "Redim image",
+    "display_name": "Redim image",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "output_extension": ".mp4",
+    "output_extension_choices": [
+      ".mp4",
+      ".mkv",
+      ".mov",
+      ".avi",
+      ".webm"
+    ],
+    "description": "Redim image",
+    "color": "#FF6B6B",
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "height",
+        "type": "text",
+        "default": "480"
+      },
+      {
+        "name": "width",
+        "type": "text",
+        "default": "640"
+      }
+    ],
+    "template": "ffmpeg -i {input} -vf scale={width}:{height} {output}",
+    "verified": false
+  },
+  "Extraire Infos en HTML": {
+    "name": "Extraire Infos en HTML",
+    "display_name": "Extraire infos en HTML",
+    "category": "ExifTool",
+    "subcategory": "Métadonnées",
+    "command": "exiftool",
+    "output_extension": ".html",
+    "output_extension_choices": [
+      ".html"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "exiftool -h {input} > {output}"
+  },
+  "Vectorisation": {
+    "name": "Vectorisation",
+    "display_name": "Vectorisation",
+    "category": "Potrace",
+    "subcategory": "",
+    "command": "Potrace",
+    "output_extension": ".svg",
+    "output_extension_choices": [
+      ".svg"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "cutoff",
+        "type": "text",
+        "default": "0.5",
+        "choices": [
+          "0.1",
+          "0.2",
+          "0.3",
+          "0.4",
+          "0.5",
+          "0.6",
+          "0.7",
+          "0.8",
+          "0.9"
+        ]
+      }
+    ],
+    "template": "Potrace {input} -k {cutoff} -P a4 -s -o {output}"
+  },
+  "ImageMagick - Convertir BMP": {
+    "name": "ImageMagick - Convertir BMP",
+    "display_name": "Convertir BMP",
+    "category": "ImageMagick",
+    "subcategory": "Conversion",
+    "command": "magick",
+    "output_extension": ".BMP",
+    "output_extension_choices": [
+      ".BMP"
+    ],
+    "description": "Convertir BMP",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "magick {input} {output}"
+  },
+  "Watermark": {
+    "name": "Watermark",
+    "display_name": "Watermark",
+    "category": "FFmpeg",
+    "subcategory": "Image",
+    "command": "ffmpeg",
+    "output_extension": ".png",
+    "output_extension_choices": [
+      ".png"
+    ],
+    "description": "Watermark",
+    "color": "#FF6B6B",
+    "verified": true,
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Décalage vertical",
+        "type": "number",
+        "default": "10"
+      },
+      {
+        "name": "Décalage horizontal",
+        "type": "number",
+        "default": "10"
+      }
+    ],
+    "template": "ffmpeg -i {input} -i {input2} -filter_complex \"overlay=W-w-{Décalage vertical}:H-h-{Décalage horizontal}\" {output}"
+  },
+  "Opération mathématique": {
+    "name": "Opération mathématique",
+    "display_name": "Opération mathématique",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": true,
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Formule",
+        "type": "text",
+        "default": "formule"
+      }
+    ],
+    "template": "set toto={Formule}\nset /a variablemath=!toto!\necho !variablemath!>{output}\nver > nul"
+  }
+}
