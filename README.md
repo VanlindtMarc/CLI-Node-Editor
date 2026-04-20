@@ -8,7 +8,7 @@ Le logiciel passe par une interface nodale.
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Pour le moment, seul le **batch** est optimisé et testé : bien que le script final puisse être écrit en 3 langages, les nœuds, eux, sont écrits en batchs.
 
-L'interface principe est divisée en trois : 
+L'interface principale est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés
 2. Une zone centrale montrant les nœuds et leurs liens
 3. Une colonne à droite où peut être généré le code et visualiser le code à exporter.
