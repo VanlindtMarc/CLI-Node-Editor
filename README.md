@@ -110,6 +110,10 @@ Chaque nœud peut être paramétré via quatre onglets.
 
 Indique le nombre de fichiers attendus en entrée et en sortie.
 
+Le port d'entrée principal sera appelé via {input}, le deuxième via {input2} et ainsi de suite.
+
+Pareil pour {output}.
+
 #### Paramètres
 
 ![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
