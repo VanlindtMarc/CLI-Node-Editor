@@ -138,7 +138,7 @@ Ce flux utilise **ffmpeg**.
 
 ![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png?raw=true)
 
-Ce flux utilise **ffmpeg** et **potrace**.
+Ce flux utilise **imagemagick** et **potrace**.
 
 1. Lorsque vous lancez le flux, il demandera la qualité voulue (en px) et où doit se situer la "coupure", c'est à dire, s'il ya un flou, à quel niveau de gris doit être réalisé la vectorisation.
 2. Le fichier est transformé en BMP, format de base de Potrace.
@@ -146,13 +146,11 @@ Ce flux utilise **ffmpeg** et **potrace**.
 4. L'image est vectorisée en SVG.
 5. Le résultat est sauvegardé au format SVG avec le nom d'origine de l'image.
 
-Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le principe de qualité plus compréhensible, en demandant une valeur de 1 à 16 :
-
-![CLI07-2](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI07-2.png?raw=true)
+Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le principe de qualité plus compréhensible, en demandant une valeur de 1 à 16.
 
 Le problème est que si l'on prend une photo en couleur, la vectorisation peut ne pas correspondre aux attentes.
 
-On peut donc créer un flux plus complexe créant cinq images : 
+On peut donc en même temps créer un flux plus complexe créant cinq images : 
 
 1. basée sur l'image en couleur
 2. basée sur une mise en noir et blanc
