@@ -1,6 +1,6 @@
 # CLI Node Editor
 
-Ce logiciel a pour but de générer automatiquement des fichiers **batch**, **bash** et **PowerShell** complexes faisant appel à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
+Ce logiciel a pour but de générer des fichiers **batch**, **bash** et **PowerShell** complexes faisant appel à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
 
 Le logiciel passe par une interface nodale.
 
@@ -8,12 +8,12 @@ Le logiciel passe par une interface nodale.
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Pour le moment, seul le **batch** est optimisé et testé : bien que le script final puisse être écrit en 3 langages, les nœuds, eux, sont écrits en batchs.
 
-L'interface principale est divisée en trois : 
+L'interface principe est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés
 2. Une zone centrale montrant les nœuds et leurs liens
-3. Une colonne à droite où peut être généré et visualisé le code à exporter.
+3. Une colonne à droite où peut être généré visualisé le code à exporter.
 
-![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png?raw=true)
+![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
 ---
 
@@ -25,13 +25,13 @@ Il est possible de créer trois sortes de flux :
 2. Tous les fichiers sont traités par un seul flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
-Cela est configurable via l'interface et l'utilisation de certains nœuds.
+Configurable via l'interface et l'utilisation de certains nœuds.
 
 ---
 
 ## Nœuds d'entrée
 
-![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png?raw=true)
+![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
 
 Il existe trois nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
@@ -76,7 +76,7 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 ## Outils CLI
 
-![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png?raw=true)
+![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png)
 
 Vous allez pouvoir utiliser tous les outils CLI que vous voulez.
 
@@ -92,7 +92,7 @@ Chaque nœud peut être paramétré via quatre onglets.
 
 #### Général 
 
-![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png?raw=true)
+![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
 * Nom du nœud : nom réel
 * Nom affiché : nom affiché dans les menus
@@ -106,19 +106,19 @@ Chaque nœud peut être paramétré via quatre onglets.
 
 #### Ports
 
-![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png?raw=true)
+![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
 
 Indique le nombre de fichiers attendus en entrée et en sortie.
 
 #### Paramètres
 
-![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png?raw=true)
+![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
 
 Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
 
 #### Template
 
-![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png?raw=true)
+![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
@@ -136,7 +136,7 @@ La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ## Watermark
 
-![CLI10](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI10.png?raw=true)
+![CLI10](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI10.png)
 
 Ce flux utilise **ffmpeg**.
 
@@ -148,7 +148,7 @@ Ce flux utilise **ffmpeg**.
 
 ## Vectorisation
 
-![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png?raw=true)
+![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
 
 Ce flux utilise **imagemagick** et **potrace**.
 
@@ -170,11 +170,11 @@ On peut donc en même temps créer un flux plus complexe créant cinq images :
 4. basée sur le canal vert
 5. basée sur le canal bleu
 
-![CLI08](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI08.png?raw=true)
+![CLI08](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI08.png)
 
 ## Modification image par traitement audio
 
-![CLI09](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI09.png?raw=true)
+![CLI09](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI09.png)
 
 Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts python persos**.
 
