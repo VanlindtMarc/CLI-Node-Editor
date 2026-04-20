@@ -50,13 +50,13 @@ On y indique simplement le nom et l'extension voulue.
 
 ---
 
-## Variables et opérations
+## Variables et opérations mathématiques
 
 Vous pouvez faire appel à deux nœuds permettant d'assigner des variables à votre flux.
 
 Dans chacun des cas, une fois une variable créée, vous pourrez y faire appel via ***{nom de la variable}***.
 
-### Opérations
+### Opérations mathématiques
 
 Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage Batch pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
 
