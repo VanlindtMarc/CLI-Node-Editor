@@ -45,11 +45,17 @@ On y indique simplement le nom et l'extension voulue.
 
 ---
 
-## Variables
+## Variables et opérations
 
 Vous pouvez faire appel à deux nœuds permettant d'assigner des variables à votre flux.
 
 Dans chacun des cas, une fois une variable créée, vous pourrez y faire appel via ***{nom de la variable}***.
+
+### Opérations
+
+Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage Batch pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
+
+Pour les calculs plus complexes, je vous conseille l'outil Qalculate.
 
 ### Variables d'entrée
 
@@ -147,7 +153,7 @@ On peut donc créer un flux plus complexe créant cinq images :
 4. basée sur le canal vert
 5. basée sur le canal bleu
 
-
+![CLI08](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI08.png?raw=true)
 
 
 
