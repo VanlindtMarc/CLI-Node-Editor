@@ -71,6 +71,8 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 ## Outils CLI
 
+![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png?raw=true)
+
 Vous allez pouvoir utiliser tous les outils CLI que vous voulez.
 
 Ils seront sauvés dans une base de données contenant :
@@ -117,7 +119,7 @@ La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ## Watermark
 
-![CLI05](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI05.png?raw=true)
+![CLI10](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI10.png?raw=true)
 
 Ce flux utilise **ffmpeg**.
 
@@ -166,7 +168,7 @@ Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts pyt
 3. On sépare le fichier d'origine en trois fichiers image correspondant aux trois canaux de couleurs
 4. Chaque couleur est transférée vers un spectrogramme audio dans un FLAC
 5. Chaque audio reçoit un écho différent
-6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris : uUne fois avec la résolution d'origine et une fois avec la résolution demandée
+6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris : une fois avec la résolution d'origine et une fois avec la résolution demandée
 7. On reconstruit deux images : une dans la résolution d'origine et une dans la résolution demandée
 
 Le but de ce flux est de reproduire plus fidèlement les effets de la télé analogique.
