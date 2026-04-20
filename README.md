@@ -141,7 +141,7 @@ Ce flux utilise **ffmpeg** et **potrace**.
 
 Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le principe de qualité plus compréhensible, en demandant une valeur de 1 à 16 :
 
-![CLI07](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI07.png?raw=true)
+![CLI07-2](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI07-2.png?raw=true)
 
 Le problème est que si l'on prend une photo en couleur, la vectorisation peut ne pas correspondre aux attentes.
 
@@ -155,8 +155,23 @@ On peut donc créer un flux plus complexe créant cinq images :
 
 ![CLI08](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI08.png?raw=true)
 
+## Modification image par traitement audio
 
+![CLI09](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI09.png?raw=true)
 
+Ce flux utilise ffmpeg, imagemagick, sox ainsi que des scripts python persos.
+
+1. On demande la taille du fichier image finale
+2. On va chercher la résolution de l'image d'origine pour en créer une variable
+3. On sépare le fichier d'origine en trois fichiers image correspondant aux trois canaux de couleurs
+4. Chaque couleur est transférée vers un spectrogramme audio dans un FLAC
+5. Chaque audio reçoit un écho différent
+6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris
+  6.1 Une fois avec la résolution d'origine
+  6.2 Une fois avec la résolution demandée
+7. On reconstruit deux images
+  7.1 Une dans la résolution d'origine
+  7.2 Une dans la résolution demandée
 
 
 
