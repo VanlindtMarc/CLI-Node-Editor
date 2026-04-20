@@ -166,12 +166,8 @@ Ce flux utilise ffmpeg, imagemagick, sox ainsi que des scripts python persos.
 3. On sépare le fichier d'origine en trois fichiers image correspondant aux trois canaux de couleurs
 4. Chaque couleur est transférée vers un spectrogramme audio dans un FLAC
 5. Chaque audio reçoit un écho différent
-6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris
-  6.1 Une fois avec la résolution d'origine
-  6.2 Une fois avec la résolution demandée
-7. On reconstruit deux images
-  7.1 Une dans la résolution d'origine
-  7.2 Une dans la résolution demandée
+6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris : uUne fois avec la résolution d'origine et une fois avec la résolution demandée
+7. On reconstruit deux images : une dans la résolution d'origine et une dans la résolution demandée
 
 
 
