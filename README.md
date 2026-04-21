@@ -194,7 +194,7 @@ Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts pyt
 
 Le but de ce flux est de reproduire plus fidèlement les effets de la télé analogique.
 
-## Transformer un BluRay (ou ISO ou Remux) en MKV
+## Transformer un  ISO ou Remux en MKV
 
 ![CLI17](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI17.png)
 
