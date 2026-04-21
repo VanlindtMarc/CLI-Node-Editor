@@ -91,7 +91,12 @@
   },
   "Qalculate": {
     "path": "C:/Program Files/Qalculate/qalc.exe",
-    "description": "Calculatrice en ligne de commande",
+    "description": "Qalculate",
+    "version_arg": "--version"
+  },
+  "MakeMKV": {
+    "path": "C:/Program Files (x86)/MakeMKV/makemkvcon64.exe",
+    "description": "",
     "version_arg": "--version"
   }
 }

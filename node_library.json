@@ -6690,7 +6690,7 @@
       ".txt"
     ],
     "description": "",
-    "color": "#95E1D3",
+    "color": "#99d8ff",
     "verified": true,
     "inputs": [],
     "outputs": [
@@ -6704,5 +6704,306 @@
       }
     ],
     "template": "set toto={Formule}\nset /a variablemath=!toto!\necho !variablemath!>{output}\nver > nul"
+  },
+  "ISO 2 MKV": {
+    "name": "ISO 2 MKV",
+    "display_name": "ISO 2 MKV",
+    "category": "HandBrake",
+    "subcategory": "Conversion",
+    "command": "HandBrakeCLI",
+    "output_extension": ".mkv",
+    "output_extension_choices": [
+      ".mkv"
+    ],
+    "description": "Conversion vidéo avec HandBrake",
+    "color": "#E17055",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Qualité",
+        "type": "choice",
+        "default": "21",
+        "choices": [
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26"
+        ]
+      },
+      {
+        "name": "Durée min",
+        "type": "number",
+        "default": "3600"
+      },
+      {
+        "name": "Hauteur Max",
+        "type": "choice",
+        "default": "1080",
+        "choices": [
+          "720",
+          "1080",
+          "2160"
+        ]
+      },
+      {
+        "name": "Encodeur",
+        "type": "choice",
+        "default": "nvenc_h265",
+        "choices": [
+          "nvenc_h265",
+          "nvenc_h264",
+          "x264",
+          "x265",
+          "svt_av1"
+        ]
+      },
+      {
+        "name": "Largeur Max",
+        "type": "choice",
+        "default": "1920",
+        "choices": [
+          "1280",
+          "1920",
+          "3840"
+        ]
+      }
+    ],
+    "template": "HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p1  --quality {Qualité} --all-audio  --all-subtitles  --aencoder copy  --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic"
+  },
+  "Iso to MKV": {
+    "name": "Iso to MKV",
+    "display_name": "ISO to MKV",
+    "category": "MakeMKV",
+    "subcategory": "",
+    "command": "MakeMKV",
+    "output_extension": ".mkv",
+    "output_extension_choices": [
+      ".mkv"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "MakeMKV mkv iso:{input} all {output}-MKV/"
+  },
+  "Choix": {
+    "name": "Choix",
+    "display_name": "Choix",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#99d8ff",
+    "verified": true,
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Question",
+        "type": "text",
+        "default": "Vous préférez :"
+      },
+      {
+        "name": "Proposition 1",
+        "type": "text",
+        "default": "bleu"
+      },
+      {
+        "name": "Proposition 2",
+        "type": "text",
+        "default": "rouge"
+      },
+      {
+        "name": "Proposition 3",
+        "type": "text",
+        "default": "vert"
+      },
+      {
+        "name": "Proposition 4",
+        "type": "text",
+        "default": "orange"
+      },
+      {
+        "name": "Proposition 5",
+        "type": "text",
+        "default": "jaune"
+      },
+      {
+        "name": "Proposition 6",
+        "type": "text",
+        "default": "violet"
+      },
+      {
+        "name": "Proposition 7",
+        "type": "text",
+        "default": "rose"
+      },
+      {
+        "name": "Proposition 8",
+        "type": "text",
+        "default": "turquoise"
+      }
+    ],
+    "template": "echo.\necho 1. {Proposition 1}\necho 2. {Proposition 2}\necho 3. {Proposition 3}\necho 4. {Proposition 4}\necho 5. {Proposition 5}\necho 6. {Proposition 6}\necho 7. {Proposition 7}\necho 8. {Proposition 8}\nchoice /C:12345678 /M \"{Question}\"\necho %ERRORLEVEL% > {output}\nver > nul"
+  },
+  "Choix - SI": {
+    "name": "Choix - SI",
+    "display_name": "Choix - Si",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#6da2cb",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Choix 1",
+        "type": "text",
+        "default": "bleu"
+      },
+      {
+        "name": "Choix 2",
+        "type": "text",
+        "default": "rouge"
+      },
+      {
+        "name": "Choix 3",
+        "type": "text",
+        "default": "vert"
+      },
+      {
+        "name": "Choix 4",
+        "type": "text",
+        "default": "orange"
+      },
+      {
+        "name": "Choix 5",
+        "type": "text",
+        "default": "jaune"
+      },
+      {
+        "name": "Choix 6",
+        "type": "text",
+        "default": "violet"
+      },
+      {
+        "name": "Choix 7",
+        "type": "text",
+        "default": "rose"
+      },
+      {
+        "name": "Choix 8",
+        "type": "text",
+        "default": "turquoise"
+      }
+    ],
+    "template": "@echo off\nset /p val=<{input}\n\nif \"%val%\"==\"1 \" echo {Choix 1} > {output}\nif \"%val%\"==\"2 \" echo {Choix 2} > {output}\nif \"%val%\"==\"3 \" echo {Choix 2} > {output}\nif \"%val%\"==\"4 \" echo {Choix 4} > {output}\nif \"%val%\"==\"5 \" echo {Choix 5} > {output}\nif \"%val%\"==\"6 \" echo {Choix 6} > {output}\nif \"%val%\"==\"7 \" echo {Choix 7} > {output}\nif \"%val%\"==\"8 \" echo {Choix 8} > {output}\nver > nul"
+  },
+  "ISO 2 MKV encodeur libre": {
+    "name": "ISO 2 MKV encodeur libre",
+    "display_name": "ISO 2 MKV encodeur libre",
+    "category": "HandBrake",
+    "subcategory": "Conversion",
+    "command": "HandBrakeCLI",
+    "output_extension": ".mkv",
+    "output_extension_choices": [
+      ".mkv"
+    ],
+    "description": "Conversion vidéo avec HandBrake",
+    "color": "#E17055",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Qualité",
+        "type": "text",
+        "default": "21",
+        "choices": [
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26"
+        ]
+      },
+      {
+        "name": "Durée min",
+        "type": "number",
+        "default": "3600"
+      },
+      {
+        "name": "Hauteur Max",
+        "type": "text",
+        "default": "1080",
+        "choices": [
+          "720",
+          "1080",
+          "2160"
+        ]
+      },
+      {
+        "name": "Encodeur",
+        "type": "text",
+        "default": "nvenc_h265"
+      },
+      {
+        "name": "Largeur Max",
+        "type": "text",
+        "default": "1920",
+        "choices": [
+          "1280",
+          "1920",
+          "3840"
+        ]
+      },
+      {
+        "name": "AudioEncodeur",
+        "type": "text",
+        "default": "copy"
+      }
+    ],
+    "template": "HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p1  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic"
   }
 }
