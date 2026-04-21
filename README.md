@@ -72,6 +72,14 @@ Certains nœuds peuvent renvoyer une valeur sauvegardée sous forme de fichier T
 
 Le nœud **Variables globales** peut créer des variables basées sur ces fichiers TXT, pouvant alors être utilisées dans toute l'interface.
 
+### Choix
+
+Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
+
+#### Choix - Si
+
+Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globable.
+
 ---
 
 ## Outils CLI
