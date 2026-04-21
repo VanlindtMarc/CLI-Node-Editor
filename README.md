@@ -104,6 +104,8 @@ Chaque nœud peut être paramétré via quatre onglets.
 * Description
 * Couleur hexa : couleur du nœud dans l'interface.
 
+
+
 #### Ports
 
 ![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
@@ -191,6 +193,13 @@ Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts pyt
 7. On reconstruit deux images : une dans la résolution d'origine et une dans la résolution demandée
 
 Le but de ce flux est de reproduire plus fidèlement les effets de la télé analogique.
+
+## Transformer un BluRay (ou ISO ou Remux) en MKV
+
+![CLI17](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI17.png)
+
+
+
 
 
 
