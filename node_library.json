@@ -7004,6 +7004,85 @@
         "default": "copy"
       }
     ],
-    "template": "HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p1  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic"
+    "template": "HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p4  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic --comb-detect --decomb"
+  },
+  "Calcul BPM": {
+    "name": "Calcul BPM",
+    "display_name": "Calcul BPM",
+    "category": "BPM Counter",
+    "subcategory": "",
+    "command": "BPM",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [],
+    "template": "BPM {input} > {output}"
+  },
+  "Math SI": {
+    "name": "Math SI",
+    "display_name": "Math SI",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Param 1",
+        "type": "text",
+        "default": "{input}"
+      },
+      {
+        "name": "Opérateur",
+        "type": "choice",
+        "default": "EQU",
+        "choices": [
+          "EQU",
+          "NEQ",
+          "LSS",
+          "LEQ",
+          "GTR",
+          "GEQ"
+        ]
+      },
+      {
+        "name": "Param 2",
+        "type": "text",
+        "default": "{input2}"
+      },
+      {
+        "name": "Alors",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Sinon",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "if {Param 1} {Opérateur} {Param 2} (\necho \"{Alors}\" > {output} ) ELSE (\necho \"{Sinon}\" > {output} )\n\nver>nul"
   }
 }

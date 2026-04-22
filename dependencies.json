@@ -64,11 +64,6 @@
     "description": "Transcription audio OpenAI",
     "version_arg": "--help"
   },
-  "image_to_flac": {
-    "path": "C:/Logiciels/Python/dist/ImageToFLAC.exe",
-    "description": "",
-    "version_arg": ""
-  },
   "ImageToFLAC": {
     "path": "C:/Logiciels/Python/dist/ImageToFLAC.exe",
     "description": "",
@@ -97,6 +92,11 @@
   "MakeMKV": {
     "path": "C:/Program Files (x86)/MakeMKV/makemkvcon64.exe",
     "description": "",
+    "version_arg": "--version"
+  },
+  "BPM": {
+    "path": "C:/Users/Marc/AppData/Local/Programs/Abyssmedia/BPM Counter/consolebpm.exe",
+    "description": "Compteur BPM",
     "version_arg": "--version"
   }
 }
