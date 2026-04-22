@@ -160,6 +160,16 @@ Ce flux utilise **ffmpeg**.
 4. Le Watermark est déposé en bas à droite de l'image, à 10 pixels de chaque bord. (ffmpeg)
 5. Le résultat est sauvegardé au format PNG sous le même nom que le fichier d'origine avec "-WM" à la fin.
 
+## Watermark 2
+
+![CLI18](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI18.png)
+
+Ici, nous pouvons voir un appel au nœud **Math SI** qui me dit si la photo est horizontale ou verticale.
+
+Si la largeur est plus grande ou égale à la hauteur, j'applique le watermark "horizontal.png".
+
+Si ce n'est pas le cas, j'applique le watermark "vertical.png".
+
 ## Vectorisation
 
 ![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
