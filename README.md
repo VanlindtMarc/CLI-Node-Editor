@@ -80,6 +80,18 @@ Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globable.
 
+### Math SI
+
+Ce noeud analyse deux entrées via l'un des opérateurs BATCH : 
+
+* **EQU** : "Equal", ou "égal"
+* **NEQ** : "Not Equal", ou "non égal"
+* **LSS** : "Less", ou "plus petit"
+* **LES** : "Less or equal", ou "plus petit ou égal"
+* **GTR** : "Greater", ou "plus grand"
+* **GEQ** : "Greater or equal", ou "plus grand ou égal"
+
+
 ---
 
 ## Outils CLI
