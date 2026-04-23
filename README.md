@@ -8,10 +8,10 @@ Le logiciel passe par une interface nodale.
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Pour le moment, seul le **batch** est optimisé et testé : bien que le script final puisse être écrit en 3 langages, les nœuds, eux, sont écrits en batchs.
 
-L'interface principe est divisée en trois : 
+L'interface principale est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés
 2. Une zone centrale montrant les nœuds et leurs liens
-3. Une colonne à droite où peut être généré visualisé le code à exporter.
+3. Une colonne à droite où peut être généré et visualisé le code à exporter.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
@@ -74,15 +74,17 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 ### Choix
 
+![CLI19](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI19.png)
+
 Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 #### Choix - Si
 
-Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globable.
+Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globale.
 
 ### Math SI
 
-Ce noeud analyse deux entrées via l'un des opérateurs BATCH : 
+Ce noeud analyse deux variables via l'un des opérateurs BATCH : 
 
 * **EQU** : "Equal", ou "égal"
 * **NEQ** : "Not Equal", ou "non égal"
@@ -90,7 +92,6 @@ Ce noeud analyse deux entrées via l'un des opérateurs BATCH :
 * **LES** : "Less or equal", ou "plus petit ou égal"
 * **GTR** : "Greater", ou "plus grand"
 * **GEQ** : "Greater or equal", ou "plus grand ou égal"
-
 
 ---
 
