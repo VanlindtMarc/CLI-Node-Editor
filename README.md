@@ -80,11 +80,15 @@ Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 #### Choix - Si
 
+![CLI19](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI19.png)
+
+Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globale.
+
+### Math SI
+
 ![CLI21](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI21.png)
 
-### Math SI if
-
-Ce noeud analyse deux variables via l'un des opérateurs BATCH : 
+Ce nœud analyse deux variables via l'un des opérateurs : 
 
 * **EQU** : "Equal", ou "égal"
 * **NEQ** : "Not Equal", ou "non égal"
