@@ -183,6 +183,12 @@ Si la largeur est plus grande ou égale à la hauteur, j'applique le watermark "
 
 Si ce n'est pas le cas, j'applique le watermark "vertical.png".
 
+## Watermark 3
+
+![CLI20](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI20.png)
+
+Nous faisons ici appel au nœud **Math SI if elseif** qui permet de faire appel aux trois possibilités afin d'affecter à chacune une valeur.
+
 ## Vectorisation
 
 ![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
