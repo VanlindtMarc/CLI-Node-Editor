@@ -82,7 +82,7 @@ Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globale.
 
-### Math SI
+### Math SI if
 
 Ce noeud analyse deux variables via l'un des opérateurs BATCH : 
 
@@ -92,6 +92,20 @@ Ce noeud analyse deux variables via l'un des opérateurs BATCH :
 * **LES** : "Less or equal", ou "plus petit ou égal"
 * **GTR** : "Greater", ou "plus grand"
 * **GEQ** : "Greater or equal", ou "plus grand ou égal"
+
+Il renverra alors la valeur si l'opération est vraie
+
+### Math SI if else
+
+idem mais permet de renvoyer une autre valeur si l'opération est fausse
+
+### Math SI if elseif
+
+idem mais renvoie trois valeurs : 
+
+1. si inférieur
+2. si égal
+3. si supérieur
 
 ---
 
