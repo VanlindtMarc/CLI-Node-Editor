@@ -74,8 +74,6 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 ### Choix
 
-![CLI19](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI19.png)
-
 Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 #### Choix - Si
