@@ -80,7 +80,7 @@ Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
 #### Choix - Si
 
-Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globale.
+![CLI21](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI21.png)
 
 ### Math SI if
 
