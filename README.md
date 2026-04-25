@@ -276,15 +276,17 @@ Ce flux utilise **HandBrake-CLI**.
 
 Nous allons ici utiliser le nœud **Switch** car les différents outils permettant de calculer le BPM et d'inscrire cette information en tant que tag dans un fichier différent selon le format.
 
-L'outil pour calculer le BPM ne fonctionne qu'avec les extensions WAV et MP3. Il faut donc transformer l'audio en MP3 avant le calcul.
+L'outil pour calculer le BPM ne fonctionne qu'avec les extensions **WAV** et **MP3**. Il faut donc transformer l'audio en **MP3** avant le calcul.
 
-
+En fonction du format, ce n'est pas le même outil qui est utilisé pour inscrire le tag, ffmpeg ayant des problèmes avec les flac.
 
 ## Calculer le BPM 2
 
 ![CLI24](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI24.png)
 
-Dans la première version, nous avions plusieurs appels au nœud **Calcul BPM**, 
+Dans la première version, nous avions plusieurs appels au nœud **Calcul BPM**.
+
+Ici, nous utilisons le nœud **Merge** afin de réunir les propositions du switch et ne garder que la condition remplie afin de suivre le flux.
 
 ## A venir 
 
