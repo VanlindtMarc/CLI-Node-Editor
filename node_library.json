@@ -6865,9 +6865,29 @@
         "name": "Proposition 8",
         "type": "text",
         "default": "turquoise"
+      },
+      {
+        "name": "Par défaut",
+        "type": "choice",
+        "default": "1",
+        "choices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      {
+        "name": "Timer",
+        "type": "number",
+        "default": "10"
       }
     ],
-    "template": "echo.\necho 1. {Proposition 1}\necho 2. {Proposition 2}\necho 3. {Proposition 3}\necho 4. {Proposition 4}\necho 5. {Proposition 5}\necho 6. {Proposition 6}\necho 7. {Proposition 7}\necho 8. {Proposition 8}\nchoice /C:12345678 /M \"{Question}\"\necho %ERRORLEVEL% > {output}\nver > nul"
+    "template": "echo.\necho 1. {Proposition 1}\necho 2. {Proposition 2}\necho 3. {Proposition 3}\necho 4. {Proposition 4}\necho 5. {Proposition 5}\necho 6. {Proposition 6}\necho 7. {Proposition 7}\necho 8. {Proposition 8}\nchoice /C:12345678 /D {Par défaut} /T {Timer} /M \"{Question}\"\necho %ERRORLEVEL% > {output}\nver > nul"
   },
   "Choix - SI": {
     "name": "Choix - SI",
@@ -7030,7 +7050,7 @@
   },
   "Math SI": {
     "name": "Math SI",
-    "display_name": "Math SI",
+    "display_name": "Math SI if else",
     "category": "Batch",
     "subcategory": "",
     "command": "",
@@ -7041,10 +7061,7 @@
     "description": "",
     "color": "#95E1D3",
     "verified": false,
-    "inputs": [
-      "file",
-      "file"
-    ],
+    "inputs": [],
     "outputs": [
       "file"
     ],
@@ -7052,7 +7069,7 @@
       {
         "name": "Param 1",
         "type": "text",
-        "default": "{input}"
+        "default": ""
       },
       {
         "name": "Opérateur",
@@ -7070,7 +7087,7 @@
       {
         "name": "Param 2",
         "type": "text",
-        "default": "{input2}"
+        "default": ""
       },
       {
         "name": "Alors",
@@ -7084,5 +7101,368 @@
       }
     ],
     "template": "if {Param 1} {Opérateur} {Param 2} (\necho \"{Alors}\" > {output} ) ELSE (\necho \"{Sinon}\" > {output} )\n\nver>nul"
+  },
+  "Switch": {
+    "name": "Switch",
+    "category": "Système",
+    "subcategory": "Contrôle",
+    "command": "",
+    "description": "Branchement conditionnel. Compare une valeur comme %INPUT_EXT% et route le fichier vers la première sortie correspondante, sinon vers Défaut.",
+    "color": "#F4D35E",
+    "verified": true,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file",
+      "file",
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Variable",
+        "type": "text",
+        "default": "%INPUT_EXT%"
+      },
+      {
+        "name": "Nombre de conditions",
+        "type": "number",
+        "default": "2"
+      },
+      {
+        "name": "Opérateur 1",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 1",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 1",
+        "type": "text",
+        "default": "Cas 1"
+      },
+      {
+        "name": "Opérateur 2",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 2",
+        "type": "text",
+        "default": "Cas 2"
+      },
+      {
+        "name": "Opérateur 3",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 3",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 3",
+        "type": "text",
+        "default": "Cas 3"
+      },
+      {
+        "name": "Opérateur 4",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 4",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 4",
+        "type": "text",
+        "default": "Cas 4"
+      },
+      {
+        "name": "Opérateur 5",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 5",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 5",
+        "type": "text",
+        "default": "Cas 5"
+      },
+      {
+        "name": "Opérateur 6",
+        "type": "choice",
+        "default": "==",
+        "choices": [
+          ">",
+          ">=",
+          "<",
+          "<=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "name": "Valeur 6",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Label sortie 6",
+        "type": "text",
+        "default": "Cas 6"
+      }
+    ],
+    "template": "",
+    "output_extension": "",
+    "display_name": "Switch",
+    "output_extension_choices": [
+      ".tmp"
+    ]
+  },
+  "Merge": {
+    "name": "Merge",
+    "display_name": "Merge",
+    "category": "Système",
+    "subcategory": "Contrôle",
+    "command": "",
+    "description": "Fusionne plusieurs branches en un seul flux. La première entrée disponible est renvoyée vers la sortie.",
+    "color": "#9BC1BC",
+    "verified": true,
+    "inputs": [
+      "file",
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Nombre d'entrées",
+        "type": "number",
+        "default": "2"
+      }
+    ],
+    "template": "",
+    "output_extension": "",
+    "output_extension_choices": [
+      ".tmp"
+    ]
+  },
+  "Math SI 3": {
+    "name": "Math SI 3",
+    "display_name": "Math SI if elseif",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Param 1",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Param 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Si égal",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Si plus petit",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Si plus grand",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "if {Param 1} GTR {Param 2} goto plusgrand\nif {Param 1} LSS {Param 2} goto pluspetit\nif {Param 1} EQU {Param 2} goto egal\n\n:plusgrand\necho \"{Si plus grand}\" > {output}\ngoto fin\n:pluspetit\necho \"{Si plus petit}\" > {output}\ngoto fin\n:egal\necho \"{Si égal}\" > {output}\ngoto fin\n:fin"
+  },
+  "Math SI if": {
+    "name": "Math SI if",
+    "display_name": "Math SI if",
+    "category": "Batch",
+    "subcategory": "",
+    "command": "",
+    "output_extension": ".txt",
+    "output_extension_choices": [
+      ".txt"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Param 1",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Opérateur",
+        "type": "choice",
+        "default": "EQU",
+        "choices": [
+          "EQU",
+          "NEQ",
+          "LSS",
+          "LEQ",
+          "GTR",
+          "GEQ"
+        ]
+      },
+      {
+        "name": "Param 2",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Alors",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "if {Param 1} {Opérateur} {Param 2} (\necho \"{Alors}\" > {output} )\n\nver>nul"
+  },
+  "Ajouter Tag": {
+    "name": "Ajouter Tag",
+    "display_name": "Ajouter Tag",
+    "category": "FFmpeg",
+    "subcategory": "Audio",
+    "command": "ffmpeg",
+    "output_extension": ".%INPUT_EXT%",
+    "output_extension_choices": [
+      ".%INPUT_EXT%"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Nom du TAG (sans espace)",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "ffmpeg -i {input} -metadata {Nom du TAG (sans espace)}={Valeur} -codec copy {output}\npause"
+  },
+  "MetaFLAC Ajouter Tag": {
+    "name": "MetaFLAC Ajouter Tag",
+    "display_name": "Ajouter Tag",
+    "category": "MetaFLAC",
+    "subcategory": "Audio",
+    "command": "metaflac",
+    "output_extension": "%INPUT_EXT%",
+    "output_extension_choices": [
+      "%INPUT_EXT%"
+    ],
+    "description": "",
+    "color": "#95E1D3",
+    "verified": false,
+    "inputs": [
+      "file"
+    ],
+    "outputs": [
+      "file"
+    ],
+    "parameters": [
+      {
+        "name": "Nom du TAG (sans espace)",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "name": "Valeur",
+        "type": "text",
+        "default": ""
+      }
+    ],
+    "template": "copy {input} {output}\nmetaflac --remove-tag=\"{Nom du TAG (sans espace)}\" {output}\nmetaflac --set-tag=\"{Nom du TAG (sans espace)}={Valeur}\" {output}"
   }
 }

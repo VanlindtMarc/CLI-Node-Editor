@@ -98,5 +98,10 @@
     "path": "C:/Users/Marc/AppData/Local/Programs/Abyssmedia/BPM Counter/consolebpm.exe",
     "description": "Compteur BPM",
     "version_arg": "--version"
+  },
+  "metaflac": {
+    "path": "C:/Logiciels/flac-1.5.0-win/Win64/metaflac.exe",
+    "description": "",
+    "version_arg": "--version"
   }
 }

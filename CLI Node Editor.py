@@ -76,6 +76,12 @@ def remove_connection_safely(scene, conn):
     if conn is None:
         return
 
+    dirty_rect = None
+    try:
+        dirty_rect = conn.sceneBoundingRect().adjusted(-8, -8, 8, 8)
+    except RuntimeError:
+        dirty_rect = None
+
     try:
         if scene is not None and conn.scene() is scene:
             scene.removeItem(conn)
@@ -101,6 +107,15 @@ def remove_connection_safely(scene, conn):
     except RuntimeError:
         pass
 
+    try:
+        if scene is not None:
+            if dirty_rect is not None:
+                scene.update(dirty_rect)
+            else:
+                scene.update()
+    except RuntimeError:
+        pass
+
 
 def quote_shell_string(value):
     """Quote une chaîne pour Bash avec apostrophes sûres."""
@@ -115,6 +130,10 @@ GLOBAL_VARIABLES_MAX_INPUTS = 12
 GLOBAL_VARIABLES_MAX_SLOTS = 12
 INPUT_VARIABLES_NODE_NAME = "Variables d'entrée"
 INPUT_VARIABLES_MAX_SLOTS = 12
+SWITCH_NODE_NAME = "Switch"
+SWITCH_MAX_CONDITIONS = 6
+MERGE_NODE_NAME = "Merge"
+MERGE_MAX_INPUTS = 6
 
 
 def build_global_variables_parameters():
@@ -142,6 +161,28 @@ def build_input_variables_parameters():
             {"name": f"Valeur par défaut {index}", "type": "text", "default": ""}
         ])
     return parameters
+
+
+def build_switch_parameters():
+    """Construit les paramètres du noeud Switch."""
+    parameters = [
+        {"name": "Variable", "type": "text", "default": "%INPUT_EXT%"},
+        {"name": "Nombre de conditions", "type": "number", "default": "2"}
+    ]
+    for index in range(1, SWITCH_MAX_CONDITIONS + 1):
+        parameters.extend([
+            {"name": f"Opérateur {index}", "type": "choice", "default": "==", "choices": [">", ">=", "<", "<=", "==", "!="]},
+            {"name": f"Valeur {index}", "type": "text", "default": ""},
+            {"name": f"Label sortie {index}", "type": "text", "default": f"Cas {index}"}
+        ])
+    return parameters
+
+
+def build_merge_parameters():
+    """Construit les paramètres du noeud Merge."""
+    return [
+        {"name": "Nombre d'entrées", "type": "number", "default": "2"}
+    ]
 
 
 class DependencyManager:
@@ -400,6 +441,32 @@ class NodeLibrary:
                 "parameters": build_input_variables_parameters(),
                 "template": "",
                 "output_extension": ""
+            },
+            SWITCH_NODE_NAME: {
+                "name": SWITCH_NODE_NAME,
+                "category": "Système",
+                "command": "",
+                "description": "Branchement conditionnel. Compare une valeur comme %INPUT_EXT% et route le fichier vers la première sortie correspondante, sinon vers Défaut.",
+                "color": "#F4D35E",
+                "verified": True,
+                "inputs": ["file"],
+                "outputs": ["file", "file", "file"],
+                "parameters": build_switch_parameters(),
+                "template": "",
+                "output_extension": ""
+            },
+            MERGE_NODE_NAME: {
+                "name": MERGE_NODE_NAME,
+                "category": "Système",
+                "command": "",
+                "description": "Fusionne plusieurs branches en un seul flux. La première entrée disponible est renvoyée vers la sortie.",
+                "color": "#9BC1BC",
+                "verified": True,
+                "inputs": ["file", "file"],
+                "outputs": ["file"],
+                "parameters": build_merge_parameters(),
+                "template": "",
+                "output_extension": ""
             }
         }
 
@@ -440,6 +507,43 @@ class NodeLibrary:
             normalized['category'] = 'Système'
             normalized['subcategory'] = 'Variables'
             normalized['verified'] = True
+        elif normalized.get('name') == SWITCH_NODE_NAME:
+            normalized['category'] = 'Système'
+            normalized['subcategory'] = 'Contrôle'
+            normalized['command'] = ''
+            normalized['description'] = (
+                "Branchement conditionnel. Compare une valeur comme %INPUT_EXT% "
+                "et route le fichier vers la première sortie correspondante, "
+                "sinon vers Défaut."
+            )
+            normalized['color'] = '#F4D35E'
+            normalized['verified'] = True
+            normalized['inputs'] = ['file']
+            normalized['parameters'] = build_switch_parameters()
+            try:
+                condition_count = int(normalized.get('parameters', [{}])[1].get('default', '2') or 2)
+            except Exception:
+                condition_count = 2
+            condition_count = max(1, min(SWITCH_MAX_CONDITIONS, condition_count))
+            normalized['outputs'] = ['file'] * (condition_count + 1)
+        elif normalized.get('name') == MERGE_NODE_NAME:
+            normalized['category'] = 'Système'
+            normalized['subcategory'] = 'Contrôle'
+            normalized['command'] = ''
+            normalized['description'] = (
+                "Fusionne plusieurs branches en un seul flux. La première "
+                "entrée disponible est renvoyée vers la sortie."
+            )
+            normalized['color'] = '#9BC1BC'
+            normalized['verified'] = True
+            normalized['parameters'] = build_merge_parameters()
+            try:
+                input_count = int(normalized.get('parameters', [{}])[0].get('default', '2') or 2)
+            except Exception:
+                input_count = 2
+            input_count = max(2, min(MERGE_MAX_INPUTS, input_count))
+            normalized['inputs'] = ['file'] * input_count
+            normalized['outputs'] = ['file']
         elif normalized.get('name') in ['Fichier Input', 'Fichier Source', 'Fichier Destination']:
             normalized['verified'] = True
         if 'display_name' not in normalized:
@@ -737,6 +841,7 @@ class Connection(QGraphicsItem):
         self.setZValue(-1)
         self.setAcceptHoverEvents(True)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
+        self.setAcceptedMouseButtons(Qt.MouseButton.LeftButton | Qt.MouseButton.RightButton)
         
     def boundingRect(self):
         """Rectangle englobant pour le rendu"""
@@ -908,6 +1013,28 @@ class Connection(QGraphicsItem):
         self.is_hovered = False
         self.update()
         super().hoverLeaveEvent(event)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.RightButton:
+            self.setSelected(True)
+            event.accept()
+            return
+        super().mousePressEvent(event)
+
+    def contextMenuEvent(self, event):
+        menu = QMenu()
+        delete_action = menu.addAction("Supprimer la liaison")
+        action = menu.exec(event.screenPos())
+        if action == delete_action:
+            scene = self.scene()
+            remove_connection_safely(scene, self)
+            if scene is not None:
+                main_window = scene.views()[0].window() if scene.views() else None
+                if main_window is not None and hasattr(main_window, 'mark_workflow_dirty'):
+                    main_window.mark_workflow_dirty()
+            event.accept()
+            return
+        super().contextMenuEvent(event)
     
     def update_position(self):
         """Met à jour la position de la courbe"""
@@ -1260,6 +1387,21 @@ class Node(QGraphicsItem):
     def _is_input_variables_node(self):
         return self.node_data.get('name') == INPUT_VARIABLES_NODE_NAME
 
+    def _is_switch_node(self):
+        return self.node_data.get('name') == SWITCH_NODE_NAME
+
+    def _is_merge_node(self):
+        return self.node_data.get('name') == MERGE_NODE_NAME
+
+    def _has_dynamic_ports(self):
+        return (
+            self._is_multi_file_node()
+            or self._is_global_variables_node()
+            or self._is_input_variables_node()
+            or self._is_switch_node()
+            or self._is_merge_node()
+        )
+
     def _get_multi_file_output_count(self):
         value_source = self.parameters.get('Nombre de fichiers', '2')
         main_window = self.get_main_window()
@@ -1293,9 +1435,31 @@ class Node(QGraphicsItem):
             value = 2
         return max(1, min(INPUT_VARIABLES_MAX_SLOTS, value))
 
+    def _get_switch_condition_count(self):
+        value_source = self.parameters.get('Nombre de conditions', '2')
+        main_window = self.get_main_window()
+        if main_window is not None:
+            value_source = main_window.resolve_node_parameter_value(self, 'Nombre de conditions')
+        try:
+            value = int(value_source or 2)
+        except Exception:
+            value = 2
+        return max(1, min(SWITCH_MAX_CONDITIONS, value))
+
+    def _get_merge_input_count(self):
+        value_source = self.parameters.get("Nombre d'entrées", '2')
+        main_window = self.get_main_window()
+        if main_window is not None:
+            value_source = main_window.resolve_node_parameter_value(self, "Nombre d'entrées")
+        try:
+            value = int(value_source or 2)
+        except Exception:
+            value = 2
+        return max(2, min(MERGE_MAX_INPUTS, value))
+
     def _get_visible_parameters(self):
         parameters = self.node_data.get('parameters', [])
-        if not self._is_global_variables_node() and not self._is_input_variables_node():
+        if not self._is_global_variables_node() and not self._is_input_variables_node() and not self._is_switch_node() and not self._is_merge_node():
             return parameters
 
         visible = [parameters[0]] if parameters else []
@@ -1306,7 +1470,7 @@ class Node(QGraphicsItem):
                     next((param for param in parameters if param.get('name') == f'Nom {index}'), None),
                     next((param for param in parameters if param.get('name') == f'Valeur {index}'), None)
                 ])
-        else:
+        elif self._is_input_variables_node():
             count = self._get_input_variables_count()
             for index in range(1, count + 1):
                 visible.extend([
@@ -1314,16 +1478,31 @@ class Node(QGraphicsItem):
                     next((param for param in parameters if param.get('name') == f'Nom {index}'), None),
                     next((param for param in parameters if param.get('name') == f'Valeur par défaut {index}'), None)
                 ])
+        elif self._is_switch_node():
+            visible.append(parameters[1] if len(parameters) > 1 else None)
+            count = self._get_switch_condition_count()
+            for index in range(1, count + 1):
+                visible.extend([
+                    next((param for param in parameters if param.get('name') == f'Opérateur {index}'), None),
+                    next((param for param in parameters if param.get('name') == f'Valeur {index}'), None),
+                    next((param for param in parameters if param.get('name') == f'Label sortie {index}'), None)
+                ])
+        else:
+            return visible
         return [param for param in visible if param]
 
     def _get_effective_inputs(self):
         if self._is_global_variables_node():
             return ['file'] * self._get_global_variables_count()
+        if self._is_merge_node():
+            return ['file'] * self._get_merge_input_count()
         return self.node_data.get('inputs', [])
 
     def _get_effective_outputs(self):
         if self._is_multi_file_node():
             return ['file'] * self._get_multi_file_output_count()
+        if self._is_switch_node():
+            return ['file'] * (self._get_switch_condition_count() + 1)
         return self.node_data.get('outputs', [])
 
     def _remove_port(self, port):
@@ -1333,6 +1512,7 @@ class Node(QGraphicsItem):
             remove_connection_safely(self.scene(), conn)
         if self.scene():
             self.scene().removeItem(port)
+            self.scene().update()
         port.setParentItem(None)
 
     def _recalculate_geometry(self):
@@ -1389,6 +1569,10 @@ class Node(QGraphicsItem):
         }
         if self._is_multi_file_node() and param_name == 'Nombre de fichiers':
             self._rebuild_ports()
+        elif self._is_switch_node() and param_name == 'Nombre de conditions':
+            self._rebuild_ports()
+        elif self._is_merge_node() and param_name == "Nombre d'entrées":
+            self._rebuild_ports()
         self.refresh_parameter_widgets()
         main_window = self.get_main_window()
         if main_window is not None:
@@ -1399,6 +1583,10 @@ class Node(QGraphicsItem):
         if param_name in self.parameter_links:
             del self.parameter_links[param_name]
             if self._is_multi_file_node() and param_name == 'Nombre de fichiers':
+                self._rebuild_ports()
+            elif self._is_switch_node() and param_name == 'Nombre de conditions':
+                self._rebuild_ports()
+            elif self._is_merge_node() and param_name == "Nombre d'entrées":
                 self._rebuild_ports()
             self.refresh_parameter_widgets()
             main_window = self.get_main_window()
@@ -1494,6 +1682,12 @@ class Node(QGraphicsItem):
         if self._is_multi_file_node() and param_name == 'Nombre de fichiers':
             self._rebuild_ports()
             self.schedule_parameter_widgets_rebuild()
+        elif self._is_switch_node() and param_name == 'Nombre de conditions':
+            self._rebuild_ports()
+            self.schedule_parameter_widgets_rebuild()
+        elif self._is_merge_node() and param_name == "Nombre d'entrées":
+            self._rebuild_ports()
+            self.schedule_parameter_widgets_rebuild()
         elif (self._is_global_variables_node() or self._is_input_variables_node()) and param_name == 'Nombre de variables':
             self._rebuild_ports()
             self.schedule_parameter_widgets_rebuild()
@@ -1519,9 +1713,18 @@ class Node(QGraphicsItem):
 
     def _should_show_output_format(self):
         """Affiche le format de sortie pour les noeuds qui produisent un fichier intermédiaire."""
-        return bool(self.node_data.get('outputs')) and self.node_data.get('name') not in [
-            'Fichier Input', 'Fichier Source', 'Fichier Destination', MULTI_FILE_NODE_NAME
-        ]
+        if self.node_data.get('name') in [
+            'Fichier Input',
+            'Fichier Source',
+            'Fichier Destination',
+            MULTI_FILE_NODE_NAME,
+            SWITCH_NODE_NAME,
+            MERGE_NODE_NAME,
+            GLOBAL_VARIABLES_NODE_NAME,
+            INPUT_VARIABLES_NODE_NAME
+        ]:
+            return False
+        return bool(self.node_data.get('outputs'))
     
     def itemChange(self, change, value):
         if change == QGraphicsItem.GraphicsItemChange.ItemPositionHasChanged:
@@ -1637,9 +1840,9 @@ class Node(QGraphicsItem):
     def duplicate_node(self):
         """Duplique le noeud"""
         new_node = Node(self.node_data, self.pos().x() + 30, self.pos().y() + 30)
-        new_node.parameters = self.parameters.copy()
+        new_node.parameters.update(self.parameters.copy())
         new_node.parameter_links = {key: value.copy() for key, value in self.parameter_links.items()}
-        if new_node._is_multi_file_node():
+        if new_node._has_dynamic_ports():
             new_node._rebuild_ports()
         new_node.output_extension = self.output_extension
         self.scene().addItem(new_node)
@@ -1805,7 +2008,7 @@ class NodeConfigDialog(QDialog):
             else:
                 self.node.parameters[param_name] = widget.text()
         
-        if self.node._is_multi_file_node():
+        if self.node._has_dynamic_ports():
             self.node._rebuild_ports()
 
         # Mettre à jour les widgets sur le noeud
@@ -1953,6 +2156,7 @@ class NodeEditorScene(QGraphicsScene):
             
             self.temp_connection = None
             self.start_port = None
+            self.update()
         
         super().mouseReleaseEvent(event)
     
@@ -3490,9 +3694,9 @@ class MainWindow(QMainWindow):
                 node = Node(library_node, node_data['x'], node_data['y'])
                 node.node_uid = node_data.get('node_uid', node.node_uid)
                 node.node_data['verified'] = bool(node_data.get('verified', node.node_data.get('verified', False)))
-                node.parameters = node_data.get('parameters', {})
+                node.parameters.update(node_data.get('parameters', {}))
                 node.parameter_links = node_data.get('parameter_links', {})
-                if node._is_multi_file_node():
+                if node._has_dynamic_ports():
                     node._rebuild_ports()
                 node.output_extension = normalize_output_extension(
                     node_data.get('output_extension', node.output_extension)
@@ -3658,6 +3862,12 @@ class MainWindow(QMainWindow):
     def _is_multi_file_node(self, node):
         return node.node_data['name'] == MULTI_FILE_NODE_NAME
 
+    def _is_switch_node(self, node):
+        return node.node_data['name'] == SWITCH_NODE_NAME
+
+    def _is_merge_node(self, node):
+        return node.node_data['name'] == MERGE_NODE_NAME
+
     def _make_output_key(self, node, port_index=0):
         return (node.node_uid, port_index)
 
@@ -3814,6 +4024,120 @@ class MainWindow(QMainWindow):
             })
         return specs
 
+    def _get_switch_specs(self, node, resolved_params=None):
+        if not self._is_switch_node(node):
+            return []
+
+        resolved_params = resolved_params or self.get_resolved_node_parameters(node)
+        try:
+            count = int(resolved_params.get('Nombre de conditions', '2') or 2)
+        except Exception:
+            count = 2
+        count = max(1, min(SWITCH_MAX_CONDITIONS, count))
+
+        specs = []
+        for index in range(1, count + 1):
+            specs.append({
+                "operator": str(resolved_params.get(f'Opérateur {index}', '==') or '==').strip() or '==',
+                "value": str(resolved_params.get(f'Valeur {index}', '') or ''),
+                "label": str(resolved_params.get(f'Label sortie {index}', f'Cas {index}') or f'Cas {index}').strip() or f'Cas {index}'
+            })
+        return specs
+
+    def _strip_wrapping_quotes(self, value):
+        value = str(value or "")
+        if len(value) >= 2 and value[0] == '"' and value[-1] == '"':
+            return value[1:-1]
+        return value
+
+    def _extract_batch_runtime_var(self, expression):
+        expression = str(expression or "").strip()
+        if expression.startswith('"!') and expression.endswith('!"'):
+            return expression[2:-2]
+        if expression.startswith('!') and expression.endswith('!'):
+            return expression[1:-1]
+        return None
+
+    def _extract_bash_runtime_var(self, expression):
+        expression = str(expression or "").strip()
+        if expression.startswith('"${') and expression.endswith('}"'):
+            return expression[3:-2]
+        if expression.startswith('${') and expression.endswith('}'):
+            return expression[2:-1]
+        return None
+
+    def _extract_powershell_runtime_var(self, expression):
+        expression = str(expression or "").strip()
+        if expression.startswith('$') and expression[1:].replace('_', '').isalnum():
+            return expression
+        return None
+
+    def _build_batch_node_input_guard(self, input_files):
+        checks = []
+        for input_file in input_files:
+            var_name = self._extract_batch_runtime_var(input_file)
+            if var_name:
+                checks.append(f'if not defined {var_name} set "NODE_READY=0"')
+        return checks
+
+    def _build_bash_node_input_guard(self, input_files):
+        conditions = []
+        for input_file in input_files:
+            var_name = self._extract_bash_runtime_var(input_file)
+            if var_name:
+                conditions.append(f'[ -n "${{{var_name}:-}}" ]')
+        return conditions
+
+    def _build_powershell_node_input_guard(self, input_files):
+        conditions = []
+        for input_file in input_files:
+            var_name = self._extract_powershell_runtime_var(input_file)
+            if var_name:
+                conditions.append(f'(-not [string]::IsNullOrWhiteSpace({var_name}))')
+        return conditions
+
+    def _get_switch_batch_ps_operator(self, operator):
+        mapping = {
+            "==": "-eq",
+            "!=": "-ne",
+            ">": "-gt",
+            ">=": "-ge",
+            "<": "-lt",
+            "<=": "-le"
+        }
+        return mapping.get(operator, "-eq")
+
+    def _build_bash_switch_condition(self, left_var, right_var, operator):
+        left_ref = f'${{{left_var}}}'
+        right_ref = f'${{{right_var}}}'
+        if operator == "==":
+            return f'[[ "{left_ref}" == "{right_ref}" ]]'
+        if operator == "!=":
+            return f'[[ "{left_ref}" != "{right_ref}" ]]'
+        if operator == ">":
+            return f'[[ "{left_ref}" > "{right_ref}" ]]'
+        if operator == ">=":
+            return f'[[ "{left_ref}" == "{right_ref}" || "{left_ref}" > "{right_ref}" ]]'
+        if operator == "<":
+            return f'[[ "{left_ref}" < "{right_ref}" ]]'
+        if operator == "<=":
+            return f'[[ "{left_ref}" == "{right_ref}" || "{left_ref}" < "{right_ref}" ]]'
+        return f'[[ "{left_ref}" == "{right_ref}" ]]'
+
+    def _build_powershell_switch_condition(self, left_expr, right_expr, operator):
+        mapping = {
+            "==": "-eq",
+            "!=": "-ne",
+            ">": "-gt",
+            ">=": "-ge",
+            "<": "-lt",
+            "<=": "-le"
+        }
+        return f'({left_expr} {mapping.get(operator, "-eq")} {right_expr})'
+
+    def _make_runtime_output_var_name(self, node, port_index=0):
+        return f"NODE_OUT_{node.execution_order or 0}_{port_index}"
+
     def _get_required_input_count(self, execution_order):
         count = 0
         for node in execution_order:
@@ -3895,28 +4219,36 @@ class MainWindow(QMainWindow):
         return nodes_list, execution_order
 
     def _replace_leading_command(self, cmd, command_name, replacement):
-        """Remplace la commande de tête par le chemin complet si le template démarre avec cet outil."""
+        """Remplace la commande de tête par le chemin complet sur chaque ligne du template."""
         cmd = str(cmd)
         command_name = str(command_name or "").strip()
         if not command_name:
             return cmd
 
-        stripped = cmd.lstrip()
-        leading_spaces = cmd[:len(cmd) - len(stripped)]
         quoted_name = f'"{command_name}"'
+        replaced_lines = []
 
-        if stripped.startswith(quoted_name):
-            return leading_spaces + replacement + stripped[len(quoted_name):]
+        for line in cmd.splitlines():
+            stripped = line.lstrip()
+            leading_spaces = line[:len(line) - len(stripped)]
 
-        if stripped == command_name:
-            return leading_spaces + replacement
+            if stripped.startswith(quoted_name):
+                replaced_lines.append(leading_spaces + replacement + stripped[len(quoted_name):])
+                continue
 
-        if stripped.startswith(command_name):
-            next_index = len(command_name)
-            if next_index == len(stripped) or stripped[next_index].isspace():
-                return leading_spaces + replacement + stripped[next_index:]
+            if stripped == command_name:
+                replaced_lines.append(leading_spaces + replacement)
+                continue
 
-        return cmd
+            if stripped.startswith(command_name):
+                next_index = len(command_name)
+                if next_index == len(stripped) or stripped[next_index].isspace():
+                    replaced_lines.append(leading_spaces + replacement + stripped[next_index:])
+                    continue
+
+            replaced_lines.append(line)
+
+        return "\n".join(replaced_lines)
 
     def _get_script_preview_content(self):
         """Construit le contenu du script correspondant au workflow courant."""
@@ -3982,6 +4314,19 @@ class MainWindow(QMainWindow):
                     )
                     for param_name, param_value in resolved_params.items()
                 }
+                output_var_name = self._make_runtime_output_var_name(node, 0)
+                if node.output_ports and node.node_data['name'] not in ['Fichier Input', 'Fichier Source'] and not self._is_multi_file_node(node) and not self._is_switch_node(node):
+                    lines.append(f'set "{output_var_name}="')
+                if node.node_data['name'] == GLOBAL_VARIABLES_NODE_NAME:
+                    for var_name, _var_value, _slot_index in self._get_global_variable_entries(node, resolved_params):
+                        env_name = f"GLOBAL_{self._sanitize_global_name(var_name)}"
+                        lines.append(f'set "{env_name}="')
+                skip_label = f"SKIP_NODE_{node.execution_order or 0}"
+                should_guard_inputs = bool(node.input_ports) and not self._is_merge_node(node)
+                if should_guard_inputs:
+                    lines.append('set "NODE_READY=1"')
+                    lines.extend(self._build_batch_node_input_guard(input_files))
+                    lines.append(f'if "!NODE_READY!"=="0" goto {skip_label}')
 
                 if node.node_data['name'] == 'Fichier Input':
                     if mode == "single_flow":
@@ -4026,10 +4371,52 @@ class MainWindow(QMainWindow):
 
                         input_node_index += len(specs)
 
+                elif self._is_switch_node(node):
+                    specs = self._get_switch_specs(node, resolved_params)
+                    switch_prefix = f"SWITCH_{node.execution_order or 0}"
+                    switch_input_var = f"{switch_prefix}_INPUT"
+                    switch_value_var = f"{switch_prefix}_VALUE"
+                    switch_matched_var = f"{switch_prefix}_MATCHED"
+                    switch_input_value = self._strip_wrapping_quotes(input_files[0]) if input_files else ""
+
+                    lines.append(f'set "{switch_input_var}={switch_input_value}"')
+                    lines.append(f'set "{switch_value_var}={rendered_params.get("Variable", "!INPUT_EXT!")}"')
+                    lines.append(f'set "{switch_matched_var}="')
+
+                    for spec_index, spec in enumerate(specs, start=1):
+                        out_var = f"{switch_prefix}_OUT_{spec_index - 1}"
+                        test_var = f"{switch_prefix}_TEST_{spec_index}"
+                        compare_value = str(rendered_params.get(f'Valeur {spec_index}', spec['value']) or '').replace("'", "''")
+                        compare_operator = self._get_switch_batch_ps_operator(spec['operator'])
+                        lines.append(f'set "{out_var}="')
+                        lines.append(f'set "{test_var}=0"')
+                        lines.append(
+                            f'for /f %%R in (\'powershell -NoProfile -Command "$left = $env:{switch_value_var}; $right = \'{compare_value}\'; if ($left {compare_operator} $right) {{ \'1\' }} else {{ \'0\' }}"\') do set "{test_var}=%%R"'
+                        )
+                        lines.append(
+                            f'if not defined {switch_matched_var} if "!{test_var}!"=="1" (set "{out_var}=!{switch_input_var}!" & set "{switch_matched_var}=1")'
+                        )
+                        node_outputs[self._make_output_key(node, spec_index - 1)] = f'"!{out_var}!"'
+
+                    default_out_var = f"{switch_prefix}_OUT_{len(specs)}"
+                    lines.append(f'set "{default_out_var}="')
+                    lines.append(f'if not defined {switch_matched_var} set "{default_out_var}=!{switch_input_var}!"')
+                    node_outputs[self._make_output_key(node, len(specs))] = f'"!{default_out_var}!"'
+
+                elif self._is_merge_node(node):
+                    node_outputs[self._make_output_key(node, 0)] = f'"!{output_var_name}!"'
+                    for input_file in input_files:
+                        runtime_var = self._extract_batch_runtime_var(input_file)
+                        if runtime_var:
+                            lines.append(f'if not defined {output_var_name} if defined {runtime_var} set "{output_var_name}=!{runtime_var}!"')
+                        else:
+                            lines.append(f'if not defined {output_var_name} set "{output_var_name}={self._strip_wrapping_quotes(input_file)}"')
+
                 elif node.node_data['name'] == 'Fichier Source':
                     output_file = rendered_params.get('Chemin fichier', '')
                     if output_file:
-                        node_outputs[self._make_output_key(node, 0)] = f'"{output_file}"'
+                        lines.append(f'set "{output_var_name}={output_file}"')
+                        node_outputs[self._make_output_key(node, 0)] = f'"!{output_var_name}!"'
                     else:
                         lines.append("echo ERREUR: Aucun fichier source defini!")
                         lines.append("goto FLOW_ERROR")
@@ -4073,12 +4460,14 @@ class MainWindow(QMainWindow):
                     temp_counter += 1
                     temp_ext = self._get_node_output_extension(node, global_values)
                     output_file = f'%TEMP%\\cline_temp_{temp_counter}{temp_ext}'
-                    node_outputs[self._make_output_key(node, 0)] = f'"{output_file}"'
+                    output_var = output_var_name
+                    node_outputs[self._make_output_key(node, 0)] = f'"!{output_var}!"'
                     temp_files.append(output_file)
 
                     template = node.node_data.get('template', '')
                     command_name = node.node_data.get('command', '')
                     command_path = self.dep_manager.get(command_name) if command_name else command_name
+                    lines.append(f'set "{output_var}={output_file}"')
 
                     if template:
                         cmd = template
@@ -4111,6 +4500,8 @@ class MainWindow(QMainWindow):
                         cmd += f' "{output_file}"'
                         lines.append(cmd)
 
+                if should_guard_inputs:
+                    lines.append(f":{skip_label}")
                 lines.append("")
 
             if temp_files:
@@ -4307,6 +4698,16 @@ class MainWindow(QMainWindow):
                     param_name: self._replace_global_placeholders_in_text(bashify_value(param_value), global_values)
                     for param_name, param_value in resolved_params.items()
                 }
+                output_var_name = f"node_out_{node.execution_order or 0}_0"
+                if node.output_ports and node.node_data['name'] not in ['Fichier Input', 'Fichier Source'] and not self._is_multi_file_node(node) and not self._is_switch_node(node):
+                    lines.append(f'{output_var_name}=""')
+                if node.node_data['name'] == GLOBAL_VARIABLES_NODE_NAME:
+                    for var_name, _var_value, _slot_index in self._get_global_variable_entries(node, resolved_params):
+                        shell_name = f"GLOBAL_{self._sanitize_global_name(var_name)}"
+                        lines.append(f'{shell_name}=""')
+                guard_conditions = self._build_bash_node_input_guard(input_files) if node.input_ports and not self._is_merge_node(node) else []
+                if guard_conditions:
+                    lines.append(f'if {" && ".join(guard_conditions)}; then')
 
                 if node.node_data['name'] == 'Fichier Input':
                     if mode == "single_flow":
@@ -4347,10 +4748,52 @@ class MainWindow(QMainWindow):
                             node_outputs[self._make_output_key(node, spec_index - 1)] = f'"${{{var_name}}}"'
                         input_node_index += len(specs)
 
+                elif self._is_switch_node(node):
+                    specs = self._get_switch_specs(node, resolved_params)
+                    switch_prefix = f"switch_{node.execution_order or 0}"
+                    switch_input_var = f"{switch_prefix}_input"
+                    switch_value_expr_var = f"{switch_prefix}_value_expr"
+                    switch_value_var = f"{switch_prefix}_value"
+                    switch_matched_var = f"{switch_prefix}_matched"
+                    switch_input_value = self._strip_wrapping_quotes(input_files[0]) if input_files else '""'
+
+                    lines.append(f'{switch_input_var}="{switch_input_value}"')
+                    lines.append(f'{switch_value_expr_var}={quote_shell_string(rendered_params.get("Variable", "${INPUT_EXT}"))}')
+                    lines.append(f'eval "{switch_value_var}=${switch_value_expr_var}"')
+                    lines.append(f'{switch_matched_var}=0')
+
+                    for spec_index, spec in enumerate(specs, start=1):
+                        compare_expr_var = f"{switch_prefix}_cmp_expr_{spec_index}"
+                        compare_var = f"{switch_prefix}_cmp_{spec_index}"
+                        out_var = f"{switch_prefix}_out_{spec_index - 1}"
+                        lines.append(f'{compare_expr_var}={quote_shell_string(rendered_params.get(f"Valeur {spec_index}", spec["value"]))}')
+                        lines.append(f'eval "{compare_var}=${compare_expr_var}"')
+                        lines.append(f'{out_var}=""')
+                        lines.append(f'if [ "${{{switch_matched_var}}}" -eq 0 ] && {self._build_bash_switch_condition(switch_value_var, compare_var, spec["operator"])}; then')
+                        lines.append(f'    {out_var}="${{{switch_input_var}}}"')
+                        lines.append(f'    {switch_matched_var}=1')
+                        lines.append('fi')
+                        node_outputs[self._make_output_key(node, spec_index - 1)] = f'"${{{out_var}}}"'
+
+                    default_out_var = f"{switch_prefix}_out_{len(specs)}"
+                    lines.append(f'{default_out_var}=""')
+                    lines.append(f'if [ "${{{switch_matched_var}}}" -eq 0 ]; then {default_out_var}="${{{switch_input_var}}}"; fi')
+                    node_outputs[self._make_output_key(node, len(specs))] = f'"${{{default_out_var}}}"'
+
+                elif self._is_merge_node(node):
+                    node_outputs[self._make_output_key(node, 0)] = f'"${{{output_var_name}}}"'
+                    for input_file in input_files:
+                        runtime_var = self._extract_bash_runtime_var(input_file)
+                        if runtime_var:
+                            lines.append(f'if [ -z "${{{output_var_name}:-}}" ] && [ -n "${{{runtime_var}:-}}" ]; then {output_var_name}="${{{runtime_var}}}"; fi')
+                        else:
+                            lines.append(f'if [ -z "${{{output_var_name}:-}}" ]; then {output_var_name}={input_file}; fi')
+
                 elif node.node_data['name'] == 'Fichier Source':
                     output_file = rendered_params.get('Chemin fichier', '')
                     if output_file:
-                        node_outputs[self._make_output_key(node, 0)] = quote_shell_string(output_file)
+                        lines.append(f'{output_var_name}={quote_shell_string(output_file)}')
+                        node_outputs[self._make_output_key(node, 0)] = f'"${{{output_var_name}}}"'
                     else:
                         lines.append('echo "ERREUR: Aucun fichier source defini!"')
                         lines.append("flow_error=1")
@@ -4396,12 +4839,14 @@ class MainWindow(QMainWindow):
                     temp_counter += 1
                     temp_ext = self._get_node_output_extension(node, global_values)
                     output_file = f'${{TMPDIR:-/tmp}}/cline_temp_{temp_counter}{temp_ext}'
-                    node_outputs[self._make_output_key(node, 0)] = f'"{output_file}"'
+                    output_var = output_var_name
+                    node_outputs[self._make_output_key(node, 0)] = f'"${{{output_var}}}"'
                     temp_files.append(output_file)
 
                     template = node.node_data.get('template', '')
                     command_name = node.node_data.get('command', '')
                     command_path = self.dep_manager.get(command_name) if command_name else command_name
+                    lines.append(f'{output_var}="{output_file}"')
 
                     if template:
                         cmd = template
@@ -4445,6 +4890,8 @@ class MainWindow(QMainWindow):
                         lines.append('    break')
                         lines.append('fi')
 
+                if guard_conditions:
+                    lines.append("fi")
                 lines.append("")
 
             if temp_files:
@@ -4612,6 +5059,16 @@ class MainWindow(QMainWindow):
                     param_name: self._replace_global_placeholders_in_text(psify_value(param_value), global_values)
                     for param_name, param_value in resolved_params.items()
                 }
+                output_var_name = f'$NodeOut{node.execution_order or 0}_0'
+                if node.output_ports and node.node_data['name'] not in ['Fichier Input', 'Fichier Source'] and not self._is_multi_file_node(node) and not self._is_switch_node(node):
+                    lines.append(f'{output_var_name} = $null')
+                if node.node_data['name'] == GLOBAL_VARIABLES_NODE_NAME:
+                    for var_name, _var_value, _slot_index in self._get_global_variable_entries(node, resolved_params):
+                        ps_name = f"GLOBAL_{self._sanitize_global_name(var_name)}"
+                        lines.append(f'${ps_name} = $null')
+                guard_conditions = self._build_powershell_node_input_guard(input_files) if node.input_ports and not self._is_merge_node(node) else []
+                if guard_conditions:
+                    lines.append(f'if ({" -and ".join(guard_conditions)}) {{')
 
                 if node.node_data['name'] == 'Fichier Input':
                     if mode == "single_flow":
@@ -4651,10 +5108,52 @@ class MainWindow(QMainWindow):
                             node_outputs[self._make_output_key(node, spec_index - 1)] = var_name
                         input_node_index += len(specs)
 
+                elif self._is_switch_node(node):
+                    specs = self._get_switch_specs(node, resolved_params)
+                    switch_prefix = f"Switch{node.execution_order or 0}"
+                    switch_input_var = f"${switch_prefix}Input"
+                    switch_value_expr_var = f"${switch_prefix}ValueExpr"
+                    switch_value_var = f"${switch_prefix}Value"
+                    switch_matched_var = f"${switch_prefix}Matched"
+                    switch_input_value = self._strip_wrapping_quotes(input_files[0]) if input_files else '$null'
+
+                    lines.append(f'{switch_input_var} = {switch_input_value}')
+                    lines.append(f'{switch_value_expr_var} = {ps_quote(rendered_params.get("Variable", "$INPUT_EXT"))}')
+                    lines.append(f'{switch_value_var} = $ExecutionContext.InvokeCommand.ExpandString({switch_value_expr_var})')
+                    lines.append(f'{switch_matched_var} = $false')
+
+                    for spec_index, spec in enumerate(specs, start=1):
+                        compare_expr_var = f"${switch_prefix}CompareExpr{spec_index}"
+                        compare_var = f"${switch_prefix}Compare{spec_index}"
+                        out_var = f"${switch_prefix}Out{spec_index - 1}"
+                        lines.append(f'{compare_expr_var} = {ps_quote(rendered_params.get(f"Valeur {spec_index}", spec["value"]))}')
+                        lines.append(f'{compare_var} = $ExecutionContext.InvokeCommand.ExpandString({compare_expr_var})')
+                        lines.append(f'{out_var} = $null')
+                        lines.append(f'if (-not {switch_matched_var} -and {self._build_powershell_switch_condition(switch_value_var, compare_var, spec["operator"])}) {{')
+                        lines.append(f'    {out_var} = {switch_input_var}')
+                        lines.append(f'    {switch_matched_var} = $true')
+                        lines.append('}')
+                        node_outputs[self._make_output_key(node, spec_index - 1)] = out_var
+
+                    default_out_var = f"${switch_prefix}Out{len(specs)}"
+                    lines.append(f'{default_out_var} = $null')
+                    lines.append(f'if (-not {switch_matched_var}) {{ {default_out_var} = {switch_input_var} }}')
+                    node_outputs[self._make_output_key(node, len(specs))] = default_out_var
+
+                elif self._is_merge_node(node):
+                    node_outputs[self._make_output_key(node, 0)] = output_var_name
+                    for input_file in input_files:
+                        runtime_var = self._extract_powershell_runtime_var(input_file)
+                        if runtime_var:
+                            lines.append(f'if (-not {output_var_name} -and -not [string]::IsNullOrWhiteSpace({runtime_var})) {{ {output_var_name} = {runtime_var} }}')
+                        else:
+                            lines.append(f'if (-not {output_var_name}) {{ {output_var_name} = {input_file} }}')
+
                 elif node.node_data['name'] == 'Fichier Source':
                     output_file = rendered_params.get('Chemin fichier', '')
                     if output_file:
-                        node_outputs[self._make_output_key(node, 0)] = ps_quote(output_file)
+                        lines.append(f'{output_var_name} = {ps_quote(output_file)}')
+                        node_outputs[self._make_output_key(node, 0)] = output_var_name
                     else:
                         lines.append('Write-Host "ERREUR: Aucun fichier source defini!"')
                         lines.append('$flowError = $true')
@@ -4701,12 +5200,14 @@ class MainWindow(QMainWindow):
                     temp_counter += 1
                     temp_ext = self._get_node_output_extension(node, global_values)
                     output_file = f'$env:TEMP\\cline_temp_{temp_counter}{temp_ext}'
-                    node_outputs[self._make_output_key(node, 0)] = output_file
+                    output_var = output_var_name
+                    node_outputs[self._make_output_key(node, 0)] = output_var
                     temp_files.append(output_file)
 
                     template = node.node_data.get('template', '')
                     command_name = node.node_data.get('command', '')
                     command_path = self.dep_manager.get(command_name) if command_name else command_name
+                    lines.append(f'{output_var} = $ExecutionContext.InvokeCommand.ExpandString({ps_quote(output_file)})')
 
                     if template:
                         cmd = template
@@ -4749,6 +5250,8 @@ class MainWindow(QMainWindow):
                         lines.append('    break')
                         lines.append('}')
 
+                if guard_conditions:
+                    lines.append('}')
                 lines.append("")
 
             if temp_files:
