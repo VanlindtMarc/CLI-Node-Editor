@@ -309,10 +309,10 @@ Enfin, une fois l'ajout du tag fait, nous réunissons les résultats pour ne fai
 
 ## Informations systèmes
 
-![CLI25](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI25.png)
+![CLI25](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli25.png)
 
 Créez simplement un fichier HTMl vide et lancez le script sur celui-ci.
 
 Il se transformera en un fichier comprenant l'ensemble de vos fichiers installés : 
 
-![CLI26](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI26.png)
+![CLI26](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli26.png)
