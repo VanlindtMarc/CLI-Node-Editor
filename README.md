@@ -284,10 +284,8 @@ En fonction du format, ce n'est pas le même outil qui est utilisé pour inscrir
 
 ![CLI24](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI24.png)
 
-Dans la première version, nous avions plusieurs appels au nœud **Calcul BPM**.
+Dans la première version, nous avions plusieurs appels aux nœuds **Calcul BPM**, **Variables Globales** et **Fichier Destination**.
 
 Ici, nous utilisons le nœud **Merge** afin de réunir les propositions du switch et ne garder que la condition remplie afin de suivre le flux.
 
-## A venir 
-
-* Indiquer pour quel langage est fait le nœud (batch, bash ou powershell) et faire en sorte de ne voir que ceux voulus.
+Enfin, une fois l'ajout du tag fait, nous réunissons les résultats pour ne faire appel qu'à un seul appel au fichier de destination puisqu'il ne peut y avoir qu'un seul fichier créé en fonction du flux.
