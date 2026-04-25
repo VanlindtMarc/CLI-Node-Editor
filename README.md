@@ -306,3 +306,13 @@ Dans la première version, nous avions plusieurs appels aux nœuds **Calcul BPM*
 Ici, nous utilisons le nœud **Merge** afin de réunir les propositions du switch et ne garder que la condition remplie afin de suivre le flux.
 
 Enfin, une fois l'ajout du tag fait, nous réunissons les résultats pour ne faire appel qu'à un seul appel au fichier de destination puisqu'il ne peut y avoir qu'un seul fichier créé en fonction du flux.
+
+## Informations systèmes
+
+![CLI25](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI25.png)
+
+Créez simplement un fichier HTMl vide et lancez le script sur celui-ci.
+
+Il se transformera en un fichier comprenant l'ensemble de vos fichiers installés : 
+
+![CLI26](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI26.png)
