@@ -140,6 +140,22 @@ Ils seront sauvés dans une base de données contenant :
 
 **Nom court à utiliser dans l'interface** - **Lien complet vers l'outil** - **Description**
 
+###  Logiciels conseillés
+
+* 7zip : compression/décompression
+* BPM Counter : calcul très précis du BPM sur WAV et MP3
+* Curl : transfert de données
+* exiftool : manipulation de métadonnées
+* ffmpeg : manipulation audio/image/vidéo
+* flac : encodeur FLAC
+* HandBrake : encodeur vidéo
+* lame : encodeur MP3
+* metaflac : modification des métas FLAC
+* Pandoc : transformation de documents 
+* Potrace : vectorisation vers SVG
+* Qalculate : calculatrice renvoyant des valeurs non-entières
+* sox : transformation audio
+
 ### Nœuds CLI
 
 Chaque nœud peut être paramétré via quatre onglets.
