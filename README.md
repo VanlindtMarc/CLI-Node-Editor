@@ -99,15 +99,32 @@ Il renverra alors la valeur si l'opération est vraie
 
 ### Math SI if else
 
-idem mais permet de renvoyer une autre valeur si l'opération est fausse
+idem, mais permet de renvoyer une autre valeur si l'opération est fausse
 
 ### Math SI if elseif
 
-idem mais renvoie trois valeurs : 
+idem, mais renvoie trois valeurs : 
 
 1. si inférieur
 2. si égal
 3. si supérieur
+
+## Switch
+
+![CLI22](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI22.png)
+
+Ce nœud vous permet de diviser votre flux en sous-flux en fonction de certaines conditions.
+
+Ce noeud reçoit une valeur en entrée afin de permettre à celle-ci de continuer le flux.
+
+Il y a en sortie le nombre de condition + 1.
+
+La dernière sortie est celle "par défaut" si aucune des conditions n'est remplie.
+
+### Merge
+
+Ce nœud permet de réunir différents flux créés par Switch afin de leur faire suivre une suite de flux unique.
+
 
 ---
 
@@ -253,8 +270,21 @@ Le but de ce flux est de reproduire plus fidèlement les effets de la télé ana
 
 Ce flux utilise **HandBrake-CLI**.
 
+## Calculer le BPM
+
+![CLI23](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI23.png)
+
+Nous allons ici utiliser le nœud **Switch** car les différents outils permettant de calculer le BPM et d'inscrire cette information en tant que tag dans un fichier différent selon le format.
+
+L'outil pour calculer le BPM ne fonctionne qu'avec les extensions WAV et MP3. Il faut donc transformer l'audio en MP3 avant le calcul.
 
 
+
+## Calculer le BPM 2
+
+![CLI24](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI24.png)
+
+Dans la première version, nous avions plusieurs appels au nœud **Calcul BPM**, 
 
 ## A venir 
 
