@@ -318,3 +318,12 @@ Créez simplement un fichier HTMl vide et lancez le script sur celui-ci.
 Il se transformera en un fichier comprenant l'ensemble de vos fichiers installés : 
 
 ![CLI26](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli26.png)
+
+## Téléchargement YouTube
+
+![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli27.png)
+
+Nous faisons appel au noeud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
+
+Pour chaque URL il ira chercher l'auteur et le nom de la vidéo puis téléchargera l'audio au format MP3 vers un format **Auteur - Titre.mp3**
+ 
