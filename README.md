@@ -321,7 +321,7 @@ Il se transformera en un fichier comprenant l'ensemble de vos fichiers installé
 
 ## Téléchargement YouTube
 
-![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli27.png)
+![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI27.png)
 
 Nous faisons appel au noeud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
 
