@@ -77,6 +77,8 @@ Le nœud **Variables globales** peut créer des variables basées sur ces fichie
 
 Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
 
+Vous pouvez indiquer un choix par défaut et un timer au bout duquel la proposition par défaut sera choisie automatiquement.
+
 #### Choix - Si
 
 ![CLI19](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI19.png)
