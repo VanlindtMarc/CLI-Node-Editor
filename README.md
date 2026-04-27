@@ -1,4 +1,4 @@
-# CLI Node Editor
+# Terminal Architect
 
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
@@ -6,15 +6,20 @@ Ce logiciel a pour but de générer des fichiers **batch**, **bash** et **PowerS
 
 Le logiciel passe par une interface nodale.
 
+Le **batch** est le langage principal, car sous **Windows** prévoit de les utiliser directement dans l'explorateur de fichiers ou via un appel à **Envoyer vers...**, ce qui n'est pas le cas de **PowerShell** pour des raisons de sécurité.
+
+
+
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
-- Pour le moment, seul le **batch** est optimisé et testé : bien que le script final puisse être écrit en 3 langages, les nœuds, eux, sont écrits en batchs.
-- Vous devez connaître le langage pour lequel vous créez un flux. Ce logiciel est une aide, pas un magicien qui fera tout à votre place.
+- Vous devez connaître un minimum le langage pour lequel vous créez un flux. Ce logiciel est une aide, pas un magicien qui fera tout à votre place.
+
+## Interface
 
 L'interface principale est divisée en trois : 
-1. Une colonne à gauche où apparaissent tous les nœuds proposés
+1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux
 2. Une zone centrale montrant les nœuds et leurs liens
-3. Une colonne à droite où peut être généré et visualisé le code à exporter.
+3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution 
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
