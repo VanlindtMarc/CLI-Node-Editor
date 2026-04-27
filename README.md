@@ -1,5 +1,7 @@
 # CLI Node Editor
 
+![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
+
 Ce logiciel a pour but de générer des fichiers **batch**, **bash** et **PowerShell** complexes faisant appel à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
 
 Le logiciel passe par une interface nodale.
@@ -321,7 +323,7 @@ Il se transformera en un fichier comprenant l'ensemble de vos fichiers installé
 
 ## Téléchargement YouTube
 
-![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI27.png)
+![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli27.png)
 
 Nous faisons appel au noeud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
 
