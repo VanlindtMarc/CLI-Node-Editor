@@ -12,7 +12,7 @@ Trois types de flux peuvent être créés :
 2. Tous les fichiers sont traités par un même flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
-Le **batch** est le langage principal, car langage de script historique de Windows et est donc considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
+Le **batch** est le langage principal, car langage de script historique de **Windows** et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
 
 ---
 ## Interface
@@ -34,14 +34,31 @@ Dans la barre de menu, vous avez également **Outils** qui vous permet d'indique
 
 Avant toute utilisation, vous devez indiquer les outils qui seront utilisés par les flux.
 
-* **Nom** : Le nom simple par lequel appeler l'outil
+* **Nom** : Le nom simple par lequel appeler l'outil par la suite
 * **Chemin** : Chemin complet vers l'outil. Cela évite d'avoir tous les outils dans son %PATH%. Si un chemin est indiqué, ce chemin sera utilisé directement dans le flux.
 * **Description** : ...
 * **Arg Version** : argument permettant de connaître la version de l'outil et de réaliser un test pour la connaitre.
 
-**Attention** au choix du nom. Si par la suite, vous changez le nom d'un outil, les nœuds y faisant appel ne fonctionneront plus.
+**Attention** au choix du nom à la création d'un outil. Si par la suite, vous changez le nom d'un outil, les nœuds y faisant appel ne fonctionneront plus.
 
+--- 
 
+## Nœuds
+
+Un nœud est une opération dans le flux permettant de le faire évoluer.
+
+Il existe plusieurs types de nœuds :
+
+* **Fichier** : entrées et sorties de flux
+* **Système** : gestion des variables (et debug simple)
+
+Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par **Terminal Architect**.
+
+Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant directement appels à une commande système ou à un logiciel CLI.
+
+### Création/Edition
+
+![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
 
 
@@ -70,15 +87,15 @@ Chaque nœud peut être paramétré via quatre onglets.
 
 ![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
-* Nom du nœud : nom réel
-* Nom affiché : nom affiché dans les menus
-* Catégorie : en général le nom de la commande CLI
-* Sous-catégorie : le type d'usage fait de la commande
-* Commande CLI : commande dans son nom court
-* Format de sortie : format proposé par défaut
-* Formats suggérés : autres formats dans lesquels il est possible de sauver le résultat
-* Description
-* Couleur hexa : couleur du nœud dans l'interface.
+* **Nom du nœud** : nom réel
+* **Nom affiché** : nom affiché dans les menus
+* **Catégorie** : en général le nom de la commande CLI
+* **Sous-catégorie** : le type d'usage fait de la commande
+* **Commande CLI** : commande dans son nom court
+* **Format de sortie** : format proposé par défaut
+* **Formats suggérés** : autres formats dans lesquels il est possible de sauver le résultat
+* **Description**
+* **Couleur hexa** : couleur du nœud dans l'interface.
 
 
 
@@ -353,13 +370,15 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 ---
 
 ## Bugs connus 
-- Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre car il y a un bug dans l'édition
+- Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre, car il y a un bug dans l'édition
 - Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées.
 - Plante si on teste "tous les outils"
+- Si on modifie la couleur d'un nœud, le pickcolor ne reprend pas la couleur affectée au nœud
 
 ## Ajouts à venir
 - Clic droit sur un nœud pour le remplacer directement par un autre
 - Ajout à la fin des fichiers générés d'une zone de remarque contenant le flux. Cette zone pourrait être captée par l'outil afin de récupérer le flux directement d'un flux généré.
-- Ajouter une colonne "url" pour le gestionnaire d'outils
+- Ajouter une colonne "URL" pour le gestionnaire d'outils
 - Ajouter un téléchargement automatique des outils
 - Faire en sorte que les tests ne soient réalisés que sur les outils ayant un "arg version"
+- Permettre de remplacer un flux par un autre s'il a le même nombre de ports d'entrée et de sortie
