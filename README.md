@@ -6,7 +6,7 @@ Ce logiciel a pour but de générer des fichiers **batch**, **bash** et **PowerS
 
 Le logiciel passe par une interface nodale.
 
-Le **batch** est le langage principal, car sous **Windows** prévoit de les utiliser directement dans l'explorateur de fichiers ou via un appel à **Envoyer vers...**, ce qui n'est pas le cas de **PowerShell** pour des raisons de sécurité.
+Le **batch** est le langage principal, car **Windows** prévoit de les utiliser directement dans l'explorateur de fichiers ou via un appel à **Envoyer vers...**, ce qui n'est pas le cas de **PowerShell** pour des raisons de sécurité. Pour lancer un fichier **PowerShell** en **PS1**, il faut le lancer depuis la console **PowerShell** ou en le lançant via un batch qui fait lui-même appel à **PowerShell**...
 
 
 
@@ -19,7 +19,7 @@ Le **batch** est le langage principal, car sous **Windows** prévoit de les util
 L'interface principale est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux
 2. Une zone centrale montrant les nœuds et leurs liens
-3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution 
+3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution lors des tests internes.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
@@ -37,14 +37,17 @@ Configurable via l'interface et l'utilisation de certains nœuds.
 
 ---
 
+## Bibliothèques de nœuds
+
 ## Nœuds d'entrée
 
 ![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
 
-Il existe trois nœuds d'entrée : 
+Il existe quatre nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
 2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
 3. **Multi-fichiers** : indique le nombre et le type de fichier attendus pour ce flux.
+4. **Liste** : indique que le fichier d'entrée est un fichier de type texte dont chaque ligne est un élément à traiter (liste de fichiers, d'URL...)
 
 Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
 
@@ -66,7 +69,7 @@ Dans chacun des cas, une fois une variable créée, vous pourrez y faire appel v
 
 ### Opérations mathématiques
 
-Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage Batch pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
+Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage **batch** pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
 
 Pour les calculs plus complexes, je vous conseille l'outil **Qalculate**.
 
