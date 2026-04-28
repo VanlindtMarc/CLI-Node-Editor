@@ -3,7 +3,7 @@
 
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
-**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pour la création des flux.
+**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pour la création des flux pouvant utiliser toute commande système ou logiciel CLI.
 
 Il est principalement créé pour des flux de traitement de fichiers auxquels il est possible de faire appel directement dans l'explorateur ou via **Envoyer vers...**
 
@@ -12,8 +12,7 @@ Trois types de flux peuvent être créés :
 2. Tous les fichiers sont traités par un même flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
-
-Le **batch** est le langage principal, car ce langage est le langage historique de Windows et est considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
+Le **batch** est le langage principal, car langage de script historique de Windows et est donc considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
 
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
@@ -27,6 +26,8 @@ L'interface principale est divisée en trois :
 1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux
 2. Une zone centrale montrant les nœuds et leurs liens
 3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution lors des tests internes.
+
+Dans la barre de menu, vous avez également **Outils** qui vous permet d'indiquer les outils CLI que vous possédez.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
 
@@ -330,7 +331,7 @@ Enfin, une fois l'ajout du tag fait, nous réunissons les résultats pour ne fai
 
 ![CLI25](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli25.png)
 
-Créez simplement un fichier HTMl vide et lancez le script sur celui-ci.
+Créez simplement un fichier HTML vide et lancez le script sur celui-ci.
 
 Il se transformera en un fichier comprenant l'ensemble de vos fichiers installés : 
 
@@ -340,7 +341,12 @@ Il se transformera en un fichier comprenant l'ensemble de vos fichiers installé
 
 ![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI27.png)
 
-Nous faisons appel au noeud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
+Nous faisons appel au nœud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
 
-Pour chaque URL il ira chercher l'auteur et le nom de la vidéo puis téléchargera l'audio au format MP3 vers un format **Auteur - Titre.mp3**
- 
+Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchargera l'audio au format MP3 vers un format **Auteur - Titre.mp3**
+
+---
+
+## Bugs connus 
+- Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre car il y a un bug dans l'édition
+- Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées. 
