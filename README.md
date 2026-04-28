@@ -3,7 +3,7 @@
 
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
-**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pour la création des flux pouvant utiliser toute commande système ou logiciel CLI.
+**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pouvant utiliser toute commande système ou logiciel CLI.
 
 Il est principalement créé pour des flux de traitement de fichiers auxquels il est possible de faire appel directement dans l'explorateur ou via **Envoyer vers...**
 
@@ -13,11 +13,6 @@ Trois types de flux peuvent être créés :
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
 Le **batch** est le langage principal, car langage de script historique de Windows et est donc considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
-
-**Attention :** 
-- Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
-- Vous devez connaître un minimum le langage pour lequel vous créez un flux. Ce logiciel est une aide, pas un magicien qui fera tout à votre place.
-- Faites des tests sur des échantillons avant de lancer votre flux sur un grand nombre de fichiers...
 
 ---
 ## Interface
@@ -349,4 +344,7 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 
 ## Bugs connus 
 - Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre car il y a un bug dans l'édition
-- Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées. 
+- Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées.
+
+## Ajouts à venir
+- Clic droit sur un nœud pour le remplacer directement par un autre
