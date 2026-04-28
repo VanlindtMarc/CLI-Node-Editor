@@ -50,11 +50,36 @@ Un nœud est une opération dans le flux permettant de le faire évoluer.
 Il existe plusieurs types de nœuds :
 
 * **Fichier** : entrées et sorties de flux
-* **Système** : gestion des variables (et debug simple)
+* **Système** : gestion des variables et des divisions/fusions de flux
 
 Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par **Terminal Architect**.
 
 Les nœuds permettant de faire évoluer le flux sont les **nœuds créés**, faisant directement appels à une commande système ou à un logiciel CLI.
+
+### Nœuds Fichier
+
+Il existe quatre nœuds d'entrée : 
+1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
+2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
+3. **Multi-fichiers** : indique le nombre et le type de fichier attendus pour ce flux.
+4. **Liste** : indique que le fichier d'entrée est un fichier de type texte dont chaque ligne est un élément à traiter (liste de fichiers, d'URL...)
+
+Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
+
+Pour la sortie nous n'en avons qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer : 
+1. **Fichier destination** : nom du fichier final voulu.
+
+### Nœuds Système
+
+Ceux-ci permettent de déclarer des variables de deux manières :
+1. Questions posées au début du flux
+2. Variables créées à partir d'informations reçues par les flux
+
+Ils permettent également :
+1. Diviser un flux en fonction de conditions
+2. Réunir ces flux si cela est nécessaire
+
+
 
 ### Nœuds créés
 
@@ -96,29 +121,8 @@ Commande à utiliser (**dans son nom court**), pouvant faire appel aux variables
 
 
 
----
 
-## Bibliothèques de nœuds
 
-## Nœuds d'entrée
-
-![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
-
-Il existe quatre nœuds d'entrée : 
-1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
-2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
-3. **Multi-fichiers** : indique le nombre et le type de fichier attendus pour ce flux.
-4. **Liste** : indique que le fichier d'entrée est un fichier de type texte dont chaque ligne est un élément à traiter (liste de fichiers, d'URL...)
-
-Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
-
----
-
-## Nœud de sortie
-
-Il n'y en a qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer.
-
-On y indique simplement le nom et l'extension voulue.
 
 ---
 
