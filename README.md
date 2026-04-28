@@ -1,18 +1,26 @@
+
 # Terminal Architect
 
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
-Ce logiciel a pour but de générer des fichiers **batch**, **bash** et **PowerShell** complexes faisant appel à plusieurs logiciels en ligne de commande afin d'automatiser un flux sur un ou plusieurs fichiers.
+**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pour la création des flux.
 
-Le logiciel passe par une interface nodale.
+Il est principalement créé pour des flux de traitement de fichiers auxquels il est possible de faire appel directement dans l'explorateur ou via **Envoyer vers...**
 
-Le **batch** est le langage principal, car **Windows** prévoit de les utiliser directement dans l'explorateur de fichiers ou via un appel à **Envoyer vers...**, ce qui n'est pas le cas de **PowerShell** pour des raisons de sécurité. Pour lancer un fichier **PowerShell** en **PS1**, il faut le lancer depuis la console **PowerShell** ou en le lançant via un batch qui fait lui-même appel à **PowerShell**...
+Trois types de flux peuvent être créés :
+1. Le flux traite chaque fichier séparément 
+2. Tous les fichiers sont traités par un même flux
+3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
+
+Le **batch** est le langage principal, car ce langage est le langage historique de Windows et est considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
 
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Vous devez connaître un minimum le langage pour lequel vous créez un flux. Ce logiciel est une aide, pas un magicien qui fera tout à votre place.
+- Faites des tests sur des échantillons avant de lancer votre flux sur un grand nombre de fichiers...
 
+---
 ## Interface
 
 L'interface principale est divisée en trois : 
@@ -21,18 +29,6 @@ L'interface principale est divisée en trois :
 3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution lors des tests internes.
 
 ![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
-
----
-
-## Types de flux pouvant être créés
-
-Il est possible de créer trois sortes de flux : 
-
-1. Chaque fichier est traité individuellement et le flux est répété pour chaque fichier.
-2. Tous les fichiers sont traités par un seul flux
-3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
-
-Configurable via l'interface et l'utilisation de certains nœuds.
 
 ---
 
