@@ -43,6 +43,11 @@ Configurable via l'interface et l'utilisation de certains nœuds.
 
 ![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
 
+
+<div align="center">
+<img width="auto" height="472px" src="README/CLI03.png" alt="Noeuds d'entrée" />
+</div>
+
 Il existe quatre nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
 2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
