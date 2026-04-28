@@ -58,46 +58,19 @@ Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant
 
 ### Création/Edition
 
-![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
-
-
-
-
-###  Logiciels conseillés
-
-* 7zip : compression/décompression
-* BPM Counter : calcul très précis du BPM sur WAV et MP3
-* Curl : transfert de données
-* exiftool : manipulation de métadonnées
-* ffmpeg : manipulation audio/image/vidéo
-* flac : encodeur FLAC
-* HandBrake : encodeur vidéo
-* lame : encodeur MP3
-* metaflac : modification des métas FLAC
-* Pandoc : transformation de documents 
-* Potrace : vectorisation vers SVG
-* Qalculate : calculatrice renvoyant des valeurs non-entières
-* sox : transformation audio
-
-### Nœuds CLI
-
-Chaque nœud peut être paramétré via quatre onglets.
-
-#### Général 
+#### Général
 
 ![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
-* **Nom du nœud** : nom réel
+* **Nom du nœud** : nom réel qui doit être unique
 * **Nom affiché** : nom affiché dans les menus
 * **Catégorie** : en général le nom de la commande CLI
 * **Sous-catégorie** : le type d'usage fait de la commande
-* **Commande CLI** : commande dans son nom court
+* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser.
 * **Format de sortie** : format proposé par défaut
 * **Formats suggérés** : autres formats dans lesquels il est possible de sauver le résultat
 * **Description**
 * **Couleur hexa** : couleur du nœud dans l'interface.
-
-
 
 #### Ports
 
@@ -120,6 +93,22 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 ![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
 Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
+
+###  Logiciels conseillés
+
+* 7zip : compression/décompression
+* BPM Counter : calcul très précis du BPM sur WAV et MP3
+* Curl : transfert de données
+* exiftool : manipulation de métadonnées
+* ffmpeg : manipulation audio/image/vidéo
+* flac : encodeur FLAC
+* HandBrake : encodeur vidéo
+* lame : encodeur MP3
+* metaflac : modification des métas FLAC
+* Pandoc : transformation de documents 
+* Potrace : vectorisation vers SVG
+* Qalculate : calculatrice renvoyant des valeurs non-entières
+* sox : transformation audio
 
 ---
 
