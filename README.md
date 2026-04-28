@@ -9,7 +9,6 @@ Le logiciel passe par une interface nodale.
 Le **batch** est le langage principal, car **Windows** prévoit de les utiliser directement dans l'explorateur de fichiers ou via un appel à **Envoyer vers...**, ce qui n'est pas le cas de **PowerShell** pour des raisons de sécurité. Pour lancer un fichier **PowerShell** en **PS1**, il faut le lancer depuis la console **PowerShell** ou en le lançant via un batch qui fait lui-même appel à **PowerShell**...
 
 
-
 **Attention :** 
 - Ce logiciel est toujours en cours de création et il peut planter lorsque l'on modifie des nœuds déjà en place. Pensez à sauvegarder votre flux couramment.
 - Vous devez connaître un minimum le langage pour lequel vous créez un flux. Ce logiciel est une aide, pas un magicien qui fera tout à votre place.
@@ -42,11 +41,6 @@ Configurable via l'interface et l'utilisation de certains nœuds.
 ## Nœuds d'entrée
 
 ![CLI03](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI03.png)
-
-
-<div align="center">
-<img width="auto" height="472px" src="README/CLI03.png" alt="Noeuds d'entrée" />
-</div>
 
 Il existe quatre nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
@@ -133,7 +127,7 @@ idem, mais renvoie trois valeurs :
 
 Ce nœud vous permet de diviser votre flux en sous-flux en fonction de certaines conditions.
 
-Ce noeud reçoit une valeur en entrée afin de permettre à celle-ci de continuer le flux.
+Ce nœud reçoit une valeur en entrée afin de permettre à celle-ci de continuer le flux.
 
 Il y a en sortie le nombre de condition + 1.
 
@@ -224,6 +218,18 @@ Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
 
 La plupart des nœuds ont été générés par IA et demandent à être testés.
 
+---
+
+## Exemples de noeuds
+
+### ImageMagick - Redimensioinner Max
+```
+magick {input} -resize {width}x{height} {output}
+```
+### HandBrakeCLI - ISO 2 MKV
+```
+HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p4  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic --comb-detect --decomb
+```
 ---
 
 # Exemples de flux
