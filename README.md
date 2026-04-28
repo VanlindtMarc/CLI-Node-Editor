@@ -54,9 +54,9 @@ Il existe plusieurs types de nœuds :
 
 Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par **Terminal Architect**.
 
-Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant directement appels à une commande système ou à un logiciel CLI.
+Les nœuds permettant de faire évoluer le flux sont les **nœuds créés**, faisant directement appels à une commande système ou à un logiciel CLI.
 
-### Création/Édition
+### Nœuds créés
 
 #### Général
 
@@ -66,7 +66,7 @@ Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant
 * **Nom affiché** : nom affiché dans les menus
 * **Catégorie** : en général le nom de la commande CLI
 * **Sous-catégorie** : le type d'usage fait de la commande
-* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser. **ATTENTION** : pour le bon fonctionnement du flux, il faut bien indiquer exactement le nom court de la commande voulue.
+* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser. ***Attention*** : pour le bon fonctionnement du flux, il faut bien indiquer exactement le nom court de la commande voulue.
 * **Format de sortie** : format proposé par défaut
 * **Formats suggérés** : autres formats dans lesquels il est possible de sauver le résultat
 * **Description**
