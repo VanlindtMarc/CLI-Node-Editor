@@ -71,15 +71,23 @@ Pour la sortie nous n'en avons qu'un, qui peut être appelé plusieurs fois si p
 
 ### Nœuds Système
 
-Ceux-ci permettent de déclarer des variables de deux manières :
-1. Questions posées au début du flux
-2. Variables créées à partir d'informations reçues par les flux
+Il y en a quatre principaux, permettant : 
 
-Ils permettent également :
-1. Diviser un flux en fonction de conditions
-2. Réunir ces flux si cela est nécessaire
+#### Questions posées au début du flux
 
+Plusieurs questions vous seront posées au début du flux, dont chaque réponse deviendra une variable utilisée par la suite 
 
+#### Variables créées à partir d'informations reçues par le flux 
+
+Ce nœud recevra un certain nombre d'entrées, chaque entrée pouvant devenir une variable.
+
+#### Diviser un flux
+
+En fonction de certaines conditions, vous pourrez faire en sorte que le flux suive une certaine voie.
+
+#### Réunir des flux
+
+Une fois un flux divisé, la réunification permettra de prendre celle qui a été choisie afin de lui faire suivre un flux unique.
 
 ### Nœuds créés
 
@@ -118,95 +126,6 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 ![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
 Commande à utiliser (**dans son nom court**), pouvant faire appel aux variables locales et globales.
-
-
-
-
-
-
----
-
-## Variables et opérations mathématiques
-
-Vous pouvez faire appel à plusieurs nœuds permettant d'assigner des variables à votre flux.
-
-Dans chacun des cas, une fois une variable créée, vous pourrez y faire appel via ***{nom de la variable}***.
-
-### Opérations mathématiques
-
-Dans la catégorie **Batch**, vous pourrez trouver **Opération mathématique**, qui utilise le langage **batch** pour réaliser les opérations. Ce langage est très limité puisqu'il ne fonctionne qu'avec des entiers. Si vous demandez 5 divisé en 2, cela vous donnera 3. Mais c'est parfait pour les résolutions.
-
-Pour les calculs plus complexes, je vous conseille l'outil **Qalculate**.
-
-### Variables d'entrée
-
-Ce nœud fera qu'une série de questions sera posée au début du flux pour être ré-utilisée par la suite.
-
-### Variables globales 
-
-Certains nœuds peuvent renvoyer une valeur sauvegardée sous forme de fichier TXT, par exemple la largeur d'une image, l'artiste d'un audio...
-
-Le nœud **Variables globales** peut créer des variables basées sur ces fichiers TXT, pouvant alors être utilisées dans toute l'interface.
-
-### Choix
-
-Le choix est une question posée proposant jusqu'à 8 propositions de réponses.
-
-Vous pouvez indiquer un choix par défaut et un timer au bout duquel la proposition par défaut sera choisie automatiquement.
-
-#### Choix - Si
-
-![CLI19](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI19.png)
-
-Cela permet d'indiquer une valeur correspondant aux choix, pouvant alors être renvoyée vers une variable globale.
-
-### Math SI
-
-![CLI21](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI21.png)
-
-Ce nœud analyse deux variables via l'un des opérateurs : 
-
-* **EQU** : "Equal", ou "égal"
-* **NEQ** : "Not Equal", ou "non égal"
-* **LSS** : "Less", ou "plus petit"
-* **LES** : "Less or equal", ou "plus petit ou égal"
-* **GTR** : "Greater", ou "plus grand"
-* **GEQ** : "Greater or equal", ou "plus grand ou égal"
-
-Il renverra alors la valeur si l'opération est vraie
-
-### Math SI if else
-
-idem, mais permet de renvoyer une autre valeur si l'opération est fausse
-
-### Math SI if elseif
-
-idem, mais renvoie trois valeurs : 
-
-1. si inférieur
-2. si égal
-3. si supérieur
-
-## Switch
-
-![CLI22](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI22.png)
-
-Ce nœud vous permet de diviser votre flux en sous-flux en fonction de certaines conditions.
-
-Ce nœud reçoit une valeur en entrée afin de permettre à celle-ci de continuer le flux.
-
-Il y a en sortie le nombre de condition + 1.
-
-La dernière sortie est celle "par défaut" si aucune des conditions n'est remplie.
-
-### Merge
-
-Ce nœud permet de réunir différents flux créés par Switch afin de leur faire suivre une suite de flux unique.
-
-
----
-
-
 
 ---
 
