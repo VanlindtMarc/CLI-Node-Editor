@@ -28,6 +28,84 @@ Dans la barre de menu, vous avez également **Outils** qui vous permet d'indique
 
 ---
 
+## Outils
+
+![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png)
+
+Avant toute utilisation, vous devez indiquer les outils qui seront utilisés par les flux.
+
+* **Nom** : Le nom simple par lequel appeler l'outil
+* **Chemin** : Chemin complet vers l'outil. Cela évite d'avoir tous les outils dans son %PATH%. Si un chemin est indiqué, ce chemin sera utilisé directement dans le flux.
+* **Description** : ...
+* **Arg Version** : argument permettant de connaître la version de l'outil et de réaliser un test pour la connaitre.
+
+**Attention** au choix du nom. Si par la suite, vous changez le nom d'un outil, les nœuds y faisant appel ne fonctionneront plus.
+
+
+
+
+
+
+###  Logiciels conseillés
+
+* 7zip : compression/décompression
+* BPM Counter : calcul très précis du BPM sur WAV et MP3
+* Curl : transfert de données
+* exiftool : manipulation de métadonnées
+* ffmpeg : manipulation audio/image/vidéo
+* flac : encodeur FLAC
+* HandBrake : encodeur vidéo
+* lame : encodeur MP3
+* metaflac : modification des métas FLAC
+* Pandoc : transformation de documents 
+* Potrace : vectorisation vers SVG
+* Qalculate : calculatrice renvoyant des valeurs non-entières
+* sox : transformation audio
+
+### Nœuds CLI
+
+Chaque nœud peut être paramétré via quatre onglets.
+
+#### Général 
+
+![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
+
+* Nom du nœud : nom réel
+* Nom affiché : nom affiché dans les menus
+* Catégorie : en général le nom de la commande CLI
+* Sous-catégorie : le type d'usage fait de la commande
+* Commande CLI : commande dans son nom court
+* Format de sortie : format proposé par défaut
+* Formats suggérés : autres formats dans lesquels il est possible de sauver le résultat
+* Description
+* Couleur hexa : couleur du nœud dans l'interface.
+
+
+
+#### Ports
+
+![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
+
+Indique le nombre de fichiers attendus en entrée et en sortie.
+
+Le port d'entrée principal sera appelé via {input}, le deuxième via {input2} et ainsi de suite.
+
+Pareil pour {output}.
+
+#### Paramètres
+
+![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
+
+Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
+
+#### Template
+
+![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
+
+Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
+
+---
+
 ## Bibliothèques de nœuds
 
 ## Nœuds d'entrée
@@ -132,75 +210,7 @@ Ce nœud permet de réunir différents flux créés par Switch afin de leur fair
 
 ---
 
-## Outils CLI
 
-![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png)
-
-Vous allez pouvoir utiliser tous les outils CLI que vous voulez.
-
-Le nom à utiliser dans l'interface est celui indiqué dans **Nom**.
-
-Ils seront sauvés dans une base de données contenant :
-
-**Nom court à utiliser dans l'interface** - **Lien complet vers l'outil** - **Description**
-
-###  Logiciels conseillés
-
-* 7zip : compression/décompression
-* BPM Counter : calcul très précis du BPM sur WAV et MP3
-* Curl : transfert de données
-* exiftool : manipulation de métadonnées
-* ffmpeg : manipulation audio/image/vidéo
-* flac : encodeur FLAC
-* HandBrake : encodeur vidéo
-* lame : encodeur MP3
-* metaflac : modification des métas FLAC
-* Pandoc : transformation de documents 
-* Potrace : vectorisation vers SVG
-* Qalculate : calculatrice renvoyant des valeurs non-entières
-* sox : transformation audio
-
-### Nœuds CLI
-
-Chaque nœud peut être paramétré via quatre onglets.
-
-#### Général 
-
-![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
-
-* Nom du nœud : nom réel
-* Nom affiché : nom affiché dans les menus
-* Catégorie : en général le nom de la commande CLI
-* Sous-catégorie : le type d'usage fait de la commande
-* Commande CLI : commande dans son nom court
-* Format de sortie : format proposé par défaut
-* Formats suggérés : autres formats dans lesquels il est possible de sauver le résultat
-* Description
-* Couleur hexa : couleur du nœud dans l'interface.
-
-
-
-#### Ports
-
-![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
-
-Indique le nombre de fichiers attendus en entrée et en sortie.
-
-Le port d'entrée principal sera appelé via {input}, le deuxième via {input2} et ainsi de suite.
-
-Pareil pour {output}.
-
-#### Paramètres
-
-![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
-
-Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
-
-#### Template
-
-![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
-
-Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
 
 ---
 
@@ -345,6 +355,11 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 ## Bugs connus 
 - Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre car il y a un bug dans l'édition
 - Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées.
+- Plante si on teste "tous les outils"
 
 ## Ajouts à venir
 - Clic droit sur un nœud pour le remplacer directement par un autre
+- Ajout à la fin des fichiers générés d'une zone de remarque contenant le flux. Cette zone pourrait être captée par l'outil afin de récupérer le flux directement d'un flux généré.
+- Ajouter une colonne "url" pour le gestionnaire d'outils
+- Ajouter un téléchargement automatique des outils
+- Faire en sorte que les tests ne soient réalisés que sur les outils ayant un "arg version"
