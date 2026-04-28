@@ -12,7 +12,7 @@ Trois types de flux peuvent être créés :
 2. Tous les fichiers sont traités par un même flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
-Le **batch** est le langage principal, car langage de script historique de **Windows** et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
+Le **batch** est le langage principal, car langage de script historique de **Windows** (et **DOS**) et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
 
 ---
 ## Interface
@@ -56,7 +56,7 @@ Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par
 
 Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant directement appels à une commande système ou à un logiciel CLI.
 
-### Création/Edition
+### Création/Édition
 
 #### Général
 
@@ -66,7 +66,7 @@ Les nœuds permettant de faire évoluer le flux sont les nœuds créés, faisant
 * **Nom affiché** : nom affiché dans les menus
 * **Catégorie** : en général le nom de la commande CLI
 * **Sous-catégorie** : le type d'usage fait de la commande
-* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser.
+* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser. **ATTENTION** : pour le bon fonctionnement du flux, il faut bien indiquer exactement le nom court de la commande voulue.
 * **Format de sortie** : format proposé par défaut
 * **Formats suggérés** : autres formats dans lesquels il est possible de sauver le résultat
 * **Description**
@@ -92,23 +92,9 @@ Permet de créer des variables locales qui seront utilisées lors de l'appel à 
 
 ![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
-Commande à utiliser (dans son nom court indiqué dans la liste des outils), pouvant faire appel aux variables locales et globales.
+Commande à utiliser (**dans son nom court**), pouvant faire appel aux variables locales et globales.
 
-###  Logiciels conseillés
 
-* 7zip : compression/décompression
-* BPM Counter : calcul très précis du BPM sur WAV et MP3
-* Curl : transfert de données
-* exiftool : manipulation de métadonnées
-* ffmpeg : manipulation audio/image/vidéo
-* flac : encodeur FLAC
-* HandBrake : encodeur vidéo
-* lame : encodeur MP3
-* metaflac : modification des métas FLAC
-* Pandoc : transformation de documents 
-* Potrace : vectorisation vers SVG
-* Qalculate : calculatrice renvoyant des valeurs non-entières
-* sox : transformation audio
 
 ---
 
@@ -371,3 +357,25 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 - Ajouter un téléchargement automatique des outils
 - Faire en sorte que les tests ne soient réalisés que sur les outils ayant un "arg version"
 - Permettre de remplacer un flux par un autre s'il a le même nombre de ports d'entrée et de sortie
+
+## Liste de logiciels CLI
+
+* 7zip : compression/décompression
+* BPM Counter : calcul très précis du BPM sur WAV et MP3
+* Curl : transfert de données
+* exiftool : manipulation de métadonnées
+* ffmpeg : manipulation audio/image/vidéo
+* flac : encodeur FLAC
+* HandBrake : encodeur vidéo
+* lame : encodeur MP3
+* magick : transformation image
+* metaflac : modification des métas FLAC
+* OpenSCAD : outil 2D et 3D
+* Pandoc : transformation de documents 
+* Potrace : vectorisation vers SVG
+* Qalculate : calculatrice renvoyant des valeurs non-entières
+* sox : transformation audio
+* Tesseract : OCR
+* Whisper : Transcription audio vers texte/sous-titre
+* Yt-dlp : téléchargement depuis YouTube
+* 
