@@ -9,15 +9,15 @@ Trois types de flux peuvent être créés :
 2. Tous les fichiers sont traités par un même flux
 3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
 
-Le **batch** est le langage principal, car langage de script historique de **Windows** (et **DOS**) et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
+Le **batch** est le langage principal, car langage de script historique de **Windows** (et **DOS**) et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. Il est donc le seul langage permettant de directement traiter des fichiers sans devoir passer par des modifications complexes de **Windows**.
 
 ---
 
 # Interface
 
 L'interface principale est divisée en trois : 
-1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux
-2. Une zone centrale montrant les nœuds et leurs liens
+1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux. Si vous double-cliqué sur un nom, ce nœud apparaîtra dans la zone centrale.
+2. Une zone centrale montrant les nœuds et leurs liens. Si vous faites un clic droit dans cette zone, une liste des nœuds apparaitra afin d'insérer celui de votre choix à cet endroit.
 3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution lors des tests internes.
 
 Dans la barre de menu, vous avez également **Outils** qui vous permet d'indiquer les outils CLI que vous possédez.
