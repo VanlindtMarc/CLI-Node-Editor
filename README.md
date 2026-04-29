@@ -1,305 +1,460 @@
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
-**Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pouvant utiliser toute commande système ou logiciel CLI.
+# 🏗️ Terminal Architect
 
-Il est principalement créé pour des flux de traitement de fichiers auxquels il est possible de faire appel directement dans l'explorateur ou via **Envoyer vers...**
+> 🧰 **Terminal Architect** est une application de bureau qui permet de **construire des scripts CLI complexes** (Batch `.bat`, Bash `.sh`, PowerShell `.ps1`) à travers une **interface nodale visuelle**, sans écrire une seule ligne de script à la main.
 
-Trois types de flux peuvent être créés :
-1. Le flux traite chaque fichier séparément 
-2. Tous les fichiers sont traités par un même flux
-3. Un certain nombre de fichiers est demandé, chacun d'un certain type, et chacun sera sélectionné par son extension pour la suite du flux.
+L'idée : assembler graphiquement des nœuds — un par commande, un par décision, un par variable — puis laisser l'application générer le script correspondant. Le script obtenu peut ensuite être appelé directement depuis l'**Explorateur Windows** (clic droit ➜ **Envoyer vers…**), ce qui transforme n'importe quel flux ffmpeg / ImageMagick / yt-dlp / HandBrake / etc. en **outil contextuel** sur vos fichiers.
 
-Le **batch** est le langage principal, car langage de script historique de **Windows** (et **DOS**) et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. Il est donc le seul langage permettant de directement traiter des fichiers sans devoir passer par des modifications complexes de **Windows**.
+🪟 Le **Batch** reste le langage de prédilection sous Windows : c'est le seul format directement exécutable depuis l'Explorateur sans bricolage de la sécurité système, contrairement à PowerShell (`.ps1`) qui nécessite un déblocage manuel.
 
 ---
 
-# Interface
+## 📚 Sommaire
 
-L'interface principale est divisée en trois : 
-1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux. Si vous double-cliqué sur un nom, ce nœud apparaîtra dans la zone centrale.
-2. Une zone centrale montrant les nœuds et leurs liens. Si vous faites un clic droit dans cette zone, une liste des nœuds apparaitra afin d'insérer celui de votre choix à cet endroit.
-3. Une colonne à droite où peut être généré et visualisé le code à exporter ainsi que visualisé le log d'exécution lors des tests internes.
-
-Dans la barre de menu, vous avez également **Outils** qui vous permet d'indiquer les outils CLI que vous possédez.
-
-![test](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI02.png)
+1. [✨ Fonctionnalités](#-fonctionnalités-principales)
+2. [⚡ Démarrage rapide](#-démarrage-rapide)
+3. [🖥️ Interface](#-interface)
+4. [🔧 Outils CLI](#-outils-cli)
+5. [🧩 Nœuds](#-nœuds)
+6. [🔁 Modes de flux](#-modes-de-flux)
+7. [🐞 Débogage](#-débogage)
+8. [📦 Bibliothèque](#-bibliothèque)
+9. [▶️ Exécution & export](#-exécution--export)
+10. [💡 Exemples de nœuds](#-exemples-de-nœuds)
+11. [🌊 Exemples de flux](#-exemples-de-flux)
+12. [🛠️ Compilation avec PyInstaller](#-compilation-avec-pyinstaller)
+13. [📂 Fichiers de configuration](#-fichiers-de-configuration)
+14. [🪲 Bugs connus](#-bugs-connus)
+15. [🚀 Roadmap](#-roadmap)
+16. [📜 Liste des CLI compatibles](#-liste-des-cli-compatibles)
 
 ---
 
-# Outils
+## ✨ Fonctionnalités principales
+
+- 🎨 **Éditeur nodal** drag & drop avec connexions Bézier, mini-map, recadrage automatique (`Ctrl+0`) et recherche de nœud (`Ctrl+F`).
+- 🌐 **Trois langages cibles** : Batch, Bash, PowerShell — choisis dans la colonne de gauche, le code se régénère à la volée.
+- 🧠 **Bibliothèque de nœuds** importable / exportable (`node_library.json`) — chaque nœud encapsule une commande CLI réutilisable.
+- 🔌 **Gestionnaire de dépendances** centralisé (`dependencies.json`) : on déclare ses outils CLI une fois, on les invoque partout par leur nom court.
+- 👁️ **Prévisualisation live** du script avec coloration syntaxique adaptée à chaque langage.
+- ▶️ **Exécution intégrée** avec retour visuel (le nœud en cours s'illumine) et console de log dans l'interface.
+- 🐛 **Mode debug** : injection de traces et de pauses pas-à-pas dans le script généré.
+- 💾 **Workflows** sauvegardables au format `.workflow` + menu **Flux récents** (16 derniers).
+- 🪵 **Trois modes d'entrée** : un fichier à la fois, plusieurs en lot, ou liste depuis un fichier texte.
+- 🎯 **Switch / Merge / Math SI** pour les flux conditionnels (orientation d'image, format audio, etc.).
+
+---
+
+## ⚡ Démarrage rapide
+
+### 🐍 Depuis les sources
+
+```bash
+pip install PyQt6
+python "Terminal Architect.py"
+```
+
+### 📥 Depuis l'exécutable compilé
+
+1. Téléchargez `Terminal Architect.exe`.
+2. Placez-le dans un dossier dédié — il créera ses fichiers de config à côté de lui au premier lancement (`dependencies.json`, `node_library.json`, `recent_workflows.json`).
+3. Configurez vos outils CLI via **Outils ➜ Configurer les dépendances** avant la première utilisation.
+
+### 🪄 Astuce « Envoyer vers »
+
+Pour que vos workflows apparaissent dans le menu contextuel Windows :
+
+1. Exportez le workflow en `.bat` (**Fichier ➜ Exporter le script**).
+2. Tapez `shell:sendto` dans la barre d'adresse de l'Explorateur.
+3. Glissez-y un raccourci vers votre `.bat`.
+
+---
+
+## 🖥️ Interface
+
+L'interface se divise en **trois colonnes** :
+
+### 1. 📚 Colonne gauche — Bibliothèque & options globales
+
+- 🔍 Filtre **Tous les nœuds** / **Nœuds vérifiés** (les nœuds vérifiés ont été testés ; les autres sont souvent générés par IA et n'attendent que votre validation).
+- ☑️ **Boucler sur chaque fichier** : applique le flux à chaque fichier indépendamment, ou en un seul passage groupé.
+- 📜 **Type de script** : Batch, Bash ou PowerShell.
+- 🐞 **Mode debug** + **Pause avant chaque action**.
+- ➕ **Nouveau** : crée un nœud personnalisé.
+- ✏️ **Éditer** / 📋 **Utiliser comme template** / 🗑️ **Supprimer** : actions sur le nœud sélectionné.
+- 👉 Double-clic sur un nœud de la liste = ajout immédiat sur le canvas.
+
+### 2. 🎨 Zone centrale — Canvas
+
+- 🖱️ Clic droit sur le fond ➜ menu hiérarchisé pour insérer un nœud à la position du curseur.
+- 🔗 Tirez un câble depuis un port pour créer une connexion.
+- 🎯 `F` pour centrer la vue sur le nœud sélectionné, `Ctrl+0` pour cadrer tout le workflow.
+- 🔢 Chaque nœud affiche son **numéro d'ordre d'exécution**, recalculé en temps réel.
+
+### 3. 📜 Colonne droite — Aperçu & exécution
+
+- 🧾 **Aperçu du script** avec coloration syntaxique (Batch / Bash / PowerShell).
+- 🔄 **Recalculer l'ordre** force la régénération.
+- ▶️ **Lancer** : exécute le workflow depuis l'interface (les fichiers d'entrée sont demandés via boîte de dialogue).
+- ⏹️ **Stop** pour interrompre.
+- 📟 **Console d'exécution** : sortie standard fusionnée du process en cours, avec nœuds animés en temps réel.
+
+![Interface](https://github.com/VanlindtMarc/be/blob/main/README/CLI02.png)
+
+---
+
+## 🔧 Outils CLI
 
 ![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png)
 
-Avant toute utilisation, vous devez indiquer les outils qui seront utilisés par les flux.
+Avant la première utilisation : déclarez les outils CLI installés sur votre machine dans **Outils ➜ Configurer les dépendances**. Pour chacun :
 
-* **Nom** : Le nom simple par lequel appeler l'outil par la suite
-* **Chemin** : Chemin complet vers l'outil. Cela évite d'avoir tous les outils dans son %PATH%. Si un chemin est indiqué, ce chemin sera utilisé directement dans le flux.
-* **Description** : ...
-* **Arg Version** : argument permettant de connaître la version de l'outil et de réaliser un test pour la connaitre.
+| Champ | Description |
+|---|---|
+| 🏷️ **Nom court** | L'identifiant utilisé dans vos templates (ex. `ffmpeg`). C'est ce nom qui fait le pont entre nœud et exécutable. |
+| 📁 **Chemin** | Chemin complet vers le binaire — vous évite d'avoir à polluer votre `%PATH%`. Si rempli, c'est ce chemin qui sera injecté dans le script. |
+| 📝 **Description** | Mémo libre. |
+| ❓ **Arg version** | L'argument à passer pour récupérer la version (`--version`, `-version`, `-ver`…). Sert au bouton de test. |
 
-**Attention** au choix du nom à la création d'un outil. Si par la suite, vous changez le nom d'un outil, les nœuds y faisant appel ne fonctionneront plus.
+> ⚠️ **Important** : ne renommez pas un outil après coup. Tous les nœuds qui pointent vers ce nom court cesseront de fonctionner.
 
---- 
+La configuration vit dans `dependencies.json` (voir [📂 Fichiers de configuration](#-fichiers-de-configuration)).
 
-# Nœuds
+---
 
-Un nœud est une opération dans le flux permettant de le faire évoluer.
+## 🧩 Nœuds
 
-Il existe plusieurs types de nœuds :
+Un **nœud** = une étape du flux. Quatre familles existent :
 
-* **Fichier** : entrées et sorties de flux
-* **Système** : gestion des variables et des divisions/fusions de flux
+### 📥 Nœuds Fichier (entrées / sortie)
 
-Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par **Terminal Architect**.
+Ces nœuds sont **gérés en interne** par Terminal Architect — non éditables.
 
-Les nœuds permettant de faire évoluer le flux sont les **nœuds créés**, faisant directement appels à une commande système ou à un logiciel CLI.
+- 📄 **Fichier Input** *(par défaut)* : le ou les fichiers passés au script à son lancement (`%~1`, `$1`, `$args[0]`).
+- 📌 **Fichier Source** : un fichier fixe (ex. un watermark PNG toujours appliqué).
+- 🗂️ **Multi-fichiers** : déclare un nombre de fichiers attendus, chacun filtré par extension.
+- 📋 **Liste** : prend un fichier texte en entrée et boucle sur chacune de ses lignes (utile pour des listes d'URL avec yt-dlp).
+- 🎯 **Fichier Destination** *(sortie)* : nom du résultat final. Peut être instancié plusieurs fois si le flux produit plusieurs livrables.
 
-## Nœuds Fichier
+### ⚙️ Nœuds Système
 
-Il existe quatre nœuds d'entrée : 
-1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
-2. **Fichier source** : indique un fichier fixe qui sera utilisé pendant le flux (par exemple un watermark pour des photos)
-3. **Multi-fichiers** : indique le nombre et le type de fichier attendus pour ce flux.
-4. **Liste** : indique que le fichier d'entrée est un fichier de type texte dont chaque ligne est un élément à traiter (liste de fichiers, d'URL...)
+- ❓ **Variables d'entrée** : pose une série de questions à l'utilisateur au démarrage du script — chaque réponse devient une variable.
+- 🌐 **Variables Globales** : transforme une entrée du flux (résultat d'une commande, ex. `ffprobe`) en variable globale réutilisable.
+- 🔀 **Switch** : aiguille le flux selon une condition (ex. format du fichier, dimensions de l'image).
+- 🔗 **Merge** : réunit les branches après un Switch pour repartir sur un tronc commun.
+- ➗ **Math SI** / **Math SI if elseif** : tests booléens et conditions multi-cas.
+- 🐛 **Debug** : affiche le contenu d'une variable ou d'un fichier au milieu du flux.
 
-Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** et le nœud de sortie **Fichier Destination**, qui sont les bases d'un flux : une entrée → une sortie.
+### 🛠️ Nœuds créés (custom)
 
-Pour la sortie nous n'en avons qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer : 
-1. **Fichier destination** : nom du fichier final voulu.
+C'est là que la richesse de l'application se trouve. Chaque nœud personnalisé décrit **une commande CLI** dans son template, avec ports et paramètres. Quatre onglets dans la fenêtre de création :
 
-## Nœuds Système
-
-Il y en a quatre principaux, permettant : 
-
-### Questions posées au début du flux
-
-Plusieurs questions vous seront posées au début du flux, dont chaque réponse deviendra une variable utilisée par la suite 
-
-### Variables créées à partir d'informations reçues par le flux 
-
-Ce nœud recevra un certain nombre d'entrées, chaque entrée pouvant devenir une variable.
-
-### Diviser un flux
-
-En fonction de certaines conditions, vous pourrez faire en sorte que le flux suive une certaine voie.
-
-### Réunir des flux
-
-Une fois un flux divisé, la réunification permettra de prendre celle qui a été choisie afin de lui faire suivre un flux unique.
-
-## Nœuds créés
-
-### Général
+#### 1. 📋 Général
 
 ![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
-* **Nom du nœud** : nom réel qui doit être unique
-* **Nom affiché** : nom affiché dans les menus
-* **Catégorie** : en général le nom de la commande CLI
-* **Sous-catégorie** : le type d'usage fait de la commande
-* **Commande CLI** : commande dans son **nom court** tel qu'indiqué dans les outils, c'est ce qui permettra plus loin d'identifier le chemin à utiliser. ***Attention*** : pour le bon fonctionnement du flux, il faut bien indiquer exactement le nom court de la commande voulue.
-* **Format de sortie** : format proposé par défaut
-* **Formats suggérés** : autres formats dans lesquels il est possible de sauver le résultat
-* **Description**
-* **Couleur hexa** : couleur du nœud dans l'interface.
+- 🏷️ **Nom du nœud** *(unique)*
+- 👁️ **Nom affiché** dans les menus
+- 📂 **Catégorie** *(souvent le nom de la CLI)*
+- 📁 **Sous-catégorie** *(type d'usage)*
+- 💻 **Commande CLI** : **nom court** déclaré dans Outils → c'est ce qui résout le chemin réel à la génération.
+- 🎬 **Format de sortie** par défaut + 📐 **Formats suggérés**
+- 📝 **Description**
+- 🎨 **Couleur hexa** affichée sur le nœud
 
-### Ports
+> ⚠️ La **commande CLI** doit correspondre **exactement** à un nom court du gestionnaire d'outils, sinon le script ne saura pas où trouver l'exécutable.
+
+#### 2. 🔌 Ports
 
 ![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
 
-Indique le nombre de fichiers attendus en entrée et en sortie.
+Définit le nombre de ports d'entrée et de sortie. Dans le template, on les référence par `{input}`, `{input2}`, … et `{output}`, `{output2}`, …
 
-Le port d'entrée principal sera appelé via {input}, le deuxième via {input2} et ainsi de suite.
-
-Pareil pour {output}.
-
-### Paramètres
+#### 3. 🎚️ Paramètres
 
 ![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
 
-Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
+Variables locales du nœud (largeur, qualité, encodeur…) avec valeurs par défaut, types et choix prédéfinis. Elles deviennent éditables directement sur le nœud une fois posé sur le canvas.
 
-### Template
+#### 4. 🧱 Template
 
 ![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
-Commande à utiliser (**dans son nom court**), pouvant faire appel aux variables locales et globales.
+La ligne de commande, paramétrée par les variables locales (`{width}`) et globales (`{Encodeur}`), avec `{input}` / `{output}` pour les ports.
 
 ---
 
-# Nœuds vérifiés
+## 🔁 Modes de flux
 
-Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
+Trois logiques d'entrée sont possibles selon les nœuds d'entrée placés :
 
-La plupart des nœuds ont été générés par IA et demandent à être testés.
+| Mode | Nœud à utiliser | Comportement |
+|---|---|---|
+| 🔂 **Un fichier à la fois** | `Fichier Input` + ☑️ *Boucler sur chaque fichier* | Le workflow s'exécute une fois par fichier passé en argument. |
+| 🧺 **Lot global** | `Fichier Input` + ☐ *Boucler sur chaque fichier* | Tous les fichiers sont disponibles ensemble dans un même run. |
+| 📋 **Liste** | `Liste` | Lit un fichier texte ligne par ligne et applique le flux à chaque ligne. |
+| 🗂️ **Multi-fichiers typés** | `Multi-fichiers` | Demande N fichiers, chacun avec une extension précise. |
 
 ---
 
-# Exemples de noeuds
+## 🐞 Débogage
 
-## ImageMagick - Redimensioinner Max
+- 🐛 **Mode debug** : insère dans le script généré des `echo` détaillés indiquant chaque étape, chaque variable résolue, le statut de retour de chaque commande.
+- ⏸️ **Pause avant chaque action** *(actif uniquement si Debug activé)* : ajoute un `pause` avant chaque nœud pour avancer manuellement dans le flux et inspecter l'état.
+- 🔍 **Nœud Debug** : sonde le contenu d'une variable ou d'un fichier au milieu du flux.
+- 📡 **Console d'exécution intégrée** : pendant un `Lancer`, les marqueurs `__NODE_START__` / `__NODE_END__` permettent à l'interface d'illuminer le nœud en cours en temps réel.
+
+---
+
+## 📦 Bibliothèque
+
+- 📥 **Importer bibliothèque** : fusionne ou remplace les nœuds de votre bibliothèque actuelle avec un fichier `.json` partagé.
+- 📤 **Exporter bibliothèque** : génère un `.json` portable pour partager vos nœuds.
+- ✏️ **Édition d'un nœud** : la modification d'un nœud dans la bibliothèque se répercute désormais sur ses occurrences déjà posées sur le canvas.
+- ✅ **Filtre vérifié / non vérifié** : la plupart des nœuds livrés ont été générés par IA et marqués comme **non vérifiés** — testez-les avant de les considérer comme fiables.
+
+---
+
+## ▶️ Exécution & export
+
+### Exécution depuis l'interface
+
+- ▶️ **Lancer** ouvre une boîte de dialogue qui demande les fichiers d'entrée (sauf si le workflow n'en attend pas).
+- 🎬 Le script est écrit dans un dossier temporaire, exécuté via `cmd.exe /c` (Batch), `bash` ou `powershell.exe -ExecutionPolicy Bypass`.
+- 🟢 Les nœuds passent en surbrillance pendant leur exécution et basculent en vert (succès) ou rouge (erreur).
+- 📟 La sortie standard du process apparaît en direct dans la console.
+- ⏹️ **Stop** envoie un kill au process en cours.
+
+### Export pour usage externe
+
+- 💾 **Fichier ➜ Exporter le script** génère un fichier autonome (`.bat`, `.sh` ou `.ps1`) que vous pouvez :
+  - Placer dans `shell:sendto` pour l'avoir dans le menu **Envoyer vers** Windows.
+  - Glisser sur l'Explorateur pour traitement direct.
+  - Distribuer à un collègue (les chemins d'outils sont absolus s'ils ont été configurés ainsi).
+
+---
+
+## 💡 Exemples de nœuds
+
+### 🖼️ ImageMagick — Redimensionner Max
+
 ```
 magick {input} -resize {width}x{height} {output}
 ```
-## HandBrakeCLI - ISO 2 MKV
+
+### 🎞️ HandBrakeCLI — ISO ➜ MKV
+
 ```
-HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p4  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic --comb-detect --decomb
+HandBrakeCLI -i {input} -o {output} --format av_mkv --encoder {Encodeur} --encoder-preset p4 --quality {Qualité} --all-audio --all-subtitles --aencoder {AudioEncodeur} --subtitle-burned=none --main-feature --min-duration {Durée min} --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic --comb-detect --decomb
 ```
+
 ---
 
-# Exemples de flux
+## 🌊 Exemples de flux
 
-## Watermark
+### 💧 Watermark v1 — basique
 
 ![CLI10](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI10.png)
 
-Ce flux utilise **ffmpeg**.
+Utilise **ffmpeg**.
 
-1. Lorsque vous lancez le flux, il va vous demander quelle place, en %, doit prendre le watermark sur l'image à traiter.
-2. Le flux retire la hauteur et la largeur de l'image à traiter et créé deux variables correspondant au %age voulu. (ffmpeg)
-3. Le Watermark est redimensionné pour correspondre au %age voulu. (ffmpeg)
-4. Le Watermark est déposé en bas à droite de l'image, à 10 pixels de chaque bord. (ffmpeg)
-5. Le résultat est sauvegardé au format PNG sous le même nom que le fichier d'origine avec "-WM" à la fin.
+1. Demande à l'utilisateur la taille du watermark en % de l'image.
+2. Récupère hauteur et largeur de l'image source ➜ deux variables globales.
+3. Redimensionne le watermark selon le %.
+4. L'incruste en bas à droite (10 px de marge).
+5. Sauvegarde en PNG suffixé `-WM`.
 
-## Watermark 2
+### 💧 Watermark v2 — adaptatif (orientation)
 
 ![CLI18](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI18.png)
 
-Ici, nous pouvons voir un appel au nœud **Math SI** qui me dit si la photo est horizontale ou verticale.
+Le nœud **Math SI** détecte si l'image est **horizontale** (largeur ≥ hauteur) ➜ `horizontal.png`, sinon ➜ `vertical.png`.
 
-Si la largeur est plus grande ou égale à la hauteur, j'applique le watermark "horizontal.png".
-
-Si ce n'est pas le cas, j'applique le watermark "vertical.png".
-
-## Watermark 3
+### 💧 Watermark v3 — trois cas
 
 ![CLI20](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI20.png)
 
-Nous faisons ici appel au nœud **Math SI if elseif** qui permet de faire appel aux trois possibilités afin d'affecter à chacune une valeur.
+Avec **Math SI if elseif**, on couvre trois orientations possibles avec un watermark dédié à chacune.
 
-## Vectorisation
+### ✏️ Vectorisation
 
 ![CLI06](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI06.png)
 
-Ce flux utilise **imagemagick** et **potrace**.
+Utilise **ImageMagick** + **Potrace**.
 
-1. Lorsque vous lancez le flux, il demandera la qualité voulue (en px) et où doit se situer la "coupure", c'est à dire, s'il ya un flou, à quel niveau de gris doit être réalisé la vectorisation.
-2. Le fichier est transformé en BMP, format de base de Potrace.
-3. L'image est redimensionnée à la qualité voulue.
-4. L'image est vectorisée en SVG.
-5. Le résultat est sauvegardé au format SVG avec le nom d'origine de l'image.
+1. Demande qualité (px) et seuil de coupure (gris).
+2. Conversion en BMP.
+3. Redimensionnement.
+4. Vectorisation en SVG via Potrace.
+5. Sauvegarde en SVG sous le nom d'origine.
 
-Mais vous pouvez simplement modifier votre flux pour, par exemple, rendre le principe de qualité plus compréhensible, en demandant une valeur de 1 à 16.
-
-Le problème est que si l'on prend une photo en couleur, la vectorisation peut ne pas correspondre aux attentes.
-
-On peut donc en même temps créer un flux plus complexe créant cinq images : 
-
-1. basée sur l'image en couleur
-2. basée sur une mise en noir et blanc
-3. basée sur le canal rouge
-4. basée sur le canal vert
-5. basée sur le canal bleu
+📸 Variante avancée — vectoriser une photo couleur en cinq passes (couleur, N&B, canaux R/G/B) :
 
 ![CLI08](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI08.png)
 
-## Modification image par traitement audio
+### 🎵 Image modifiée par traitement audio (esthétique TV analogique)
 
 ![CLI09](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI09.png)
 
-Ce flux utilise **ffmpeg**, **imagemagick**, **sox** ainsi que des **scripts python persos**.
+Utilise **ffmpeg**, **ImageMagick**, **sox** et des **scripts Python persos**.
 
-1. On demande la taille du fichier image finale
-2. On va chercher la résolution de l'image d'origine pour en créer une variable
-3. On sépare le fichier d'origine en trois fichiers image correspondant aux trois canaux de couleurs
-4. Chaque couleur est transférée vers un spectrogramme audio dans un FLAC
-5. Chaque audio reçoit un écho différent
-6. On extrait de chaque audio le spectrogramme avec comme couleurs un dégradé de gris : une fois avec la résolution d'origine et une fois avec la résolution demandée
-7. On reconstruit deux images : une dans la résolution d'origine et une dans la résolution demandée
+1. Demande la taille finale.
+2. Récupère la résolution d'origine.
+3. Sépare l'image en 3 fichiers (R/G/B).
+4. Chaque canal devient un spectrogramme audio FLAC.
+5. Chaque audio reçoit un écho différent.
+6. Reconstruit deux images à partir des spectrogrammes (résolution d'origine + résolution demandée).
 
-Le but de ce flux est de reproduire plus fidèlement les effets de la télé analogique.
-
-## Transformer un  ISO ou Remux en MKV
+### 🎬 ISO/Remux ➜ MKV
 
 ![CLI17](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI17.png)
 
-Ce flux utilise **HandBrake-CLI**.
+Utilise **HandBrake-CLI**.
 
-## Calculer le BPM
+### 🥁 Calcul du BPM v1
 
 ![CLI23](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI23.png)
 
-Nous allons ici utiliser le nœud **Switch** car les différents outils permettant de calculer le BPM et d'inscrire cette information en tant que tag dans un fichier différent selon le format.
+Le BPM Counter ne comprend que **WAV** et **MP3**. On convertit donc d'abord en MP3, on calcule le BPM, puis selon le format final on inscrit le tag (FFmpeg pour MP3, **metaflac** pour FLAC car FFmpeg gère mal les tags FLAC).
 
-L'outil pour calculer le BPM ne fonctionne qu'avec les extensions **WAV** et **MP3**. Il faut donc transformer l'audio en **MP3** avant le calcul.
-
-En fonction du format, ce n'est pas le même outil qui est utilisé pour inscrire le tag, ffmpeg ayant des problèmes avec les flac.
-
-## Calculer le BPM 2
+### 🥁 Calcul du BPM v2 (avec Merge)
 
 ![CLI24](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI24.png)
 
-Dans la première version, nous avions plusieurs appels aux nœuds **Calcul BPM**, **Variables Globales** et **Fichier Destination**.
+Refactorisation de la v1 : un seul appel **Calcul BPM** + un **Merge** après le Switch ➜ une seule branche `Fichier Destination` au lieu de deux. Plus DRY.
 
-Ici, nous utilisons le nœud **Merge** afin de réunir les propositions du switch et ne garder que la condition remplie afin de suivre le flux.
-
-Enfin, une fois l'ajout du tag fait, nous réunissons les résultats pour ne faire appel qu'à un seul appel au fichier de destination puisqu'il ne peut y avoir qu'un seul fichier créé en fonction du flux.
-
-## Informations systèmes
+### 💻 Inventaire système ➜ HTML
 
 ![CLI25](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli25.png)
 
-Créez simplement un fichier HTML vide et lancez le script sur celui-ci.
-
-Il se transformera en un fichier comprenant l'ensemble de vos fichiers installés : 
+Créez un fichier HTML vide et lancez le script dessus : il sera transformé en page listant tous vos logiciels installés.
 
 ![CLI26](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/cli26.png)
 
-## Téléchargement YouTube
+### 📺 Téléchargement YouTube en lot
 
 ![CLI27](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI27.png)
 
-Nous faisons appel au nœud d'entrée Liste qui reçoit en entrée un fichier TXT contenant, ici, des URL.
-
-Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchargera l'audio au format MP3 vers un format **Auteur - Titre.mp3**
+Le nœud **Liste** ingère un `.txt` d'URL. Pour chaque URL : récupération auteur + titre via **yt-dlp**, puis téléchargement audio en MP3 sous `Auteur - Titre.mp3`.
 
 ---
 
-## Bugs connus 
-- Lorsque l'on modifie un paramètre de nœud, il faut réécrire le paramètre, car il y a un bug dans l'édition
-- Si vous lancez un flux depuis l'interface et qu'il y a des questions posées, le flux se bloquera car les questions ne sont pas demandées.
-- Plante si on teste "tous les outils"
-- Si on modifie la couleur d'un nœud, le pickcolor ne reprend pas la couleur affectée au nœud
+## 🛠️ Compilation avec PyInstaller
 
-## Ajouts à venir
-- Clic droit sur un nœud pour le remplacer directement par un autre
-- Ajout à la fin des fichiers générés d'une zone de remarque contenant le flux. Cette zone pourrait être captée par l'outil afin de récupérer le flux directement d'un flux généré.
-- Ajouter une colonne "URL" pour le gestionnaire d'outils
-- Ajouter un téléchargement automatique des outils
-- Faire en sorte que les tests ne soient réalisés que sur les outils ayant un "arg version"
-- Permettre de remplacer un flux par un autre s'il a le même nombre de ports d'entrée et de sortie
-- Import et export d'un nœud unique
-- Export du flux vers PNG avec fond transparent
-- Export du flux vers SVG
+### `Terminal Architect.spec` recommandé
 
-## Liste de logiciels CLI
+```python
+# -*- mode: python ; coding: utf-8 -*-
 
-* 7zip : compression/décompression
-* BPM Counter : calcul très précis du BPM sur WAV et MP3
-* Curl : transfert de données
-* exiftool : manipulation de métadonnées
-* FFmpeg : manipulation audio/image/vidéo
-* flac : encodeur FLAC
-* HandBrake : encodeur vidéo
-* lame : encodeur MP3
-* magick : transformation image
-* metaflac : modification des métas FLAC
-* OpenSCAD : outil 2D et 3D
-* Pandoc : transformation de documents 
-* Potrace : vectorisation vers SVG
-* Qalculate : calculatrice renvoyant des valeurs non-entières
-* sox : transformation audio
-* Tesseract : OCR
-* Whisper : Transcription audio vers texte/sous-titre
-* YT-dlp : téléchargement depuis YouTube
-* 
+a = Analysis(
+    ['Terminal Architect.py'],
+    pathex=[],
+    binaries=[],
+    datas=[
+        ('node_library.json',                  '.'),
+        ('dependencies.json',                  '.'),
+        ('AIDE.md',                            '.'),
+        ('Terminal Architect ICON final.png',  '.'),
+    ],
+    hiddenimports=[
+        'cli_node_editor',
+        'cli_node_editor.core',
+        'cli_node_editor.dialogs',
+        'cli_node_editor.graphics',
+        'cli_node_editor.script_generation',
+        'cli_node_editor.highlighter',
+    ],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    noarchive=False,
+    optimize=0,
+)
+pyz = PYZ(a.pure)
+
+exe = EXE(
+    pyz, a.scripts, a.binaries, a.datas, [],
+    name='Terminal Architect',
+    debug=False,
+    upx=True,
+    console=False,
+    icon=['Terminal Architect ICON final.png'],
+)
+```
+
+### Build
+
+```bash
+pyinstaller "Terminal Architect.spec" --clean --noconfirm
+```
+
+L'exécutable est généré dans `dist/Terminal Architect.exe`.
+
+> 🧨 **Attention aux chemins** : PyInstaller extrait les `datas` dans un dossier temporaire (`sys._MEIPASS`). Pour les fichiers que l'app **modifie** (`dependencies.json`, `node_library.json`, `recent_workflows.json`), il faut les copier au premier lancement vers un emplacement persistant **à côté de l'exe** — sinon les modifications sont perdues à la fermeture. Voir la fonction `user_file()` dans `Terminal Architect.py`.
+
+---
+
+## 📂 Fichiers de configuration
+
+| Fichier | Rôle | Modifiable |
+|---|---|---|
+| 📦 `node_library.json` | Bibliothèque complète des nœuds personnalisés | ✅ |
+| 🔧 `dependencies.json` | Outils CLI déclarés (nom court ➜ chemin) | ✅ |
+| 🕒 `recent_workflows.json` | 16 derniers workflows ouverts | ✅ |
+| 📖 `AIDE.md` | Aide intégrée, accessible depuis le menu | 📌 (livré) |
+| 🎨 `Terminal Architect ICON final.png` | Icône de l'application | 📌 (livré) |
+
+En version compilée, ces fichiers se trouvent **à côté de l'exécutable**.
+
+---
+
+## 🪲 Bugs connus
+
+- ✏️ Lors de la modification d'un paramètre de nœud, il faut **réécrire entièrement** la valeur — bug d'édition partielle.
+- 🚧 Lancer un flux contenant des **questions utilisateur** depuis l'interface bloque l'exécution (la console d'exécution n'est pas interactive).
+- 💥 La fonction « Tester tous les outils » plante si un outil n'a pas de `version_arg`.
+- 🎨 Le sélecteur de couleur ne reprend pas la couleur déjà attribuée au nœud lors de la modification.
+
+---
+
+## 🚀 Roadmap
+
+- 🖱️ Clic droit sur un nœud ➜ remplacement direct par un autre.
+- 🧾 Encart de remarque dans les scripts générés contenant le flux source — pour pouvoir **réimporter** un workflow depuis un script déjà généré.
+- 🔗 Colonne **URL** pour le gestionnaire d'outils.
+- ⬇️ Téléchargement automatique des outils manquants.
+- ✅ Exécuter les tests d'outils uniquement sur ceux qui ont un `version_arg` défini.
+- 🔁 Remplacer un flux par un autre s'ils ont le même nombre de ports d'E/S.
+- 📦 Import / export d'un nœud unique.
+- 🖼️ Export du flux en **PNG** (fond transparent) et en **SVG**.
+
+---
+
+## 📜 Liste des CLI compatibles
+
+| Outil | Usage principal |
+|---|---|
+| 🗜️ **7-Zip** | Compression / décompression |
+| 🥁 **BPM Counter** | Calcul précis du BPM (WAV, MP3) |
+| 🌐 **curl** | Transferts URL |
+| 🏷️ **exiftool** | Métadonnées |
+| 🎬 **FFmpeg** | Audio / image / vidéo (couteau suisse) |
+| 🎵 **flac** | Encodeur FLAC |
+| 📺 **HandBrake-CLI** | Encodage vidéo |
+| 🎙️ **lame** | Encodeur MP3 |
+| 🖼️ **ImageMagick** (`magick`) | Manipulation d'images |
+| 🏷️ **metaflac** | Métadonnées FLAC |
+| 📐 **OpenSCAD** | Modélisation 2D / 3D |
+| 📄 **Pandoc** | Conversion de documents |
+| ✒️ **Potrace** | Vectorisation bitmap ➜ SVG |
+| 🧮 **Qalculate** | Calculatrice (valeurs non-entières) |
+| 🎚️ **sox** | Traitement audio |
+| 👁️ **Tesseract** | OCR |
+| 🗣️ **Whisper** | Transcription audio ➜ texte/sous-titres |
+| 📥 **yt-dlp** | Téléchargement YouTube et autres |
+
+---
+
+<sub>🏗️ Terminal Architect — un éditeur nodal pour gens pressés qui aiment quand même bien comprendre ce que leur shell fabrique.</sub>
