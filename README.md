@@ -278,6 +278,9 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 - Ajouter un téléchargement automatique des outils
 - Faire en sorte que les tests ne soient réalisés que sur les outils ayant un "arg version"
 - Permettre de remplacer un flux par un autre s'il a le même nombre de ports d'entrée et de sortie
+- Import et export d'un nœud unique
+- Export du flux vers PNG avec fond transparent
+- Export du flux vers SVG
 
 ## Liste de logiciels CLI
 
@@ -285,7 +288,7 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 * BPM Counter : calcul très précis du BPM sur WAV et MP3
 * Curl : transfert de données
 * exiftool : manipulation de métadonnées
-* ffmpeg : manipulation audio/image/vidéo
+* FFmpeg : manipulation audio/image/vidéo
 * flac : encodeur FLAC
 * HandBrake : encodeur vidéo
 * lame : encodeur MP3
@@ -298,5 +301,5 @@ Pour chaque URL, il ira chercher l'auteur et le nom de la vidéo puis téléchar
 * sox : transformation audio
 * Tesseract : OCR
 * Whisper : Transcription audio vers texte/sous-titre
-* Yt-dlp : téléchargement depuis YouTube
+* YT-dlp : téléchargement depuis YouTube
 * 
