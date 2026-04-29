@@ -1,6 +1,3 @@
-
-# Terminal Architect
-
 ![Logo](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/Terminal%20Architect%20Logo%20final.svg)
 
 **Terminal Architect** est une aide à la création de flux **batch**, **bash** et **PowerShell** complexes pour **Windows** passant par une interface nodale pouvant utiliser toute commande système ou logiciel CLI.
@@ -15,7 +12,8 @@ Trois types de flux peuvent être créés :
 Le **batch** est le langage principal, car langage de script historique de **Windows** (et **DOS**) et considéré comme un exécutable, contrairement au format **.PS1** de **PowerShell**. 
 
 ---
-## Interface
+
+# Interface
 
 L'interface principale est divisée en trois : 
 1. Une colonne à gauche où apparaissent tous les nœuds proposés et les options générales du flux
@@ -28,7 +26,7 @@ Dans la barre de menu, vous avez également **Outils** qui vous permet d'indique
 
 ---
 
-## Outils
+# Outils
 
 ![CLI11](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI11.png)
 
@@ -43,7 +41,7 @@ Avant toute utilisation, vous devez indiquer les outils qui seront utilisés par
 
 --- 
 
-## Nœuds
+# Nœuds
 
 Un nœud est une opération dans le flux permettant de le faire évoluer.
 
@@ -56,7 +54,7 @@ Ces deux types de nœuds ne peuvent être modifiés, car directement gérés par
 
 Les nœuds permettant de faire évoluer le flux sont les **nœuds créés**, faisant directement appels à une commande système ou à un logiciel CLI.
 
-### Nœuds Fichier
+## Nœuds Fichier
 
 Il existe quatre nœuds d'entrée : 
 1. **Fichier input** : ce nœud est celui par défaut et correspond au(x) fichier(s) que vous enverrez vers votre flux
@@ -69,29 +67,29 @@ Par défaut, l'interface vous présentera le nœud d'entrée **Fichier Input** e
 Pour la sortie nous n'en avons qu'un, qui peut être appelé plusieurs fois si plusieurs fichiers sont à créer : 
 1. **Fichier destination** : nom du fichier final voulu.
 
-### Nœuds Système
+## Nœuds Système
 
 Il y en a quatre principaux, permettant : 
 
-#### Questions posées au début du flux
+### Questions posées au début du flux
 
 Plusieurs questions vous seront posées au début du flux, dont chaque réponse deviendra une variable utilisée par la suite 
 
-#### Variables créées à partir d'informations reçues par le flux 
+### Variables créées à partir d'informations reçues par le flux 
 
 Ce nœud recevra un certain nombre d'entrées, chaque entrée pouvant devenir une variable.
 
-#### Diviser un flux
+### Diviser un flux
 
 En fonction de certaines conditions, vous pourrez faire en sorte que le flux suive une certaine voie.
 
-#### Réunir des flux
+### Réunir des flux
 
 Une fois un flux divisé, la réunification permettra de prendre celle qui a été choisie afin de lui faire suivre un flux unique.
 
-### Nœuds créés
+## Nœuds créés
 
-#### Général
+### Général
 
 ![CLI12](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI12.png)
 
@@ -105,7 +103,7 @@ Une fois un flux divisé, la réunification permettra de prendre celle qui a ét
 * **Description**
 * **Couleur hexa** : couleur du nœud dans l'interface.
 
-#### Ports
+### Ports
 
 ![CLI13](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI13.png)
 
@@ -115,13 +113,13 @@ Le port d'entrée principal sera appelé via {input}, le deuxième via {input2} 
 
 Pareil pour {output}.
 
-#### Paramètres
+### Paramètres
 
 ![CLI14](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI14.png)
 
 Permet de créer des variables locales qui seront utilisées lors de l'appel à la commande. 
 
-#### Template
+### Template
 
 ![CLI15](https://github.com/VanlindtMarc/CLI-Node-Editor/blob/main/README/CLI15.png)
 
@@ -129,7 +127,7 @@ Commande à utiliser (**dans son nom court**), pouvant faire appel aux variables
 
 ---
 
-## Nœuds vérifiés
+# Nœuds vérifiés
 
 Les nœuds vérifiés correspondent à des nœuds qui ont été testés.
 
@@ -137,13 +135,13 @@ La plupart des nœuds ont été générés par IA et demandent à être testés.
 
 ---
 
-## Exemples de noeuds
+# Exemples de noeuds
 
-### ImageMagick - Redimensioinner Max
+## ImageMagick - Redimensioinner Max
 ```
 magick {input} -resize {width}x{height} {output}
 ```
-### HandBrakeCLI - ISO 2 MKV
+## HandBrakeCLI - ISO 2 MKV
 ```
 HandBrakeCLI -i {input} -o {output}  --format av_mkv  --encoder {Encodeur}  --encoder-preset p4  --quality {Qualité} --all-audio  --all-subtitles  --aencoder  {AudioEncodeur}   --subtitle-burned=none --main-feature --min-duration {Durée min}  --maxWidth {Largeur Max} --maxHeight {Hauteur Max} --loose-anamorphic --comb-detect --decomb
 ```
